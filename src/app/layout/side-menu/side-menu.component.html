@@ -1,0 +1,64 @@
+<div class="sidebar" [@sideMenuAnime]='menuState'>
+
+  <div class="logobar-wrapper" >
+    <div class="logobar" >
+      <span  [@minilogoAnime]='menuState'>NEVZAT</span>
+    </div>
+  </div>
+
+  <div class="avatar-wrapper" [@avatarAnime]='menuState'>
+    <div class="avatar"
+      [style.background-image]="'url(' +'assets/profilepicture.png' + ')'">
+    </div>
+  </div>
+
+
+  <div class="menu-actions">
+
+    <div class="menu-action active">
+      <div class="logo">
+        <fa-icon [icon]="icons.faHome"></fa-icon>
+      </div>
+      <div class="content">
+        Schedule
+      </div>
+    </div>
+
+    <div class="menu-action">
+      <div class="logo">
+        <fa-icon [icon]="icons.faProjectDiagram"></fa-icon>
+      </div>
+      <div class="content">
+        Constraints
+      </div>
+    </div>
+    <div class="menu-action">
+      <div class="logo">
+        <fa-icon [icon]="icons.faCalendarAlt"></fa-icon>
+      </div>
+      <div class="content">
+        Lessons
+      </div>
+    </div>
+    <div class="menu-action">
+      <div class="logo">
+        <fa-icon [icon]="icons.faUndoAlt"></fa-icon>
+      </div>
+      <div class="content">
+        Instructors
+      </div>
+    </div>
+    <div class="menu-action">
+      <div class="logo">
+        <fa-icon [icon]="icons.faUsers"></fa-icon>
+      </div>
+      <div class="content">
+        Reports
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="sidebar-holder" [@sideMenuAnime]='menuState'>
+</div>

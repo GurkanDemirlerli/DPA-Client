@@ -1,0 +1,136 @@
+.sidebar {
+    padding-top:20px;
+    position: relative;
+    border-radius: 10px;
+    position: fixed;
+    // width: 250px;
+    height: 100vh;
+    // background: rgb(255, 255, 255);
+    background: rgb(56, 56, 56);
+    box-shadow: rgb(56, 56, 56);
+    overflow: hidden;
+  }
+  
+  .menu-actions {
+    color: gray;
+    font-weight: 400;
+  }
+  
+  .menu-action {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 10px;
+  
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // border-bottom: 1px solid rgb(243, 241, 241);
+    border-bottom: 1px solid rgb(37, 37, 37);
+  
+  
+    .logo {
+      // color:rgb(93, 93, 93);
+      color:rgb(216, 216, 216);
+  
+      display: flex;
+      flex-direction:column;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      
+      min-width: 40px;
+      min-height: 40px;
+      // margin-bottom: 4px;
+      font-size: 25px;
+    }
+  
+    .content {
+      color:rgb(191, 191, 191);
+  
+  
+      margin-left: 15px;
+      font-size: 13px;
+    }
+  
+    // &:first-child{
+    // border-top: 1px solid rgb(243, 241, 241);
+  
+    // }
+  }
+  
+  .active::before {
+    box-sizing: content-box;
+    content: "";
+    position: absolute;
+    top: -2;
+    left: 0;
+    height: 100%;
+    width: 4px;
+    background-color: rgb(56, 172, 255);
+    border-top: 1px solid rgb(56, 172, 255);
+    border-bottom: 1px solid rgb(56, 172, 255);
+  }
+  
+  .logobar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: visible;
+    width: 80%;
+    position: absolute;
+    top: -20px;
+    left: 10%;
+    height: 40px;
+    background: rgb(179, 175, 255);
+    background: linear-gradient(
+      90deg,
+      rgb(138, 132, 255) 0%,
+      rgba(34, 195, 228, 1) 100%
+    );
+    border-radius: 20px;
+  
+    &-wrapper {
+      padding: 10px;
+      padding-top: 0;
+    }
+  
+    span{
+      color: rgb(255, 255, 255);
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+  }
+  
+  
+  fa-icon{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+  
+  .avatar{
+  
+    transition: 0.2s;
+    transition-timing-function: ease;
+    min-width: 80px;
+    min-height: 80px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid rgba(115, 213, 255, 0.714);
+    margin-right: 1rem;
+    
+    &-wrapper{
+      flex:1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
