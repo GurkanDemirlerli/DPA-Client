@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { PagesComponent } from './pages.component';
 import { LayoutModule } from './../layout/layout.module';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,10 @@ import { InstructorsComponent } from './instructors/instructors.component';
 import { LessonsComponent } from './lessons/lessons.component';
 import { ReportsComponent } from './reports/reports.component';
 import { ConstraintsComponent } from './constraints/constraints.component';
-
+import { FacultiesComponent } from './faculties/faculties.component';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -17,12 +21,17 @@ import { ConstraintsComponent } from './constraints/constraints.component';
         LessonsComponent,
         ReportsComponent,
         ConstraintsComponent,
-        PagesComponent
+        PagesComponent,
+        FacultiesComponent
     ],
     imports: [
         CommonModule,
         PagesRoutingModule,
-        LayoutModule
+        LayoutModule,
+        TableModule,
+        DialogModule,
+        FormsModule,
+        ButtonModule
     ],
     exports: [],
     providers: [],

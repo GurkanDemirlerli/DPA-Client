@@ -1,21 +1,20 @@
 <div class="sidebar" [@sideMenuAnime]='menuState'>
 
-  <div class="logobar-wrapper" >
-    <div class="logobar" >
-      <span  [@minilogoAnime]='menuState'>NEVZAT</span>
+  <div class="logobar-wrapper">
+    <div class="logobar">
+      <span [@minilogoAnime]='menuState'>NEVZAT</span>
     </div>
   </div>
 
   <div class="avatar-wrapper" [@avatarAnime]='menuState'>
-    <div class="avatar"
-      [style.background-image]="'url(' +'assets/profilepicture.png' + ')'">
+    <div class="avatar" [style.background-image]="'url(' +'assets/profilepicture.png' + ')'">
     </div>
   </div>
 
 
   <div class="menu-actions">
 
-    <div class="menu-action active">
+    <div class="menu-action" [routerLink]="['/pages/schedule']" routerLinkActive="active">
       <div class="logo">
         <fa-icon [icon]="icons.faHome"></fa-icon>
       </div>
@@ -24,7 +23,7 @@
       </div>
     </div>
 
-    <div class="menu-action">
+    <div class="menu-action" [routerLink]="['/pages/constraints']" routerLinkActive="active">
       <div class="logo">
         <fa-icon [icon]="icons.faProjectDiagram"></fa-icon>
       </div>
@@ -32,29 +31,29 @@
         Constraints
       </div>
     </div>
-    <div class="menu-action">
+    <div class="menu-action" [routerLink]="['/pages/lessons']" routerLinkActive="active">
       <div class="logo">
         <fa-icon [icon]="icons.faCalendarAlt"></fa-icon>
       </div>
-      <div class="content">
+      <a class="content">
         Lessons
-      </div>
+      </a>
     </div>
-    <div class="menu-action">
+    <div class="menu-action" [routerLink]="['/pages/instructors']" routerLinkActive="active">
       <div class="logo">
         <fa-icon [icon]="icons.faUndoAlt"></fa-icon>
       </div>
-      <div class="content">
+      <a class="content">
         Instructors
-      </div>
+      </a>
     </div>
-    <div class="menu-action">
+    <div class="menu-action" [routerLink]="['/pages/reports']" routerLinkActive="active">
       <div class="logo">
         <fa-icon [icon]="icons.faUsers"></fa-icon>
       </div>
-      <div class="content">
+      <a class="content">
         Reports
-      </div>
+      </a>
     </div>
 
   </div>

@@ -28,20 +28,20 @@
 
       <!--AUTH-->
       <div class="auth-wrapper">
-        <div class="auth-action">
+        <!-- <div class="auth-action">
           <div class="auth-action-logo">
             <fa-icon [icon]="icons.faSignInAlt"></fa-icon>
           </div>
           <div class="auth-action-content">
             Login
           </div>
-        </div>
-        <div class="auth-action">
+        </div> -->
+        <div class="auth-action" (click)="onLogoutClick()">
           <div class="auth-action-logo">
-            <fa-icon [icon]="icons.faUserPlus"></fa-icon>
+            <fa-icon [icon]="icons.faSignOutAlt"></fa-icon>
           </div>
           <div class="auth-action-content">
-            Register
+            Logout
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { FacultiesComponent } from './faculties/faculties.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -7,6 +8,8 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { InstructorsComponent } from './instructors/instructors.component';
 import { ReportsComponent } from './reports/reports.component';
 import { PagesComponent } from './pages.component';
+import { RoleGuard } from '../guards/auth.guard';
+import { RolesWithWord } from '../enums';
 
 const routes: Routes = [
     {
@@ -18,7 +21,13 @@ const routes: Routes = [
         },
         {
             path: 'lessons',
-            component: LessonsComponent
+            component: LessonsComponent,
+            canActivate: [RoleGuard],
+            data: {
+                expectedRoles: [
+                    RolesWithWord.Administrator
+                ]
+            }
         },
         {
             path: 'instructors',
@@ -27,6 +36,10 @@ const routes: Routes = [
         {
             path: 'constraints',
             component: ConstraintsComponent
+        },
+        {
+            path: 'faculties',
+            component: FacultiesComponent
         },
         {
             path: 'reports',

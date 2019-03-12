@@ -1,6 +1,8 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { faSignInAlt, faUserPlus, faBars,faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt, faUserPlus, faBars, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { MenuService } from '../services/menu.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dpa-header',
@@ -13,11 +15,29 @@ export class HeaderComponent implements OnInit {
     faSearch,
     faSignInAlt,
     faUserPlus,
-    faBars
+    faBars,
+    faSignOutAlt
   }
-  constructor(private menuService: MenuService) { }
+  constructor(
+    private menuService: MenuService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+
+  }
+
+  onLogoutClick() {
+    console.log('clicked');
+    this.authService.signOut().subscribe((res) => {
+      console.log(res);
+    }, (error) => {
+      this.router.navigate(['/auth/login']);
+    }, () => {
+      this.router.navigate(['/auth/login']);
+    });
+    // this.flashMessagesService.show('You are logged out', { cssClass: 'alert-info' });
 
   }
 
