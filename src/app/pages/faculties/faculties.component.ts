@@ -5,6 +5,7 @@ import { AddFacultyModel } from 'src/app/models/add-faculty.model';
 import { UpdateFacultyModel } from 'src/app/models/update-faculty.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'dpa-faculties',
@@ -38,6 +39,8 @@ export class FacultiesComponent implements OnInit {
 
   cols: any[];
 
+  items: MenuItem[];
+
   constructor(private facultyService: FacultyMockService, private router: Router) { }
 
   ngOnInit() {
@@ -48,6 +51,11 @@ export class FacultiesComponent implements OnInit {
     this.cols = [
       { field: 'facultyCode', header: 'Code', width: '20%' },
       { field: 'title', header: 'Title', width: '80%' }
+    ];
+
+    this.items = [
+      { label: 'Adil Çizelgeleme Sistemi', routerLink: ['/pages/faculties'] },
+      { label: 'Fakülteler', routerLink: ['/pages/faculties'] },
     ];
   }
 

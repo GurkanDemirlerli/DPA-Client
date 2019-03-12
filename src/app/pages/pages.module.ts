@@ -16,6 +16,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { DepartmentsComponent } from './departments/departments.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -28,6 +31,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
         DepartmentsComponent
     ],
     imports: [
+        AutoCompleteModule,
+        DropdownModule,
         CommonModule,
         PagesRoutingModule,
         LayoutModule,

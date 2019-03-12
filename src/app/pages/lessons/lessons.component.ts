@@ -12,6 +12,8 @@ import { UpdateLessonModel } from 'src/app/models/update-lesson.model';
 import { LessonMockService } from 'src/app/mocks/lesson.mock.service';
 import { EducationTypesTableView, EducationTypes } from 'src/app/enums/education-types.enum';
 import { LessonTypes } from 'src/app/enums';
+import { lessonTypeOptions, educationTypeOptions, aktsOptions, weeklyHourOptions } from './dropdown.data';
+
 @Component({
   selector: 'dpa-lessons',
   templateUrl: './lessons.component.html',
@@ -23,7 +25,6 @@ export class LessonsComponent implements OnInit {
   public educationTypes = EducationTypes;
   public lessonTypes = LessonTypes;
   public lessonTypesTableView = LessonTypesTableView;
-
 
   departmanId: number;
 
@@ -45,13 +46,17 @@ export class LessonsComponent implements OnInit {
 
   lessons: LessonModel[];
 
+  dropdownOptions: any = {};
+
+  selectedOptions: any = {};
+
 
   constructor(
     private route: ActivatedRoute,
     private departmentService: DepartmentMockService,
     private facultyService: FacultyMockService,
     private lessonService: LessonMockService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -87,16 +92,27 @@ export class LessonsComponent implements OnInit {
       });
 
     });
+
+    this.fillDropdownOptions();
+  }
+
+  fillDropdownOptions() {
+    this.dropdownOptions.lessonTypeOptions = lessonTypeOptions;
+    this.dropdownOptions.educationTypeOptions = educationTypeOptions;
+    this.dropdownOptions.aktsOptions = aktsOptions;
+    this.dropdownOptions.weeklyHourOptions = weeklyHourOptions;
   }
 
 
   showDialogToAdd() {
     this.newLesson = true;
     this.lesson = {};
+    this.selectedOptions = {};
     this.displayDialog = true;
   }
 
   save() {
+    console.log(this.lesson);
     let lessons = [...this.lessons];
     if (this.newLesson) {
       let addLessonModel: AddLessonModel = {
@@ -162,6 +178,10 @@ export class LessonsComponent implements OnInit {
   onRowSelect(event) {
     this.newLesson = false;
     this.lesson = this.clone(event.data);
+    this.selectedOptions.aktsOptions = (this.dropdownOptions.aktsOptions as any[]).find((option) => option.code == this.lesson.akts);
+    this.selectedOptions.lessonTypeOptions = (this.dropdownOptions.lessonTypeOptions as any[]).find((option) => option.code == this.lesson.lessonType);
+    this.selectedOptions.educationTypeOptions = (this.dropdownOptions.educationTypeOptions as any[]).find((option) => option.code == this.lesson.educationType);
+    this.selectedOptions.weeklyHourOptions = (this.dropdownOptions.weeklyHourOptions as any[]).find((option) => option.code == this.lesson.weeklyHour);
     this.displayDialog = true;
   }
 
@@ -173,9 +193,6 @@ export class LessonsComponent implements OnInit {
     return lesson;
   }
 
-  // goToLessons() {
-  //   this.router.navigate(['pages/lessons', this.selectedDepartment.departmanId]);
-  // }
 
 
 }

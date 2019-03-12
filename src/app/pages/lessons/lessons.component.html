@@ -1,65 +1,178 @@
-<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="wrpr-br">
+    <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
+</div>
+
 <br>
-<h3>{{departman?.title}} Bölümü</h3>
-<br>
-<p-table [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
-  (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
-  <ng-template pTemplate="caption">
-    Dersler
-  </ng-template>
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr [pSelectableRow]="rowData">
-      <td *ngFor="let col of columns">
-        <ng-container *ngIf="col.field === 'lessonType';else second">
+<div class="wrpr">
+  <p-table [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
+    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+    <ng-template pTemplate="caption">
+      {{departman?.title}} Bölümü Dersleri
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field === 'lessonType';else second">
             {{ lessonTypesTableView[lessonTypes[rowData[col.field]]] }}
-        </ng-container>
-        <ng-template #second>
-          <ng-container *ngIf="col.field === 'educationType';else third">
-            {{ educationTypesTableView[educationTypes[rowData[col.field]]] }}
           </ng-container>
-        </ng-template>
-        <ng-template #third>
-          {{rowData[col.field]}}
-        </ng-template>
-      </td>
-    </tr>
-  </ng-template>
+          <ng-template #second>
+            <ng-container *ngIf="col.field === 'educationType';else third">
+              {{ educationTypesTableView[educationTypes[rowData[col.field]]] }}
+            </ng-container>
+          </ng-template>
+          <ng-template #third>
+            {{rowData[col.field]}}
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
 
-  <ng-template pTemplate="summary" let-rowData>
-    <div style="text-align:left">
-      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-    </div>
-  </ng-template>
-</p-table>
-
+    <ng-template pTemplate="summary" let-rowData>
+      <div style="text-align:left">
+        <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+      </div>
+    </ng-template>
+  </p-table>
+</div>
 <p-dialog header="Ders Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-  [style]="{width: '400px'}">
-  <div class="ui-g ui-fluid" *ngIf="department">
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="departmanCode">Bölüm Kodu</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="departmanCode" [(ngModel)]="department.departmanCode" />
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="title">Bölüm Adı</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="title" [(ngModel)]="department.title" />
+  [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}">
+  <!-- <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-12">
+        <b class="first">Ders Adı</b>
+        <input type="text" pInputText placeholder="Ders Adını Giriniz" >
       </div>
     </div>
 
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-12">
+        <b class="first">Ders Kodu</b>
+        <input type="text" pInputText placeholder="Ders Kodunu Giriniz" >
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-6">
+        <b>AKTS</b>
+        <div class="ui-grid-row">
+          <p-dropdown [options]="dropdownOptions.aktsOptions" [style]="{'width': '145px'}" placeholder="AKTS Seçiniz"
+            optionLabel="name" [showClear]="true"></p-dropdown> 
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-6">
+        <b>Teorik Saat</b>
+        <div class="ui-grid-row">
+          <p-dropdown [options]="dropdownOptions.weeklyHourOptions" [style]="{'width': '145px'}" placeholder="Teorik Saat"
+            optionLabel="name" [showClear]="true" ></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-12">
+        <b>Ders Tipi</b>
+        <div class="ui-grid-row">
+          <p-dropdown [options]="dropdownOptions.lessonTypeOptions" [style]="{'width': '145px'}" placeholder="Ders Tipi"
+            optionLabel="name" [showClear]="true" ></p-dropdown>
+        </div>
+      </div>
+      <div class="form-group ui-grid-col-12">
+        <b>Öğretim Türü</b>
+        <div class="ui-grid-row">
+          <div class="ui-grid-12">
+            <p-dropdown [options]="dropdownOptions.educationTypeOptions" [style]="{'width': '145px'}"
+              placeholder="Öğretim Türü" optionLabel="name" [showClear]="true" >
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-12">
+        <b>Açıklama</b>
+        <textarea rows="2" cols="30" placeholder="Açıklama" pInputTextarea ></textarea>
+      </div>
+    </div>
+
+  </div> -->
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="lesson">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="lessonCode">Ders Kodu</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="lessonCode" [(ngModel)]="lesson.lessonCode" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="name">Ders Adı</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="name" [(ngModel)]="lesson.name" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="group">Grup</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="group" [(ngModel)]="lesson.group" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="akts">AKTS</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="dropdownOptions.aktsOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
+          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.aktsOptions"
+          (onChange)="lesson.akts = $event.value.code"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="weeklyHour">Haftalık Saat</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="dropdownOptions.weeklyHourOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
+          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.weeklyHourOptions"
+          (onChange)="lesson.weeklyHour = $event.value.code"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="lessonType">Ders Tipi</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="dropdownOptions.lessonTypeOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
+          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.lessonTypeOptions"
+          (onChange)="lesson.lessonType = $event.value.code"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="educationType">Öğrenim Türü</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="dropdownOptions.educationTypeOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
+          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.educationTypeOptions"
+          (onChange)="lesson.educationType = $event.value.code"></p-dropdown>
+      </div>
+    </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
