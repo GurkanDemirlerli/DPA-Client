@@ -1,5 +1,12 @@
-<p-table [columns]="cols" [value]="faculties" selectionMode="single" [(selection)]="selectedFaculty"
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<br>
+<h3>{{faculty?.title}}</h3>
+<br>
+<p-table [columns]="cols" [value]="departments" selectionMode="single" [(selection)]="selectedDepartment"
   (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    Bölümler
+  </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of columns" [pSortableColumn]="col.field" colspan="col.colspan"
@@ -24,30 +31,30 @@
   </ng-template>
 </p-table>
 
-<p-dialog header="Fakülte Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+<p-dialog header="Bölüm Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
   [style]="{width: '400px'}">
-  <div class="ui-g ui-fluid" *ngIf="faculty">
+  <div class="ui-g ui-fluid" *ngIf="department">
     <div class="ui-g-12">
       <div class="ui-g-4">
-        <label for="facultyCode">Fakülte Kodu</label>
+        <label for="departmanCode">Bölüm Kodu</label>
       </div>
       <div class="ui-g-8">
-        <input pInputText id="facultyCode" [(ngModel)]="faculty.facultyCode" />
+        <input pInputText id="departmanCode" [(ngModel)]="department.departmanCode" />
       </div>
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">
-        <label for="title">Fakülte Adı</label>
+        <label for="title">Bölüm Adı</label>
       </div>
       <div class="ui-g-8">
-        <input pInputText id="title" [(ngModel)]="faculty.title" />
+        <input pInputText id="title" [(ngModel)]="department.title" />
       </div>
     </div>
 
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton (click)="goToDepartments()" label="Bölümler"></button>
+      <button type="button" pButton (click)="goToLessons()" label="Dersler"></button>
       <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
       <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
     </div>

@@ -1,3 +1,6 @@
+import { LessonMockService } from './mocks/lesson.mock.service';
+import { DepartmentMockService } from './mocks/department.mock.service';
+import { FacultyMockService } from './mocks';
 import { FacultyService } from './services/faculty.service';
 import { AuthService } from './services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +24,9 @@ import { RoleGuard, AuthGuard, AuthNotAllowed } from './guards/auth.guard';
     AppRoutingModule
   ],
   providers: [
+    FacultyMockService,
+    DepartmentMockService,
+    LessonMockService,
     AuthService,
     FacultyService,
     AuthGuard,

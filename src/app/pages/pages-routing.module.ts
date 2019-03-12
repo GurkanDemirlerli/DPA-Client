@@ -1,3 +1,4 @@
+import { DepartmentsComponent } from './departments/departments.component';
 import { FacultiesComponent } from './faculties/faculties.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -19,16 +20,16 @@ const routes: Routes = [
             path: 'schedule',
             component: ScheduleComponent
         },
-        {
-            path: 'lessons',
-            component: LessonsComponent,
-            canActivate: [RoleGuard],
-            data: {
-                expectedRoles: [
-                    RolesWithWord.Administrator
-                ]
-            }
-        },
+        // {
+        //     path: 'lessons',
+        //     component: LessonsComponent,
+        //     canActivate: [RoleGuard],
+        //     data: {
+        //         expectedRoles: [
+        //             RolesWithWord.Administrator
+        //         ]
+        //     }
+        // },
         {
             path: 'instructors',
             component: InstructorsComponent
@@ -40,6 +41,14 @@ const routes: Routes = [
         {
             path: 'faculties',
             component: FacultiesComponent
+        },
+        {
+            path: 'departments/:facultyId',
+            component: DepartmentsComponent
+        },
+        {
+            path: 'lessons/:departmanId',
+            component: LessonsComponent
         },
         {
             path: 'reports',

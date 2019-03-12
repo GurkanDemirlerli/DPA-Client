@@ -1,13 +1,28 @@
-import { FacultyService } from './../../services/faculty.service';
+import { FacultyMockService } from './../../mocks';
 import { Component, OnInit } from '@angular/core';
 import { FacultyModel } from 'src/app/models';
 import { AddFacultyModel } from 'src/app/models/add-faculty.model';
 import { UpdateFacultyModel } from 'src/app/models/update-faculty.model';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dpa-faculties',
   templateUrl: './faculties.component.html',
-  styleUrls: ['./faculties.component.scss']
+  styleUrls: ['./faculties.component.scss'],
+  animations: [
+    trigger('rowExpansionTrigger', [
+      state('void', style({
+        transform: 'translateX(-10%)',
+        opacity: 0
+      })),
+      state('active', style({
+        transform: 'translateX(0)',
+        opacity: 1
+      })),
+      transition('* <=> *', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
+    ])
+  ]
 })
 export class FacultiesComponent implements OnInit {
 
@@ -23,16 +38,16 @@ export class FacultiesComponent implements OnInit {
 
   cols: any[];
 
-  constructor(private facultyService: FacultyService) { }
+  constructor(private facultyService: FacultyMockService, private router: Router) { }
 
   ngOnInit() {
-    this.facultyService.getFaculties().subscribe((faculties) => {
+    this.facultyService.getAll().subscribe((faculties) => {
       this.faculties = faculties;
     })
 
     this.cols = [
-      { field: 'facultyCode', header: 'Code' },
-      { field: 'title', header: 'Title' }
+      { field: 'facultyCode', header: 'Code', width: '20%' },
+      { field: 'title', header: 'Title', width: '80%' }
     ];
   }
 
@@ -105,6 +120,10 @@ export class FacultiesComponent implements OnInit {
       faculty[prop] = f[prop];
     }
     return faculty;
+  }
+
+  goToDepartments() {
+    this.router.navigate(['pages/departments', this.faculty.facultyId]);
   }
 
 }

@@ -1,6 +1,71 @@
-<p>
-  lessons works!
-</p>
-<p>
-  lessons works!
-</p>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<br>
+<h3>{{departman?.title}} Bölümü</h3>
+<br>
+<p-table [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
+  (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    Dersler
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <ng-container *ngIf="col.field === 'lessonType';else second">
+            {{ lessonTypesTableView[lessonTypes[rowData[col.field]]] }}
+        </ng-container>
+        <ng-template #second>
+          <ng-container *ngIf="col.field === 'educationType';else third">
+            {{ educationTypesTableView[educationTypes[rowData[col.field]]] }}
+          </ng-container>
+        </ng-template>
+        <ng-template #third>
+          {{rowData[col.field]}}
+        </ng-template>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+    </div>
+  </ng-template>
+</p-table>
+
+<p-dialog header="Ders Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+  [style]="{width: '400px'}">
+  <div class="ui-g ui-fluid" *ngIf="department">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="departmanCode">Bölüm Kodu</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="departmanCode" [(ngModel)]="department.departmanCode" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="title">Bölüm Adı</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="title" [(ngModel)]="department.title" />
+      </div>
+    </div>
+
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton (click)="goToLessons()" label="Dersler"></button>
+      <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+    </div>
+  </p-footer>
+</p-dialog>

@@ -14,6 +14,8 @@ import { FacultiesComponent } from './faculties/faculties.component';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { DepartmentsComponent } from './departments/departments.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -22,7 +24,8 @@ import { ButtonModule } from 'primeng/button';
         ReportsComponent,
         ConstraintsComponent,
         PagesComponent,
-        FacultiesComponent
+        FacultiesComponent,
+        DepartmentsComponent
     ],
     imports: [
         CommonModule,
@@ -31,7 +34,8 @@ import { ButtonModule } from 'primeng/button';
         TableModule,
         DialogModule,
         FormsModule,
-        ButtonModule
+        ButtonModule,
+        BreadcrumbModule,
     ],
     exports: [],
     providers: [],
