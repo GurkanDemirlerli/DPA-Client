@@ -1,18 +1,25 @@
-<p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both" filterBy="brand"
-  [sortField]="sortField" [sortOrder]="sortOrder">
+<p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both"
+  filterBy="departman.title,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
   <p-header>
     <div class="ui-helper-clearfix">
       <div class="ui-g">
-        <div class="ui-g-12 ui-md-4">
-          <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
-            (onChange)="onSortChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-        </div>
-        <div class="ui-g-6 ui-md-4 filter-container">
+        <div class="ui-g-6 ui-md-3">
           <div style="position:relative">
-            <input type="search" pInputText placeholder="Search by brand" (keyup)="dv.filter($event.target.value)">
+            <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
           </div>
         </div>
-        <div class="ui-g-6 ui-md-4" style="text-align:right">
+        <div class="ui-g-6 ui-md-3 filter-container" style="text-align:right">
+          <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+            (onChange)="onSortChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+
+        </div>
+        <div class="ui-g-6 ui-md-3 filter-container">
+          <div style="position:relative">
+            <input type="search" pInputText placeholder="Ara" (keyup)="dv.filter($event.target.value)">
+          </div>
+        </div>
+
+        <div class="ui-g-6 ui-md-3" style="text-align:right">
           <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
         </div>
       </div>
@@ -29,7 +36,7 @@
           <div class="ui-g-10 ui-sm-6"><b>{{user.name  + ' ' + user.surname | titlecase}}</b></div>
 
           <div class="ui-g-2 ui-sm-6">Email: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{user.email | titlecase}}</b></div>
+          <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
 
           <div class="ui-g-2 ui-sm-6">Ünvan: </div>
           <div class="ui-g-10 ui-sm-6"><b>{{titlesWord[titles[user.title]]}}</b></div>
@@ -49,7 +56,7 @@
   </ng-template>
   <ng-template let-user pTemplate="gridItem">
     <div style="padding:.5em" class="ui-g-12 ui-md-3">
-      <p-panel [header]="user.vin" [style]="{'text-align':'center'}">
+      <p-panel [header]="user.departman?.title" [style]="{'text-align':'center'}">
         <img src="assets/profilepicture.png" width="60">
         <div class="user-detail">{{titlesWord[titles[user.title]] + ' ' +user.name  + ' ' + user.surname | titlecase}}
         </div>
@@ -61,22 +68,28 @@
   </ng-template>
 </p-dataView>
 
-<p-dialog header="Car Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-  [style]="{width: '225px'}" (onAfterHide)="onDialogHide()">
+
+
+<p-dialog header="Kullanıcı detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+  [style]="{width: '400px'}" (onAfterHide)="close()">
   <div class="ui-g" *ngIf="selectedUser">
     <div class="ui-g-12" style="text-align:center">
       <img src="assets/profilepicture.png" width="120">
     </div>
-    <div class="ui-g-4">Vin: </div>
-    <div class="ui-g-8">{{selectedUser.vin}}</div>
+    <div class="ui-g-4">Ad: </div>
+    <div class="ui-g-8">{{selectedUser.name  + ' ' + selectedUser.surname | titlecase}}</div>
 
-    <div class="ui-g-4">Brand: </div>
-    <div class="ui-g-8">{{selectedUser.brand}}</div>
+    <div class="ui-g-4">Email: </div>
+    <div class="ui-g-8">{{selectedUser.email}}</div>
 
-    <div class="ui-g-4">Year: </div>
-    <div class="ui-g-8">{{selectedUser.year}}</div>
+    <div class="ui-g-4">Ünvan: </div>
+    <div class="ui-g-8">{{titlesWord[titles[selectedUser.title]]}}</div>
 
-    <div class="ui-g-4">Color: </div>
-    <div class="ui-g-8">{{selectedUser.color}}</div>
+    <div class="ui-g-4">Rol: </div>
+    <div class="ui-g-8">{{roles[selectedUser.roles] }}</div>
+
+    <div class="ui-g-4">Bölüm: </div>
+    <div class="ui-g-8">{{selectedUser.departman?.title}}</div>
+
   </div>
 </p-dialog>

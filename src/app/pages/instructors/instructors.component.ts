@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentMockService } from 'src/app/mocks/department.mock.service';
 import { FacultyMockService } from 'src/app/mocks';
 import { LessonMockService } from 'src/app/mocks/lesson.mock.service';
-import { UserModel } from 'src/app/models/user.model';
+import { UserModel, AddUserModel } from 'src/app/models/user.model';
 import { SelectItem } from 'primeng/primeng';
 import { Roles, Titles } from 'src/app/enums';
 import { TitlesWord } from 'src/app/enums/titles.enum';
@@ -21,6 +21,10 @@ export class InstructorsComponent implements OnInit {
   public titlesWord = TitlesWord;
 
   users: UserModel[];
+
+  usr: UserModel = {};
+
+  newUser: boolean;
 
   selectedUser: UserModel;
 
@@ -79,7 +83,23 @@ export class InstructorsComponent implements OnInit {
     }
   }
 
-  onDialogHide() {
+  close() {
     this.selectedUser = null;
+    console.log(this.selectUser);
+  }
+
+  showDialogToAdd() {
+    this.selectedUser = null;
+    this.newUser = true;
+    this.usr = {};
+    this.displayDialog = true;
+  }
+
+  clone(u: UserModel): UserModel {
+    let user = {};
+    for (let prop in u) {
+      user[prop] = u[prop];
+    }
+    return user;
   }
 }
