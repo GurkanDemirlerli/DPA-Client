@@ -10,3 +10,16 @@ export enum Titles {
     Cevirici = 8,
     EgitimOgretimPlanlayicisi = 9
 }
+
+export enum TitlesWord {
+    Administrator = "Admin",
+    Profesor = "Prof. Dr.",
+    Docent = "Doc.",
+    YrdDoc = "Yrd. Doc.",
+    OgrGor = "Ogr. Gor.",
+    Okutman = "Okt",
+    ArsGor = "Arş. Gör.",
+    Uzman = "Uzm.",
+    Cevirici = "Cvr.",
+    EgitimOgretimPlanlayicisi = "Eg. Og. Pl."
+}

@@ -60,7 +60,6 @@ export class LessonsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // console.log(EducationTypesTableView[EducationTypes[rowData[col.field]]]);
     this.route.params.subscribe((params) => {
       this.departmanId = params["departmanId"];
       this.departmentService.get(this.departmanId).subscribe((departman) => {

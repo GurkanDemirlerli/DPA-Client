@@ -18,7 +18,9 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
+import { DataViewModule } from 'primeng/dataview';
+import { PanelModule } from 'primeng/panel';
+import { InputTextModule } from 'primeng/inputtext';
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -31,6 +33,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
         DepartmentsComponent
     ],
     imports: [
+        InputTextModule,
+        PanelModule,
+        DataViewModule,
         AutoCompleteModule,
         DropdownModule,
         CommonModule,

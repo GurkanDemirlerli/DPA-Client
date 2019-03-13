@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RoleGuard, AuthGuard, AuthNotAllowed } from './guards/auth.guard';
+import { UserMockService } from './mocks/user.mock.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RoleGuard, AuthGuard, AuthNotAllowed } from './guards/auth.guard';
     AppRoutingModule
   ],
   providers: [
+    UserMockService,
     FacultyMockService,
     DepartmentMockService,
     LessonMockService,
