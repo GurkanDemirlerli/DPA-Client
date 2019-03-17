@@ -21,6 +21,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DataViewModule } from 'primeng/dataview';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
+
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -33,6 +34,7 @@ import { InputTextModule } from 'primeng/inputtext';
         DepartmentsComponent
     ],
     imports: [
+
         InputTextModule,
         PanelModule,
         DataViewModule,

@@ -1,5 +1,6 @@
 export enum RolesWithWord {
-    Administrator = "Administrator",
-    HeadOfDepartment = "Admin",
-    Instructor = "User"
+    None = "None",
+    User = "Eğitmen",
+    Admin = "Bölüm Başkanı",
+    Administrator = "Admin"
 }

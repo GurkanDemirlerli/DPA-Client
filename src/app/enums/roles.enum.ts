@@ -4,3 +4,10 @@ export enum Roles {
     Admin = 2,
     Administrator = 3
 }
+
+export enum RolesWord {
+    None = "None",
+    User = "Eğitmen",
+    Admin = "Bölüm Başkanı",
+    Administrator = "Admin"
+}

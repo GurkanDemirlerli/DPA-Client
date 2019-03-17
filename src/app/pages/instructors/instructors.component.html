@@ -70,13 +70,12 @@
 
 
 
-<p-dialog header="Kullanıcı detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-  [style]="{width: '400px'}" (onAfterHide)="close()">
-  <div class="ui-g" *ngIf="selectedUser">
-    <div class="ui-g-12" style="text-align:center">
-      <img src="assets/profilepicture.png" width="120">
-    </div>
-    <div class="ui-g-4">Ad: </div>
+<p-dialog header="Kullanıcı Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+[contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}" (onAfterHide)="close()">
+  <div class="ui-g-12" style="text-align:center">
+    <img src="assets/profilepicture.png" width="120">
+  </div>
+  <!-- <div class="ui-g-4">Ad: </div>
     <div class="ui-g-8">{{selectedUser.name  + ' ' + selectedUser.surname | titlecase}}</div>
 
     <div class="ui-g-4">Email: </div>
@@ -89,7 +88,85 @@
     <div class="ui-g-8">{{roles[selectedUser.roles] }}</div>
 
     <div class="ui-g-4">Bölüm: </div>
-    <div class="ui-g-8">{{selectedUser.departman?.title}}</div>
+    <div class="ui-g-8">{{selectedUser.departman?.title}}</div> -->
+
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="user">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="name">Ad</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="name" [(ngModel)]="user.name" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="surname">Soyad</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="surname" [(ngModel)]="user.surname" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="login">Giriş Adı</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="login" [(ngModel)]="user.login" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="password">Şifre</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="password" [(ngModel)]="user.password" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="email">Email</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="email" [(ngModel)]="user.email" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="roles">Rol</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="dropdownOptions.roleTypeOptions" [style]="{'width': '100%'}"  placeholder="Seçiniz"
+          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.roleTypeOptions"
+          (onChange)="user.roles = $event.value.code"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="title">Ünvan</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="dropdownOptions.titleTypeOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
+          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.titleTypeOptions"
+          (onChange)="user.title = $event.value.code"></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="departmanId">Bölüm</label>
+      </div>
+      <div class="ui-g-8">
+        <p-dropdown [options]="dropdownOptions.departmanOptions" [style]="{'width': '100%'}"  placeholder="Seçiniz"
+          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.departmanOptions"
+          (onChange)="user.departmanId = $event.value.code"></p-dropdown>
+      </div>
+    </div>
 
   </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+    </div>
+  </p-footer>
 </p-dialog>
