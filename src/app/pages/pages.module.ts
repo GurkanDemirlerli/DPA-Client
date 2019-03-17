@@ -21,6 +21,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DataViewModule } from 'primeng/dataview';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
     declarations: [
@@ -34,7 +36,8 @@ import { InputTextModule } from 'primeng/inputtext';
         DepartmentsComponent
     ],
     imports: [
-
+        InputSwitchModule,
+        SelectButtonModule,
         InputTextModule,
         PanelModule,
         DataViewModule,

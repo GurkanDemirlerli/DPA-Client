@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RoleGuard, AuthGuard, AuthNotAllowed } from './guards/auth.guard';
 import { UserMockService } from './mocks/user.mock.service';
+import { ConstraintMockService } from './mocks/constraint.mock.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { UserMockService } from './mocks/user.mock.service';
     AppRoutingModule
   ],
   providers: [
+    ConstraintMockService,
     UserMockService,
     FacultyMockService,
     DepartmentMockService,

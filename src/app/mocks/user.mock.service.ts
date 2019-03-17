@@ -10,7 +10,7 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
     constructor() {
         super("userId", [
             {
-                userId: "1",
+                userId: 1,
                 login: "ntasbasi",
                 password: "123456",
                 name: "nevzat",
@@ -21,7 +21,7 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
                 departmanId: 1,
             },
             {
-                userId: "2",
+                userId: 2,
                 login: "yyurtay",
                 password: "123456",
                 name: "yüksel",
@@ -32,7 +32,7 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
                 departmanId: 1,
             },
             {
-                userId: "4",
+                userId: 3,
                 login: "coz",
                 password: "123456",
                 name: "cemil",
@@ -43,7 +43,7 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
                 departmanId: 1,
             },
             {
-                userId: "deneme",
+                userId: 4,
                 login: "dn1",
                 password: "123456",
                 name: "deneme",
