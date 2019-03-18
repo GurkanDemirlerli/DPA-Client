@@ -23,7 +23,7 @@ import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
-
+import { InputTextareaModule } from 'primeng/inputtextarea';
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -36,6 +36,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         DepartmentsComponent
     ],
     imports: [
+        InputTextareaModule,
         InputSwitchModule,
         SelectButtonModule,
         InputTextModule,
