@@ -1,12 +1,15 @@
-import { AddFacultyModel } from './../models/add-faculty.model';
-import { FacultyModel } from './../models';
 import { Injectable } from '@angular/core';
 import { server } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { ServicesHelpers } from './helpers';
-import { UpdateFacultyModel } from '../models/update-faculty.model';
+
+import {
+    FacultyModel,
+    AddFacultyModel,
+    UpdateFacultyModel
+} from 'src/app/models';
 
 @Injectable()
 export class FacultyService {

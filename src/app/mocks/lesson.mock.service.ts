@@ -1,9 +1,7 @@
 import { MockServiceBase } from './mock.service.base';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { LessonModel } from '../models/lesson.model';
-import { AddLessonModel } from '../models/add-lesson.model';
-import { UpdateLessonModel } from '../models/update-lesson.model';
+import { LessonModel, AddLessonModel, UpdateLessonModel } from '../models/lesson.model';
 
 @Injectable()
 export class LessonMockService extends MockServiceBase<LessonModel, AddLessonModel, UpdateLessonModel> {

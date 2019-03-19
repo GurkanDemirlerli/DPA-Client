@@ -1,15 +1,29 @@
-import { UpdateConstraintModel } from './../../models/constraint.model';
 import { Component, OnInit } from '@angular/core';
-import { ConstraintModel } from 'src/app/models/constraint.model';
 import { MenuItem } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConstraintMockService } from 'src/app/mocks/constraint.mock.service';
-import { DepartmentMockService } from 'src/app/mocks/department.mock.service';
-import { FacultyMockService } from 'src/app/mocks';
-import { LessonMockService } from 'src/app/mocks/lesson.mock.service';
-import { AddConstraintModel } from 'src/app/models/add-constraint.model';
-import { weeklyHourOptions, educationTypeOptions } from './dropdown.data';
-import { EducationTypesTableView, EducationTypes } from 'src/app/enums/education-types.enum';
+
+
+import {
+  ConstraintModel,
+  AddConstraintModel,
+  UpdateConstraintModel
+} from 'src/app/models';
+import {
+  FacultyMockService,
+  ConstraintMockService,
+  DepartmentMockService,
+  LessonMockService
+} from 'src/app/mocks';
+import {
+  EducationTypesTableView,
+  EducationTypes
+} from 'src/app/enums';
+import {
+  weeklyHourOptions,
+  educationTypeOptions
+} from './dropdown.data';
+
+
 
 @Component({
   selector: 'dpa-constraints',

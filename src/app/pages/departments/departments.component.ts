@@ -1,12 +1,20 @@
-import { UpdateDepartmanModel } from './../../models/update-departman.model';
-import { AddDepartmanModel } from './../../models/add-departman.model';
-import { DepartmentMockService } from './../../mocks/department.mock.service';
-import { DepartmanModel } from './../../models/departman.model';
-import { FacultyMockService } from './../../mocks/faculty.mock.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FacultyModel } from 'src/app/models';
 import { MenuItem } from 'primeng/api';
+
+
+
+import {
+  FacultyModel,
+  AddDepartmanModel,
+  UpdateDepartmanModel,
+  DepartmanModel
+} from 'src/app/models';
+import {
+  FacultyMockService,
+  DepartmentMockService
+} from 'src/app/mocks';
+
 
 @Component({
   selector: 'dpa-departments',

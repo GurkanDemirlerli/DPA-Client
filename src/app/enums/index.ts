@@ -1,3 +1,10 @@
+export { LessonTypesTableView } from './lesson-types.enum';
+
+export { TitlesWord } from './titles.enum';
+export { RolesWord } from './roles.enum';
+
+export { EducationTypesTableView } from './education-types.enum';
+
 export { RolesWithWord } from './roles-with-word.enum';
 export { AKTS } from './akts.enum';
 export { EducationTypes } from './education-types.enum';

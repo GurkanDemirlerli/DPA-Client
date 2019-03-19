@@ -1,9 +1,7 @@
 import { MockServiceBase } from './mock.service.base';
 import { Injectable } from '@angular/core';
-import { FacultyModel } from '../models';
+import { FacultyModel, AddFacultyModel, UpdateFacultyModel } from '../models';
 import { Observable, of } from 'rxjs';
-import { AddFacultyModel } from '../models/add-faculty.model';
-import { UpdateFacultyModel } from '../models/update-faculty.model';
 
 @Injectable()
 export class FacultyMockService extends MockServiceBase<FacultyModel, AddFacultyModel, UpdateFacultyModel> {

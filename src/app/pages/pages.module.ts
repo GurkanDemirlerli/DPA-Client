@@ -24,6 +24,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { LocationsComponent } from './locations/locations.component';
+
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -33,7 +35,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
         ConstraintsComponent,
         PagesComponent,
         FacultiesComponent,
-        DepartmentsComponent
+        DepartmentsComponent,
+        LocationsComponent
     ],
     imports: [
         InputTextareaModule,

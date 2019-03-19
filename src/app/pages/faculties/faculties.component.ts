@@ -1,11 +1,19 @@
-import { FacultyMockService } from './../../mocks';
 import { Component, OnInit } from '@angular/core';
-import { FacultyModel } from 'src/app/models';
-import { AddFacultyModel } from 'src/app/models/add-faculty.model';
-import { UpdateFacultyModel } from 'src/app/models/update-faculty.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+
+
+import {
+  FacultyModel,
+  UpdateFacultyModel,
+  AddFacultyModel
+} from 'src/app/models';
+
+import {
+  FacultyMockService,
+} from 'src/app/mocks';
+
 
 @Component({
   selector: 'dpa-faculties',

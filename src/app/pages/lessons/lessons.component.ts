@@ -1,18 +1,38 @@
-import { LessonTypesTableView } from 'src/app/enums/lesson-types.enum';
-import { FacultyMockService } from './../../mocks/faculty.mock.service';
-import { LessonModel } from './../../models/lesson.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DepartmentMockService } from 'src/app/mocks/department.mock.service';
 import { DepartmanModel } from 'src/app/models/departman.model';
 import { MenuItem } from 'primeng/api';
-import { FacultyModel } from 'src/app/models';
-import { AddLessonModel } from 'src/app/models/add-lesson.model';
-import { UpdateLessonModel } from 'src/app/models/update-lesson.model';
-import { LessonMockService } from 'src/app/mocks/lesson.mock.service';
-import { EducationTypesTableView, EducationTypes } from 'src/app/enums/education-types.enum';
-import { LessonTypes } from 'src/app/enums';
-import { lessonTypeOptions, educationTypeOptions, aktsOptions, weeklyHourOptions } from './dropdown.data';
+
+
+
+
+import {
+  FacultyModel,
+  LessonModel,
+  UpdateLessonModel,
+  AddLessonModel
+} from 'src/app/models';
+import {
+  FacultyMockService,
+  DepartmentMockService,
+  LessonMockService
+} from 'src/app/mocks';
+import {
+  LessonTypesTableView,
+  LessonTypes,
+  EducationTypesTableView,
+  EducationTypes
+} from 'src/app/enums';
+import {
+  weeklyHourOptions,
+  educationTypeOptions,
+  lessonTypeOptions,
+  aktsOptions
+} from './dropdown.data';
+
+
+
+
 
 @Component({
   selector: 'dpa-lessons',

@@ -1,8 +1,6 @@
-import { UpdateDepartmanModel } from './../models/update-departman.model';
-import { AddDepartmanModel } from './../models/add-departman.model';
 import { MockServiceBase } from './mock.service.base';
 import { Injectable } from '@angular/core';
-import { DepartmanModel } from '../models/departman.model';
+import { DepartmanModel, AddDepartmanModel, UpdateDepartmanModel } from '../models/departman.model';
 import { Observable, of } from 'rxjs';
 
 @Injectable()
@@ -39,5 +37,5 @@ export class DepartmentMockService extends MockServiceBase<DepartmanModel, AddDe
         return of(model);
     }
 
-    
+
 }

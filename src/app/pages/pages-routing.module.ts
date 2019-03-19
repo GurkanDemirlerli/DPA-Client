@@ -1,3 +1,4 @@
+import { LocationsComponent } from './locations/locations.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { FacultiesComponent } from './faculties/faculties.component';
 import { NgModule } from '@angular/core';
@@ -41,6 +42,10 @@ const routes: Routes = [
         {
             path: 'faculties',
             component: FacultiesComponent
+        },
+        {
+            path: 'locations',
+            component: LocationsComponent
         },
         {
             path: 'departments/:facultyId',

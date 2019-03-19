@@ -1,15 +1,31 @@
-import { UserMockService } from './../../mocks/user.mock.service';
+import { MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DepartmentMockService } from 'src/app/mocks/department.mock.service';
-import { FacultyMockService } from 'src/app/mocks';
-import { LessonMockService } from 'src/app/mocks/lesson.mock.service';
-import { UserModel, AddUserModel, UpdateUserModel } from 'src/app/models/user.model';
 import { SelectItem } from 'primeng/primeng';
-import { Roles, Titles } from 'src/app/enums';
-import { TitlesWord } from 'src/app/enums/titles.enum';
-import { RolesWord } from 'src/app/enums/roles.enum';
-import { roleTypeOptions, titleTypeOptions } from './dropdown.data';
+
+
+import {
+  UserModel,
+  AddUserModel,
+  UpdateUserModel
+} from 'src/app/models';
+import {
+  FacultyMockService,
+  DepartmentMockService,
+  LessonMockService,
+  UserMockService
+} from 'src/app/mocks';
+import {
+  Roles,
+  Titles,
+  TitlesWord,
+  RolesWord
+} from 'src/app/enums';
+import {
+  roleTypeOptions,
+  titleTypeOptions
+} from './dropdown.data';
+
 
 @Component({
   selector: 'dpa-instructors',
@@ -34,6 +50,8 @@ export class InstructorsComponent implements OnInit {
   displayDialog: boolean;
 
   sortOptions: SelectItem[];
+
+  items: MenuItem[];
 
   sortKey: string;
 
@@ -68,6 +86,11 @@ export class InstructorsComponent implements OnInit {
       { label: 'Newest First', value: '!year' },
       { label: 'Oldest First', value: 'year' },
       { label: 'Brand', value: 'brand' }
+    ];
+
+    this.items = [
+      { label: 'Adil Çizelgeleme Sistemi' },
+      { label: 'Kullanıcılar' },
     ];
 
     this.fillDropdownOptions();

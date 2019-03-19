@@ -1,81 +1,88 @@
-<p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both"
-  filterBy="departman.title,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
-  <p-header>
-    <div class="ui-helper-clearfix">
-      <div class="ui-g">
-        <div class="ui-g-6 ui-md-3">
-          <div style="position:relative">
-            <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-          </div>
-        </div>
-        <div class="ui-g-6 ui-md-3 filter-container" style="text-align:right">
-          <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
-            (onChange)="onSortChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+<div class="wrpr-br">
+  <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
+</div>
 
-        </div>
-        <div class="ui-g-6 ui-md-3 filter-container">
-          <div style="position:relative">
-            <input type="search" pInputText placeholder="Ara" (keyup)="dv.filter($event.target.value)">
-          </div>
-        </div>
+<br>
+<div class="wrpr">
 
-        <div class="ui-g-6 ui-md-3" style="text-align:right">
-          <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-        </div>
-      </div>
-    </div>
-  </p-header>
-  <ng-template let-user pTemplate="listItem">
-    <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-      <div class="ui-g-12 ui-md-3" style="text-align:center">
-        <img src="assets/profilepicture.png" width="120">
-      </div>
-      <div class="ui-g-12 ui-md-8 user-details">
+  <p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both"
+    filterBy="departman.title,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
+    <p-header>
+      <div class="ui-helper-clearfix">
         <div class="ui-g">
-          <div class="ui-g-2 ui-sm-6">Ad: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{user.name  + ' ' + user.surname | titlecase}}</b></div>
+          <div class="ui-g-6 ui-md-3">
+            <div style="position:relative">
+              <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+            </div>
+          </div>
+          <div class="ui-g-6 ui-md-3 filter-container" style="text-align:right">
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+              (onChange)="onSortChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
 
-          <div class="ui-g-2 ui-sm-6">Email: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
+          </div>
+          <div class="ui-g-6 ui-md-3 filter-container">
+            <div style="position:relative">
+              <input type="search" pInputText placeholder="Ara" (keyup)="dv.filter($event.target.value)">
+            </div>
+          </div>
 
-          <div class="ui-g-2 ui-sm-6">Ünvan: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{titlesWord[titles[user.title]]}}</b></div>
-
-          <div class="ui-g-2 ui-sm-6">Rol: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{roles[user.roles] }}</b></div>
-
-          <div class="ui-g-2 ui-sm-6">Bölüm: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{user.departman?.title}}</b></div>
-
+          <div class="ui-g-6 ui-md-3" style="text-align:right">
+            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          </div>
         </div>
       </div>
-      <div class="ui-g-12 ui-md-1 search-icon">
-        <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"></button>
-      </div>
-    </div>
-  </ng-template>
-  <ng-template let-user pTemplate="gridItem">
-    <div style="padding:.5em" class="ui-g-12 ui-md-3">
-      <p-panel [header]="user.departman?.title" [style]="{'text-align':'center'}">
-        <img src="assets/profilepicture.png" width="60">
-        <div class="user-detail">{{titlesWord[titles[user.title]] + ' ' +user.name  + ' ' + user.surname | titlecase}}
+    </p-header>
+    <ng-template let-user pTemplate="listItem">
+      <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+        <div class="ui-g-12 ui-md-3" style="text-align:center">
+          <img src="assets/profilepicture.png" width="120">
         </div>
-        <hr class="ui-widget-content" style="border-top:0">
-        <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"
-          style="margin-top:0"></button>
-      </p-panel>
+        <div class="ui-g-12 ui-md-8 user-details">
+          <div class="ui-g">
+            <div class="ui-g-2 ui-sm-6">Ad: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{user.name  + ' ' + user.surname | titlecase}}</b></div>
+
+            <div class="ui-g-2 ui-sm-6">Email: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
+
+            <div class="ui-g-2 ui-sm-6">Ünvan: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{titlesWord[titles[user.title]]}}</b></div>
+
+            <div class="ui-g-2 ui-sm-6">Rol: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{roles[user.roles] }}</b></div>
+
+            <div class="ui-g-2 ui-sm-6">Bölüm: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{user.departman?.title}}</b></div>
+
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-1 search-icon">
+          <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"></button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-user pTemplate="gridItem">
+      <div style="padding:.5em" class="ui-g-12 ui-md-3">
+        <p-panel [header]="user.departman?.title" [style]="{'text-align':'center'}">
+          <img src="assets/profilepicture.png" width="60">
+          <div class="user-detail">{{titlesWord[titles[user.title]] + ' ' +user.name  + ' ' + user.surname | titlecase}}
+          </div>
+          <hr class="ui-widget-content" style="border-top:0">
+          <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"
+            style="margin-top:0"></button>
+        </p-panel>
+      </div>
+    </ng-template>
+  </p-dataView>
+
+
+
+  <p-dialog header="Kullanıcı Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+    [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}" (onAfterHide)="close()">
+    <div class="ui-g-12" style="text-align:center">
+      <img src="assets/profilepicture.png" width="120">
     </div>
-  </ng-template>
-</p-dataView>
-
-
-
-<p-dialog header="Kullanıcı Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-[contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}" (onAfterHide)="close()">
-  <div class="ui-g-12" style="text-align:center">
-    <img src="assets/profilepicture.png" width="120">
-  </div>
-  <!-- <div class="ui-g-4">Ad: </div>
+    <!-- <div class="ui-g-4">Ad: </div>
     <div class="ui-g-8">{{selectedUser.name  + ' ' + selectedUser.surname | titlecase}}</div>
 
     <div class="ui-g-4">Email: </div>
@@ -90,83 +97,85 @@
     <div class="ui-g-4">Bölüm: </div>
     <div class="ui-g-8">{{selectedUser.departman?.title}}</div> -->
 
-  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="user">
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="name">Ad</label>
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="user">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="name">Ad</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="name" [(ngModel)]="user.name" />
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="name" [(ngModel)]="user.name" />
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="surname">Soyad</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="surname" [(ngModel)]="user.surname" />
+        </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="surname">Soyad</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="login">Giriş Adı</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="login" [(ngModel)]="user.login" />
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="surname" [(ngModel)]="user.surname" />
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="password">Şifre</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="password" [(ngModel)]="user.password" />
+        </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="login">Giriş Adı</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="email">Email</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="email" [(ngModel)]="user.email" />
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="login" [(ngModel)]="user.login" />
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="roles">Rol</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.roleTypeOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
+            optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.roleTypeOptions"
+            (onChange)="user.roles = $event.value.code"></p-dropdown>
+        </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="password">Şifre</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="title">Ünvan</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.titleTypeOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
+            optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.titleTypeOptions"
+            (onChange)="user.title = $event.value.code"></p-dropdown>
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="password" [(ngModel)]="user.password" />
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="departmanId">Bölüm</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.departmanOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
+            optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.departmanOptions"
+            (onChange)="user.departmanId = $event.value.code"></p-dropdown>
+        </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="email">Email</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="email" [(ngModel)]="user.email" />
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="roles">Rol</label>
-      </div>
-      <div class="ui-g-8">
-        <p-dropdown [options]="dropdownOptions.roleTypeOptions" [style]="{'width': '100%'}"  placeholder="Seçiniz"
-          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.roleTypeOptions"
-          (onChange)="user.roles = $event.value.code"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="title">Ünvan</label>
-      </div>
-      <div class="ui-g-8">
-        <p-dropdown [options]="dropdownOptions.titleTypeOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
-          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.titleTypeOptions"
-          (onChange)="user.title = $event.value.code"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="departmanId">Bölüm</label>
-      </div>
-      <div class="ui-g-8">
-        <p-dropdown [options]="dropdownOptions.departmanOptions" [style]="{'width': '100%'}"  placeholder="Seçiniz"
-          optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.departmanOptions"
-          (onChange)="user.departmanId = $event.value.code"></p-dropdown>
-      </div>
-    </div>
 
-  </div>
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
     </div>
-  </p-footer>
-</p-dialog>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+        <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+</div>
