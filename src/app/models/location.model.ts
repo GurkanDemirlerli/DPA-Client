@@ -1,7 +1,10 @@
+import { FacultyModel } from './faculty.model';
+
 export interface LocationModel {
     locationId?: number;
     title?: string;
     facultyId?: number;
+    faculty?: FacultyModel;
 }
 
 export interface AddLocationModel {

@@ -1,8 +1,10 @@
+import { FacultyModel } from './faculty.model';
 export interface DepartmanModel {
     departmanId?: number;
     title?: string;
     departmanCode?: string;
     facultyId?: number;
+    faculty?: FacultyModel;
 }
 
 export interface AddDepartmanModel {

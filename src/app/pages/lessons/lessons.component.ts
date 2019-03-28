@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmanModel } from 'src/app/models/departman.model';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, SelectItem } from 'primeng/api';
 
 
 
@@ -31,9 +31,6 @@ import {
 } from './dropdown.data';
 
 
-
-
-
 @Component({
   selector: 'dpa-lessons',
   templateUrl: './lessons.component.html',
@@ -45,10 +42,6 @@ export class LessonsComponent implements OnInit {
   public educationTypes = EducationTypes;
   public lessonTypes = LessonTypes;
   public lessonTypesTableView = LessonTypesTableView;
-
-  departmanId: number;
-
-  departman: DepartmanModel;
 
   faculty: FacultyModel;
 
@@ -71,6 +64,10 @@ export class LessonsComponent implements OnInit {
   selectedOptions: any = {};
 
 
+  filters: { departmans: SelectItem[] } = {
+    departmans: []
+  };
+
   constructor(
     private route: ActivatedRoute,
     private departmentService: DepartmentMockService,
@@ -80,37 +77,44 @@ export class LessonsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.departmanId = params["departmanId"];
-      this.departmentService.get(this.departmanId).subscribe((departman) => {
-        this.departman = departman;
-        this.lessonService.getLessonsForDepartment(this.departmanId).subscribe((lessons) => {
-          this.lessons = lessons;
-          this.facultyService.get(this.departman.facultyId).subscribe((faculty) => {
-            this.faculty = faculty;
-            this.cols = [
-              { field: 'lessonCode', header: 'Kodu' },
-              { field: 'name', header: 'Adı' },
-              { field: 'group', header: 'Grup' },
-              { field: 'akts', header: 'AKTS' },
-              { field: 'weeklyHour', header: 'Saat' },
-              { field: 'lessonType', header: 'Ders Tipi' },
-              { field: 'educationType', header: 'Öğrenim Türü' },
-            ];
-
-            this.items = [
-              { label: 'Adil Çizelgeleme Sistemi' },
-              { label: 'Fakülteler', routerLink: ['/pages/faculties'] },
-              { label: this.faculty.title },
-              { label: 'Bölümler', routerLink: ['/pages/departments'] },
-              { label: this.departman.title },
-              { label: 'Dersler', routerLink: ['/pages/lessons'] },
-            ];
-          });
+    this.lessonService.getAll().subscribe((lessons) => {
+      lessons.map((lesson) => {
+        this.departmentService.get(lesson.departmanId).subscribe((departman) => {
+          lesson.departman = departman;
         });
       });
 
+      this.lessons = lessons;
+      this.cols = [
+        { field: 'lessonCode', header: 'Kodu' },
+        { field: 'name', header: 'Adı' },
+        { field: 'group', header: 'Grup' },
+        { field: 'akts', header: 'AKTS' },
+        { field: 'weeklyHour', header: 'Saat' },
+        { field: 'lessonType', header: 'Ders Tipi' },
+        { field: 'educationType', header: 'Öğrenim Türü' },
+        { field: 'departmanId', header: 'Bölüm' },
+      ];
+
+      this.items = [
+        { label: 'Adil Çizelgeleme Sistemi' },
+        { label: 'Dersler' },
+      ];
     });
+
+    this.departmentService.getAll().subscribe((departmans) => {
+      this.filters.departmans.push({
+        label: "Tümü",
+        value: null
+      });
+      departmans.map((departman) => {
+        this.filters.departmans.push({
+          label: departman.title,
+          value: departman.departmanId
+        });
+      });
+    });
+
 
     this.fillDropdownOptions();
   }
@@ -142,7 +146,7 @@ export class LessonsComponent implements OnInit {
         weeklyHour: this.lesson.weeklyHour,
         lessonType: this.lesson.lessonType,
         educationType: this.lesson.educationType,
-        departmanId: this.departmanId
+        departmanId: this.lesson.departmanId
       }
       this.lessonService.add(addLessonModel).subscribe(() => {
         lessons.push(this.lesson);
@@ -164,7 +168,7 @@ export class LessonsComponent implements OnInit {
         weeklyHour: this.lesson.weeklyHour,
         lessonType: this.lesson.lessonType,
         educationType: this.lesson.educationType,
-        departmanId: this.departmanId
+        departmanId: this.lesson.departmanId
       }
       let id = this.lesson.lessonId;
       this.lessonService.update(updateLessonModel, id).subscribe(() => {

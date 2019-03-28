@@ -5,3 +5,4 @@ export { UserModel, AddUserModel, UpdateUserModel } from 'src/app/models/user.mo
 export { LessonModel, AddLessonModel, UpdateLessonModel } from './lesson.model';
 export { ConstraintModel, AddConstraintModel, UpdateConstraintModel } from 'src/app/models/constraint.model';
 export { LoginModel } from './login.model';
+export { ListUserModel } from './list-user.model';

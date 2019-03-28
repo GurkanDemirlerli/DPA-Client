@@ -1,3 +1,4 @@
+import { FacultyService } from './../../services/faculty.service';
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
@@ -49,7 +50,7 @@ export class FacultiesComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor(private facultyService: FacultyMockService, private router: Router) { }
+  constructor(private facultyService: FacultyService, private router: Router) { }
 
   ngOnInit() {
     this.facultyService.getAll().subscribe((faculties) => {

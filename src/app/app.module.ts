@@ -1,3 +1,5 @@
+import { DepartmentService } from './services/department.service';
+import { LocationMockService } from './mocks/location.mock.service';
 import { LessonMockService } from './mocks/lesson.mock.service';
 import { DepartmentMockService } from './mocks/department.mock.service';
 import { FacultyMockService } from './mocks';
@@ -26,6 +28,7 @@ import { ConstraintMockService } from './mocks/constraint.mock.service';
     AppRoutingModule
   ],
   providers: [
+    LocationMockService,
     ConstraintMockService,
     UserMockService,
     FacultyMockService,
@@ -33,6 +36,7 @@ import { ConstraintMockService } from './mocks/constraint.mock.service';
     LessonMockService,
     AuthService,
     FacultyService,
+    DepartmentService,
     AuthGuard,
     RoleGuard,
     AuthNotAllowed

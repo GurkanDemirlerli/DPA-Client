@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services';
 import { MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +8,8 @@ import { SelectItem } from 'primeng/primeng';
 import {
   UserModel,
   AddUserModel,
-  UpdateUserModel
+  UpdateUserModel,
+  ListUserModel
 } from 'src/app/models';
 import {
   FacultyMockService,
@@ -39,13 +41,13 @@ export class InstructorsComponent implements OnInit {
   public titles = Titles;
   public titlesWord = TitlesWord;
 
-  users: UserModel[];
+  users: ListUserModel[];
 
-  user: UserModel = {};
+  user: any = {};
 
   newUser: boolean;
 
-  selectedUser: UserModel;
+  selectedUser: any;
 
   displayDialog: boolean;
 
@@ -68,18 +70,18 @@ export class InstructorsComponent implements OnInit {
     private departmentService: DepartmentMockService,
     private facultyService: FacultyMockService,
     private lessonService: LessonMockService,
-    private userService: UserMockService,
+    private userService: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
     this.userService.getAll().subscribe((users) => {
       this.users = users;
-      users.map(user => {
-        this.departmentService.get(user.departmanId).subscribe(department => {
-          user.departman = department;
-        })
-      })
+      // users.map(user => {
+      //   this.departmentService.get(user.departmanId).subscribe(department => {
+      //     user.departman = department;
+      //   })
+      // })
     });
 
     this.sortOptions = [
@@ -112,8 +114,9 @@ export class InstructorsComponent implements OnInit {
     })
   }
 
-  selectUser(event: Event, user: UserModel) {
+  selectUser(event: Event, user: ListUserModel) {
     this.selectedUser = user;
+    this.newUser = false;
     this.selectedOptions.roleTypeOptions = (this.dropdownOptions.roleTypeOptions as any[]).find((option) => option.code == this.selectedUser.roles);
     this.selectedOptions.titleTypeOptions = (this.dropdownOptions.titleTypeOptions as any[]).find((option) => option.code == this.selectedUser.title);
     this.selectedOptions.departmanOptions = (this.dropdownOptions.departmanOptions as any[]).find((option) => option.code == this.selectedUser.departmanId);
@@ -148,7 +151,7 @@ export class InstructorsComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  clone(u: UserModel): UserModel {
+  clone(u: ListUserModel): ListUserModel {
     let user = {};
     for (let prop in u) {
       user[prop] = u[prop];
@@ -157,7 +160,6 @@ export class InstructorsComponent implements OnInit {
   }
 
   save() {
-    console.log(this.user);
     let users = [...this.users];
     if (this.newUser) {
       let addUserModel: AddUserModel = {
@@ -168,32 +170,32 @@ export class InstructorsComponent implements OnInit {
         email: this.user.email,
         roles: this.user.roles,
         title: this.user.title,
-        departmanId: this.user.departmanId
+        // departmanId: this.user.departmanId
       }
-      this.userService.add(addUserModel).subscribe(() => {
-        this.departmentService.get(this.user.departmanId).subscribe(department => {
-          this.user.departman = department;
-          users.push(this.user);
-          this.users = users;
-          this.user = null;
-          this.displayDialog = false;
-        })
+      this.userService.add(addUserModel).subscribe((res) => {
+        // this.departmentService.get(this.user.departmanId).subscribe(department => {
+        //   this.user.departman = department;
+        this.user.userId = res.data;
+        users.push(this.user);
+        this.users = users;
+        this.user = null;
+        this.displayDialog = false;
+        // })
       }, (err) => {
         console.log(err);
       }, () => {
 
       });
     } else {
-      console.log(this.user);
       let updateUserModel: UpdateUserModel = {
-        login: this.user.name,
-        password: this.user.password,
+        // login: this.user.name,
+        // password: this.user.password,
         name: this.user.name,
         surname: this.user.surname,
         email: this.user.email,
         roles: this.user.roles,
         title: this.user.title,
-        departmanId: this.user.departmanId
+        // departmanId: this.user.departmanId
       }
       let id = this.user.userId;
       this.userService.update(updateUserModel, id).subscribe(() => {
@@ -211,7 +213,7 @@ export class InstructorsComponent implements OnInit {
   }
 
   delete() {
-    this.lessonService.delete(this.selectedUser.userId).subscribe(() => {
+    this.userService.delete(this.selectedUser.userId).subscribe(() => {
       let index = this.users.indexOf(this.selectedUser);
       this.users = this.users.filter((val, i) => i != index);
       this.user = null;

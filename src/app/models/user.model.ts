@@ -27,12 +27,12 @@ export interface AddUserModel {
 }
 
 export interface UpdateUserModel {
-    login?: string;
-    password?: string;
+    // login?: string;
+    // password?: string;
     name?: string;
     surname?: string;
     email?: string;
     roles?: Roles;
     title?: Title;
-    departmanId?: number;
+    // departmanId?: number;
 }

@@ -1,3 +1,4 @@
+import { AddUserModel, UpdateUserModel } from './../models/user.model';
 import { LoginModel } from './../models/login.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -5,6 +6,9 @@ import { server } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ServicesHelpers } from './helpers';
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { TokenModel } from '../models/token.model';
+import { ListUserModel } from '../models';
 
 @Injectable()
 export class AuthService {
@@ -39,6 +43,73 @@ export class AuthService {
                 })
             );
     }
+
+    public add(model: AddUserModel): Observable<any> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        const helper = new JwtHelperService();
+        const token = localStorage.getItem('token');
+        const decoded: TokenModel = helper.decodeToken(token);
+        let endPoint: string = 'Users/instructor';
+        if (decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "Administrator") {
+            endPoint = 'Users/headOfDepartmant';
+        }
+        return this.http.post<any>(this.domain + endPoint, model, headers)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                }),
+                catchError((err) => {
+                    return this.handleError(err);
+                })
+            );
+    }
+
+    public getAll(): Observable<ListUserModel[]> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.get<ListUserModel[]>(this.domain + 'Users', headers)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+
+    public update(model: UpdateUserModel, id: number): Observable<void> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.put<void>(this.domain + `Users/${id}`, model, headers)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                }),
+                catchError((err) => {
+                    return this.handleError(err);
+                })
+            );
+    }
+
+    public delete(id: number): Observable<void> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.delete<void>(this.domain + `Users/${id}`, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+    public get(id: number): Observable<ListUserModel> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.get<ListUserModel>(this.domain + `Users/${id}`, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+
 
     private storeUserData(token: string) {
         localStorage.setItem('token', token);

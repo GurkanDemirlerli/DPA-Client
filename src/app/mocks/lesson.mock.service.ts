@@ -94,11 +94,4 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
             },
         ]);
     }
-
-
-    getLessonsForDepartment(departmanId): Observable<LessonModel[]> {
-        let data: LessonModel[] = [...this.data] as LessonModel[];
-        let model: LessonModel[] = data.filter(x => x.departmanId == departmanId);
-        return of(model);
-    }
 }

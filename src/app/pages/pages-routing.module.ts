@@ -48,11 +48,11 @@ const routes: Routes = [
             component: LocationsComponent
         },
         {
-            path: 'departments/:facultyId',
+            path: 'departments',
             component: DepartmentsComponent
         },
         {
-            path: 'lessons/:departmanId',
+            path: 'lessons',
             component: LessonsComponent
         },
         {

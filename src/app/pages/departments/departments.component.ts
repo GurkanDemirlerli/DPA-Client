@@ -1,6 +1,8 @@
+import { DepartmentService } from './../../services/department.service';
+import { FacultyService } from './../../services/faculty.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, SelectItem } from 'primeng/api';
 
 
 
@@ -22,73 +24,103 @@ import {
   styleUrls: ['./departments.component.scss']
 })
 export class DepartmentsComponent implements OnInit {
-  facultyId: number;
   faculty: FacultyModel;
-
-
 
   displayDialog: boolean;
 
-  department: DepartmanModel = {};
+  item: DepartmanModel = {};
 
-  selectedDepartment: DepartmanModel;
+  selectedItem: DepartmanModel;
 
-  newDepartment: boolean;
+  newItem: boolean;
 
-  departments: DepartmanModel[];
+  items: DepartmanModel[];
 
   cols: any[];
 
-  items: MenuItem[];
+  brItems: MenuItem[];
+
+  dropdownOptions: any = {};
+
+  selectedOptions: any = {};
+
+  filters: { faculties: SelectItem[] } = {
+    faculties: []
+  };
 
   constructor(
     private route: ActivatedRoute,
-    private facultyService: FacultyMockService,
-    private departmentService: DepartmentMockService,
+    private facultyService: FacultyService,
+    private departmentService: DepartmentService,
     private router: Router
   ) {
-    this.route.params.subscribe(params => this.facultyId = params["facultyId"]);
   }
 
   ngOnInit() {
-    this.facultyService.get(this.facultyId).subscribe(faculty => this.faculty = faculty);
-
-    this.departmentService.getDepartmentsForFaculty(this.facultyId).subscribe((departments) => {
-      this.departments = departments;
+    this.departmentService.getAll().subscribe((departments) => {
+      this.items = departments;
+      this.facultyService.getAll().subscribe((faculties) => {
+        this.filters.faculties.push({
+          label: "Tümü",
+          value: null
+        });
+        faculties.map((faculty) => {
+          this.filters.faculties.push({
+            label: faculty.title,
+            value: faculty.facultyId
+          });
+        });
+      });
     })
 
     this.cols = [
-      { field: 'departmanCode', header: 'Kodu', width: '20%' },
-      { field: 'title', header: 'Adı', width: '80%' }
+      { field: 'departmanCode', header: 'Kodu' },
+      { field: 'title', header: 'Adı' },
+      { field: 'facultyId', header: 'Fakülte' }
     ];
 
-    this.items = [
+    this.brItems = [
       { label: 'Adil Çizelgeleme Sistemi', routerLink: ['/pages/faculties'] },
-      { label: 'Fakülteler', routerLink: ['/pages/faculties'] },
-      { label: this.faculty.title },
-      { label: 'Bölümler', routerLink: ['/pages/departments'] }
+      { label: 'Bölümler' }
     ];
+
+    this.fillDropdownOptions();
+  }
+
+  fillDropdownOptions() {
+    this.dropdownOptions.facultyOptions = [];
+    let facultyOptions = [];
+    this.facultyService.getAll().subscribe((faculties) => {
+      faculties.map((faculty) => {
+        facultyOptions.push({
+          "name": faculty.title,
+          "code": faculty.facultyId
+        });
+      });
+      this.dropdownOptions.facultyOptions = facultyOptions;
+    })
   }
 
 
   showDialogToAdd() {
-    this.newDepartment = true;
-    this.department = {};
+    this.newItem = true;
+    this.item = {};
+    this.selectedOptions = {};
     this.displayDialog = true;
   }
 
   save() {
-    let departments = [...this.departments];
-    if (this.newDepartment) {
+    let departments = [...this.items];
+    if (this.newItem) {
       let addDepartmanModel: AddDepartmanModel = {
-        title: this.department.title,
-        departmanCode: this.department.departmanCode,
-        facultyId: this.facultyId
+        title: this.item.title,
+        departmanCode: this.item.departmanCode,
+        facultyId: this.item.facultyId
       }
       this.departmentService.add(addDepartmanModel).subscribe(() => {
-        departments.push(this.department);
-        this.departments = departments;
-        this.department = null;
+        departments.push(this.item);
+        this.items = departments;
+        this.item = null;
         this.displayDialog = false;
       }, (err) => {
         console.log(err);
@@ -96,17 +128,17 @@ export class DepartmentsComponent implements OnInit {
 
       });
     } else {
-      console.log(this.department);
+      console.log(this.item);
       let updateDepartmanModel: UpdateDepartmanModel = {
-        title: this.department.title,
-        departmanCode: this.department.departmanCode,
-        facultyId: this.facultyId
+        title: this.item.title,
+        departmanCode: this.item.departmanCode,
+        facultyId: this.item.facultyId
       }
-      let id = this.department.departmanId;
+      let id = this.item.departmanId;
       this.departmentService.update(updateDepartmanModel, id).subscribe(() => {
-        departments[this.departments.indexOf(this.selectedDepartment)] = this.department;
-        this.departments = departments;
-        this.department = null;
+        departments[this.items.indexOf(this.selectedItem)] = this.item;
+        this.items = departments;
+        this.item = null;
         this.displayDialog = false;
       }, (err) => {
         console.log(err);
@@ -118,10 +150,10 @@ export class DepartmentsComponent implements OnInit {
   }
 
   delete() {
-    this.departmentService.delete(this.selectedDepartment.departmanId).subscribe(() => {
-      let index = this.departments.indexOf(this.selectedDepartment);
-      this.departments = this.departments.filter((val, i) => i != index);
-      this.department = null;
+    this.departmentService.delete(this.selectedItem.departmanId).subscribe(() => {
+      let index = this.items.indexOf(this.selectedItem);
+      this.items = this.items.filter((val, i) => i != index);
+      this.item = null;
       this.displayDialog = false;
     }, (err) => {
       console.log(err);
@@ -131,8 +163,9 @@ export class DepartmentsComponent implements OnInit {
   }
 
   onRowSelect(event) {
-    this.newDepartment = false;
-    this.department = this.clone(event.data);
+    this.newItem = false;
+    this.item = this.clone(event.data);
+    this.selectedOptions.facultyOptions = (this.dropdownOptions.facultyOptions as any[]).find((option) => option.code == this.selectedItem.facultyId);
     this.displayDialog = true;
   }
 
@@ -142,10 +175,6 @@ export class DepartmentsComponent implements OnInit {
       department[prop] = f[prop];
     }
     return department;
-  }
-
-  goToLessons() {
-    this.router.navigate(['pages/lessons', this.selectedDepartment.departmanId]);
   }
 
 }

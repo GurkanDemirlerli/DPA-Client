@@ -1,3 +1,4 @@
+import { DepartmanModel } from './departman.model';
 import { AKTS, WeeklyHours, LessonTypes, EducationTypes } from '../enums';
 
 export interface LessonModel {
@@ -10,6 +11,7 @@ export interface LessonModel {
     lessonType?: LessonTypes;
     educationType?: EducationTypes;
     departmanId?: number;
+    departman?: DepartmanModel;
 }
 
 export interface AddLessonModel {

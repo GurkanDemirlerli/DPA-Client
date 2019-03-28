@@ -1,19 +1,25 @@
 <div class="wrpr-br">
-    <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
+  <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
 </div>
 
 <br>
 <div class="wrpr">
-  <p-table [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
+  <p-table #dt [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
     (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
-      {{departman?.title}} Bölümü Dersleri
+      Sakarya Üniversitesi Dersleri
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" [pSortableColumn]="col.field">
           {{col.header}}
           <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          <p-dropdown *ngSwitchCase="'departmanId'" [options]="filters.departmans" [style]="{'width':'100%'}"
+            (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
         </th>
       </tr>
     </ng-template>
