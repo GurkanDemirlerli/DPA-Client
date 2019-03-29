@@ -1,3 +1,5 @@
+import { FacultyService } from './../../services/faculty.service';
+import { LocationService } from './../../services/location.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, SelectItem } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -60,9 +62,9 @@ export class LocationsComponent implements OnInit {
 
   constructor(
     private constraintService: ConstraintMockService,
-    private locationService: LocationMockService,
+    private locationService: LocationService,
     private departmentService: DepartmentMockService,
-    private facultyService: FacultyMockService,
+    private facultyService: FacultyService,
     private lessonService: LessonMockService,
   ) { }
 

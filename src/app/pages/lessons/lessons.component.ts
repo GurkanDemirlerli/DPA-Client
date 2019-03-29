@@ -1,3 +1,4 @@
+import { LessonService } from './../../services/lesson.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmanModel } from 'src/app/models/departman.model';
@@ -71,8 +72,7 @@ export class LessonsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private departmentService: DepartmentMockService,
-    private facultyService: FacultyMockService,
-    private lessonService: LessonMockService,
+    private lessonService: LessonService,
     private router: Router,
   ) { }
 

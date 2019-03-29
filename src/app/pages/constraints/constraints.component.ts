@@ -22,6 +22,7 @@ import {
   weeklyHourOptions,
   educationTypeOptions
 } from './dropdown.data';
+import { ConstraintService } from 'src/app/services/constraint.service';
 
 
 
@@ -60,12 +61,9 @@ export class ConstraintsComponent implements OnInit {
   };
 
   constructor(
-    private constraintService: ConstraintMockService,
+    private constraintService: ConstraintService,
     private router: Router,
     private route: ActivatedRoute,
-    private departmentService: DepartmentMockService,
-    private facultyService: FacultyMockService,
-    private lessonService: LessonMockService,
   ) { }
 
   ngOnInit() {

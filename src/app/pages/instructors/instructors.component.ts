@@ -1,3 +1,4 @@
+import { DepartmentService } from './../../services/department.service';
 import { AuthService } from 'src/app/services';
 import { MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
@@ -67,9 +68,7 @@ export class InstructorsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private departmentService: DepartmentMockService,
-    private facultyService: FacultyMockService,
-    private lessonService: LessonMockService,
+    private departmentService: DepartmentService,
     private userService: AuthService,
     private router: Router
   ) { }

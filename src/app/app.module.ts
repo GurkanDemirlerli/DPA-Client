@@ -1,3 +1,6 @@
+import { LessonService } from './services/lesson.service';
+import { LocationService } from './services/location.service';
+import { ConstraintService } from './services/constraint.service';
 import { DepartmentService } from './services/department.service';
 import { LocationMockService } from './mocks/location.mock.service';
 import { LessonMockService } from './mocks/lesson.mock.service';
@@ -34,8 +37,11 @@ import { ConstraintMockService } from './mocks/constraint.mock.service';
     FacultyMockService,
     DepartmentMockService,
     LessonMockService,
+    ConstraintService,
     AuthService,
     FacultyService,
+    LocationService,
+    LessonService,
     DepartmentService,
     AuthGuard,
     RoleGuard,
