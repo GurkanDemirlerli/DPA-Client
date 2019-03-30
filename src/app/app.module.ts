@@ -1,3 +1,4 @@
+import { InstructorLessonService } from './services/instructor-lesson.service';
 import { LessonService } from './services/lesson.service';
 import { LocationService } from './services/location.service';
 import { ConstraintService } from './services/constraint.service';
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RoleGuard, AuthGuard, AuthNotAllowed } from './guards/auth.guard';
 import { UserMockService } from './mocks/user.mock.service';
 import { ConstraintMockService } from './mocks/constraint.mock.service';
+import { DepartmentLessonService } from './services/department-lesson.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ConstraintMockService } from './mocks/constraint.mock.service';
     ConstraintService,
     AuthService,
     FacultyService,
+    InstructorLessonService,
     LocationService,
+    DepartmentLessonService,
     LessonService,
     DepartmentService,
     AuthGuard,

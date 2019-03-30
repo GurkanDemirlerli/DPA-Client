@@ -52,6 +52,10 @@ export class InstructorsComponent implements OnInit {
 
   displayDialog: boolean;
 
+  displayDersler: boolean;
+
+  displayRol: boolean;
+
   sortOptions: SelectItem[];
 
   items: MenuItem[];
@@ -223,5 +227,15 @@ export class InstructorsComponent implements OnInit {
 
     });
   }
+
+
+  dersler() {
+    this.displayDersler = true;
+  }
+
+  rol() {
+    this.displayRol = true;
+  }
+  
 
 }

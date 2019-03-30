@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../services/menu.service';
 import { faAddressBook, faFeather, faAdjust, faHome, faProjectDiagram, faCalendarAlt, faUndoAlt, faUsers, faQuestion, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -33,6 +34,8 @@ export class SideMenuComponent implements OnInit {
   isMax = true;
   menuState: string;
 
+  userName: string = "";
+
   icons = {
     faHome,
     faProjectDiagram,
@@ -46,9 +49,12 @@ export class SideMenuComponent implements OnInit {
     faAdjust
   }
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.getMe().subscribe((user)=>{
+      this.userName = user.name;
+    })
     this.menuService.isMax$.subscribe((menuState) => {
       this.isMax = menuState;
       this.menuState = (this.isMax === true) ? 'open' : 'collapsed';

@@ -82,21 +82,6 @@
     <div class="ui-g-12" style="text-align:center">
       <img src="assets/profilepicture.png" width="120">
     </div>
-    <!-- <div class="ui-g-4">Ad: </div>
-    <div class="ui-g-8">{{selectedUser.name  + ' ' + selectedUser.surname | titlecase}}</div>
-
-    <div class="ui-g-4">Email: </div>
-    <div class="ui-g-8">{{selectedUser.email}}</div>
-
-    <div class="ui-g-4">Ünvan: </div>
-    <div class="ui-g-8">{{titlesWord[titles[selectedUser.title]]}}</div>
-
-    <div class="ui-g-4">Rol: </div>
-    <div class="ui-g-8">{{roles[selectedUser.roles] }}</div>
-
-    <div class="ui-g-4">Bölüm: </div>
-    <div class="ui-g-8">{{selectedUser.departman?.title}}</div> -->
-
     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="user">
       <div class="ui-g-12">
         <div class="ui-g-4">
@@ -174,6 +159,30 @@
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
         <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
         <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+        <button type="button" pButton (click)="dersler()" label="Dersler"></button>
+        <button type="button" pButton (click)="rol()" label="Rol"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+
+
+  <p-dialog header="Verdiği Dersler" [(visible)]="displayDersler" [responsive]="true" showEffect="fade" [modal]="true"
+    [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}" (onAfterHide)="close()">
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" label="Delete"></button>
+        <button type="button" pButton icon="fa fa-check" label="Save"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+  <p-dialog header="Kullanıcı Rolü" [(visible)]="displayRol" [responsive]="true" showEffect="fade" [modal]="true"
+    [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}" (onAfterHide)="close()">
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" label="Delete"></button>
+        <button type="button" pButton icon="fa fa-check" label="Save"></button>
       </div>
     </p-footer>
   </p-dialog>

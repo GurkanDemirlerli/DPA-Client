@@ -109,6 +109,13 @@ export class AuthService {
             );
     }
 
+    public getMe(): Observable<ListUserModel> {
+        const helper = new JwtHelperService();
+        const token = localStorage.getItem('token');
+        const decoded: TokenModel = helper.decodeToken(token);
+        return this.get(Number(decoded.sub));
+    }
+
 
 
     private storeUserData(token: string) {
