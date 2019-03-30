@@ -1,16 +1,18 @@
+import { InstructorLessonService } from './../../services/instructor-lesson.service';
 import { DepartmentService } from './../../services/department.service';
 import { AuthService } from 'src/app/services';
 import { MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectItem } from 'primeng/primeng';
-
+import * as _ from 'lodash';
 
 import {
   UserModel,
   AddUserModel,
   UpdateUserModel,
-  ListUserModel
+  ListUserModel,
+  LessonModel
 } from 'src/app/models';
 import {
   FacultyMockService,
@@ -28,6 +30,7 @@ import {
   roleTypeOptions,
   titleTypeOptions
 } from './dropdown.data';
+import { LessonService } from 'src/app/services/lesson.service';
 
 
 @Component({
@@ -70,9 +73,15 @@ export class InstructorsComponent implements OnInit {
 
   selectedOptions: any = {};
 
+  sourceDers: LessonModel[] = [];
+
+  targetDers: LessonModel[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private departmentService: DepartmentService,
+    private lessonService: LessonService,
+    private instructorLessonService: InstructorLessonService,
     private userService: AuthService,
     private router: Router
   ) { }
@@ -231,11 +240,33 @@ export class InstructorsComponent implements OnInit {
 
   dersler() {
     this.displayDersler = true;
+    let targetDers: LessonModel[] = [];
+    let sourceDers: LessonModel[] = [];
+
+    this.instructorLessonService.getLessonsByUserId(this.selectedUser.userId).subscribe((lessons1) => {
+      targetDers = lessons1;
+      this.lessonService.getAll().subscribe((lessons2) => {
+        lessons2.map((ls) => {
+          console.log("targetDers",targetDers);
+          console.log("ls",ls);
+          let tempA = targetDers.filter((opt) => opt.lessonCode == ls.lessonCode);
+          console.log("uz:",tempA.length);
+          if (tempA.length < 1) {
+            console.log("eklendi");
+            sourceDers.push(ls);
+          }
+        });
+        console.log("FİN");
+        this.targetDers = targetDers;
+        this.sourceDers = sourceDers;
+      });
+    });
+
   }
 
   rol() {
     this.displayRol = true;
   }
-  
+
 
 }

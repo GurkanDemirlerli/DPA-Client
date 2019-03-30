@@ -168,7 +168,18 @@
 
 
   <p-dialog header="Verdiği Dersler" [(visible)]="displayDersler" [responsive]="true" showEffect="fade" [modal]="true"
-    [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}" (onAfterHide)="close()">
+    [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
+
+    <p-pickList [source]="sourceDers" [target]="targetDers" sourceHeader="Tüm Dersler" targetHeader="Verdiği Dersler"
+      [responsive]="true" filterBy="name,lessonCode" dragdrop="true" sourceFilterPlaceholder="Ara"
+      targetFilterPlaceholder="Ara">
+      <ng-template let-ders pTemplate="item">
+        <div class="ui-helper-clearfix">
+          <div style="font-size:14px;margin:15px 5px 0 0">{{ders.name}} - {{ders.lessonCode}} </div>
+        </div>
+      </ng-template>
+    </p-pickList>
+
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
         <button type="button" pButton icon="fa fa-close" label="Delete"></button>

@@ -25,6 +25,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { LocationsComponent } from './locations/locations.component';
+import { PickListModule } from 'primeng/picklist';
 
 @NgModule({
     declarations: [
@@ -55,6 +56,8 @@ import { LocationsComponent } from './locations/locations.component';
         FormsModule,
         ButtonModule,
         BreadcrumbModule,
+        PickListModule
+
     ],
     exports: [],
     providers: [],
