@@ -3,7 +3,6 @@
 </div>
 
 <br>
-<div class="wrpr">
 
   <p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both"
     filterBy="departman.title,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
@@ -168,11 +167,11 @@
 
 
   <p-dialog header="Verdiği Dersler" [(visible)]="displayDersler" [responsive]="true" showEffect="fade" [modal]="true"
-    [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
+    [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()" >
 
     <p-pickList [source]="sourceDers" [target]="targetDers" sourceHeader="Tüm Dersler" targetHeader="Verdiği Dersler"
       [responsive]="true" filterBy="name,lessonCode" dragdrop="true" sourceFilterPlaceholder="Ara"
-      targetFilterPlaceholder="Ara">
+      targetFilterPlaceholder="Ara" (onMoveToTarget)="addLessonForUser($event)" (onMoveToSource)="deleteLessonForUser($event)">
       <ng-template let-ders pTemplate="item">
         <div class="ui-helper-clearfix">
           <div style="font-size:14px;margin:15px 5px 0 0">{{ders.name}} - {{ders.lessonCode}} </div>
@@ -182,8 +181,7 @@
 
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-        <button type="button" pButton icon="fa fa-close" label="Delete"></button>
-        <button type="button" pButton icon="fa fa-check" label="Save"></button>
+     
       </div>
     </p-footer>
   </p-dialog>
@@ -197,5 +195,3 @@
       </div>
     </p-footer>
   </p-dialog>
-
-</div>

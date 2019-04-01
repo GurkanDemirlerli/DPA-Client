@@ -2,7 +2,6 @@
   <p-breadcrumb [model]="brItems" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
 </div>
 <br>
-<div class="wrpr">
   <p-table #dt [columns]="cols" [value]="items" selectionMode="single" [(selection)]="selectedItem"
     (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
@@ -39,7 +38,6 @@
       </div>
     </ng-template>
   </p-table>
-</div>
 
 
 

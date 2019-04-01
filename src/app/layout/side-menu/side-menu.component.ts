@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../services/menu.service';
 import { faAddressBook, faFeather, faAdjust, faHome, faProjectDiagram, faCalendarAlt, faUndoAlt, faUsers, faQuestion, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ListUserModel } from 'src/app/models';
 @Component({
   selector: 'dpa-side-menu',
   templateUrl: './side-menu.component.html',
@@ -34,7 +35,7 @@ export class SideMenuComponent implements OnInit {
   isMax = true;
   menuState: string;
 
-  userName: string = "";
+  user: ListUserModel;
 
   icons = {
     faHome,
@@ -53,7 +54,7 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getMe().subscribe((user)=>{
-      this.userName = user.name;
+      this.user = user;
     })
     this.menuService.isMax$.subscribe((menuState) => {
       this.isMax = menuState;

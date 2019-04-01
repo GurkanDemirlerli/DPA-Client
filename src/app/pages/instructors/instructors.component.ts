@@ -12,7 +12,8 @@ import {
   AddUserModel,
   UpdateUserModel,
   ListUserModel,
-  LessonModel
+  LessonModel,
+  AddUserLessonModel
 } from 'src/app/models';
 import {
   FacultyMockService,
@@ -247,10 +248,10 @@ export class InstructorsComponent implements OnInit {
       targetDers = lessons1;
       this.lessonService.getAll().subscribe((lessons2) => {
         lessons2.map((ls) => {
-          console.log("targetDers",targetDers);
-          console.log("ls",ls);
+          console.log("targetDers", targetDers);
+          console.log("ls", ls);
           let tempA = targetDers.filter((opt) => opt.lessonCode == ls.lessonCode);
-          console.log("uz:",tempA.length);
+          console.log("uz:", tempA.length);
           if (tempA.length < 1) {
             console.log("eklendi");
             sourceDers.push(ls);
@@ -268,5 +269,24 @@ export class InstructorsComponent implements OnInit {
     this.displayRol = true;
   }
 
+  addLessonForUser(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      let addModel: AddUserLessonModel = {
+        userId: this.user.userId,
+        lessonId: e.items[i].lessonId
+      };
+      this.instructorLessonService.add(addModel).subscribe((res) => {
+
+      });
+    }
+  }
+
+  deleteLessonForUser(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      this.instructorLessonService.delete(this.user.userId, e.items[i].lessonId).subscribe((res) => {
+        console.log("Beklenen sonuç:", res);
+      });
+    }
+  }
 
 }

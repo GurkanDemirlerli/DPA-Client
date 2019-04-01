@@ -3,7 +3,6 @@
 </div>
 
 <br>
-<div class="wrpr">
   <p-table #dt [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
     (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
@@ -47,7 +46,6 @@
       </div>
     </ng-template>
   </p-table>
-</div>
 <p-dialog header="Ders Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
   [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}">
   <!-- <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
