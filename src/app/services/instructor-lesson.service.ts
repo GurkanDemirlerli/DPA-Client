@@ -74,7 +74,7 @@ export class InstructorLessonService {
 
     public getUsersByLessonId(lessonId: number): Observable<LessonModel[]> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.get<LessonModel[]>(this.domain + `InstructorLesson/${lessonId}/instructors`, headers)
+        return this.http.get<LessonModel[]>(this.domain + `InstructorLesson/${lessonId}/instuctors`, headers)
             .pipe(
                 tap((res) => {
                     console.log(res);

@@ -26,6 +26,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { LocationsComponent } from './locations/locations.component';
 import { PickListModule } from 'primeng/picklist';
+import { MyDepartmentInstructorsComponent } from './my-department-instructors/my-department-instructors.component';
+import { MyDepartmentLessonsComponent } from './my-department-lessons/my-department-lessons.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +39,9 @@ import { PickListModule } from 'primeng/picklist';
         PagesComponent,
         FacultiesComponent,
         DepartmentsComponent,
-        LocationsComponent
+        LocationsComponent,
+        MyDepartmentInstructorsComponent,
+        MyDepartmentLessonsComponent
     ],
     imports: [
         InputTextareaModule,

@@ -49,7 +49,7 @@ export class DepartmentService {
         const token = localStorage.getItem('token');
         const decoded: TokenModel = helper.decodeToken(token);
         const updateModel = {
-            userId: Number(decoded.sub),
+            userId: model.userId,
             departmanCode: model.departmanCode,
             facultyId: model.facultyId,
             title: model.title
@@ -82,6 +82,19 @@ export class DepartmentService {
                 }),
                 catchError(this.handleError)
             );
+    }
+
+    public getMyDepartment() {
+        const helper = new JwtHelperService();
+        const token = localStorage.getItem('token');
+        const decoded: TokenModel = helper.decodeToken(token);
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.get<DepartmanModel>(this.domain + `Departman/getDepartmentForHeadOfDepartment/${decoded.sub}`, headers)
+        .pipe(
+            tap(() => {
+            }),
+            catchError(this.handleError)
+        );
     }
 
     private handleError(err) {

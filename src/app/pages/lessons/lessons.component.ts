@@ -1,3 +1,8 @@
+import { ListUserModel } from './../../models/list-user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { DepartmentService } from './../../services/department.service';
+import { InstructorLessonService } from './../../services/instructor-lesson.service';
+import { DepartmentLessonService } from './../../services/department-lesson.service';
 import { LessonService } from './../../services/lesson.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +16,10 @@ import {
   FacultyModel,
   LessonModel,
   UpdateLessonModel,
-  AddLessonModel
+  AddLessonModel,
+  AddDepartmentLessonModel,
+  UserModel,
+  AddUserLessonModel
 } from 'src/app/models';
 import {
   FacultyMockService,
@@ -64,6 +72,14 @@ export class LessonsComponent implements OnInit {
 
   selectedOptions: any = {};
 
+  displayBolumler: boolean;
+  targetBolumler: DepartmanModel[] = [];
+  sourceBolumler: DepartmanModel[] = [];
+
+  displayInstructors: boolean;
+  targetInstructors: ListUserModel[] = [];
+  sourceInstructors: ListUserModel[] = [];
+
 
   filters: { departmans: SelectItem[] } = {
     departmans: []
@@ -71,18 +87,21 @@ export class LessonsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private departmentService: DepartmentMockService,
+    private departmentService: DepartmentService,
+    private departmentLessonService: DepartmentLessonService,
+    private instructorLessonService: InstructorLessonService,
     private lessonService: LessonService,
+    private authService: AuthService,
     private router: Router,
   ) { }
 
   ngOnInit() {
     this.lessonService.getAll().subscribe((lessons) => {
-      lessons.map((lesson) => {
-        this.departmentService.get(lesson.departmanId).subscribe((departman) => {
-          lesson.departman = departman;
-        });
-      });
+      // lessons.map((lesson) => {
+      //   this.departmentService.get(lesson.departmanId).subscribe((departman) => {
+      //     lesson.departman = departman;
+      //   });
+      // });
 
       this.lessons = lessons;
       this.cols = [
@@ -216,6 +235,87 @@ export class LessonsComponent implements OnInit {
     return lesson;
   }
 
+  bolumler() {
+    this.displayBolumler = true;
+    let targetBolumler: DepartmanModel[] = [];
+    let sourceBolumler: DepartmanModel[] = [];
+
+    this.departmentLessonService.getDepartmentsForLessonId(this.selectedLesson.lessonId).subscribe((departments1) => {
+      targetBolumler = departments1;
+      this.departmentService.getAll().subscribe((departments2) => {
+        departments2.map((ls) => {
+          let tempA = targetBolumler.filter((opt) => opt.departmanId == ls.departmanId);
+          if (tempA.length < 1) {
+            sourceBolumler.push(ls);
+          }
+        });
+        this.targetBolumler = targetBolumler;
+        this.sourceBolumler = sourceBolumler;
+      });
+    });
+  }
+
+  addDepartmentForLesson(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      let addModel: AddDepartmentLessonModel = {
+        departmanId: e.items[i].departmanId,
+        lessonId: this.lesson.lessonId
+      };
+      this.departmentLessonService.add(addModel).subscribe((res) => {
+
+      });
+    }
+  }
+
+  deleteDepartmentForLesson(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      this.departmentLessonService.delete(e.items[i].departmanId, this.lesson.lessonId).subscribe((res) => {
+        console.log("Beklenen sonuç:", res);
+      });
+    }
+  }
+
+
+  dersiVerenler() {
+    this.displayInstructors = true;
+    let targetInstructors: ListUserModel[] = [];
+    let sourceInstructors: ListUserModel[] = [];
+
+    this.instructorLessonService.getUsersByLessonId(this.selectedLesson.lessonId).subscribe((users1) => {
+      targetInstructors = users1;
+      this.authService.getAll().subscribe((users2) => {
+        users2.map((ls) => {
+          let tempA = targetInstructors.filter((opt) => opt.userId == ls.userId);
+          if (tempA.length < 1) {
+            sourceInstructors.push(ls);
+          }
+        });
+        this.targetInstructors = targetInstructors;
+        this.sourceInstructors = sourceInstructors;
+      });
+    });
+  }
+
+
+  addUserForLesson(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      let addModel: AddUserLessonModel = {
+        userId: e.items[i].userId,
+        lessonId: this.lesson.lessonId
+      };
+      this.instructorLessonService.add(addModel).subscribe((res) => {
+
+      });
+    }
+  }
+
+  deleteUserForLesson(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      this.instructorLessonService.delete(e.items[i].userId, this.lesson.lessonId).subscribe((res) => {
+        console.log("Beklenen sonuç:", res);
+      });
+    }
+  }
 
 
 }

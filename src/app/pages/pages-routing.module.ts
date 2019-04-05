@@ -1,3 +1,5 @@
+import { MyDepartmentInstructorsComponent } from './my-department-instructors/my-department-instructors.component';
+import { MyDepartmentLessonsComponent } from './my-department-lessons/my-department-lessons.component';
 import { LocationsComponent } from './locations/locations.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { FacultiesComponent } from './faculties/faculties.component';
@@ -46,6 +48,14 @@ const routes: Routes = [
         {
             path: 'locations',
             component: LocationsComponent
+        },
+        {
+            path: 'my-department-lessons',
+            component: MyDepartmentLessonsComponent
+        },
+        {
+            path: 'my-department-instructors',
+            component: MyDepartmentInstructorsComponent
         },
         {
             path: 'departments',

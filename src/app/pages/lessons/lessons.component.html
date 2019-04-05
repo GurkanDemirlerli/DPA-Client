@@ -3,49 +3,49 @@
 </div>
 
 <br>
-  <p-table #dt [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
-    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
-    <ng-template pTemplate="caption">
-      Sakarya Üniversitesi Dersleri
-    </ng-template>
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-          {{col.header}}
-          <p-sortIcon [field]="col.field"></p-sortIcon>
-        </th>
-      </tr>
-      <tr>
-        <th *ngFor="let col of columns" [ngSwitch]="col.field">
-          <p-dropdown *ngSwitchCase="'departmanId'" [options]="filters.departmans" [style]="{'width':'100%'}"
-            (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [pSelectableRow]="rowData">
-        <td *ngFor="let col of columns">
-          <ng-container *ngIf="col.field === 'lessonType';else second">
-            {{ lessonTypesTableView[lessonTypes[rowData[col.field]]] }}
+<p-table #dt [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
+  (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    Sakarya Üniversitesi Dersleri
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+    <tr>
+      <th *ngFor="let col of columns" [ngSwitch]="col.field">
+        <p-dropdown *ngSwitchCase="'departmanId'" [options]="filters.departmans" [style]="{'width':'100%'}"
+          (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <ng-container *ngIf="col.field === 'lessonType';else second">
+          {{ lessonTypesTableView[lessonTypes[rowData[col.field]]] }}
+        </ng-container>
+        <ng-template #second>
+          <ng-container *ngIf="col.field === 'educationType';else third">
+            {{ educationTypesTableView[educationTypes[rowData[col.field]]] }}
           </ng-container>
-          <ng-template #second>
-            <ng-container *ngIf="col.field === 'educationType';else third">
-              {{ educationTypesTableView[educationTypes[rowData[col.field]]] }}
-            </ng-container>
-          </ng-template>
-          <ng-template #third>
-            {{rowData[col.field]}}
-          </ng-template>
-        </td>
-      </tr>
-    </ng-template>
+        </ng-template>
+        <ng-template #third>
+          {{rowData[col.field]}}
+        </ng-template>
+      </td>
+    </tr>
+  </ng-template>
 
-    <ng-template pTemplate="summary" let-rowData>
-      <div style="text-align:left">
-        <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-      </div>
-    </ng-template>
-  </p-table>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+    </div>
+  </ng-template>
+</p-table>
 <p-dialog header="Ders Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
   [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}">
   <!-- <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
@@ -180,9 +180,52 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton (click)="goToLessons()" label="Dersler"></button>
+      <button type="button" pButton (click)="bolumler()" label="Bölümler"></button>
+      <button type="button" pButton (click)="dersiVerenler()" label="Dersi Verenler"></button>
       <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
       <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Dersin Verildiği Bölümler" [(visible)]="displayBolumler" [responsive]="true" showEffect="fade"
+  [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
+
+  <p-pickList [source]="sourceBolumler" [target]="targetBolumler" sourceHeader="Tüm Bölümler"
+    targetHeader="Verildiği Bölümler" [responsive]="true" filterBy="title,departmanCode" dragdrop="true"
+    sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addDepartmentForLesson($event)"
+    (onMoveToSource)="deleteDepartmentForLesson($event)">
+    <ng-template let-bolum pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div style="font-size:14px;margin:15px 5px 0 0">{{bolum.title}} - {{bolum.departmanCode}} </div>
+      </div>
+    </ng-template>
+  </p-pickList>
+
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Dersi Verenler" [(visible)]="displayInstructors" [responsive]="true" showEffect="fade" [modal]="true"
+  [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
+
+  <p-pickList [source]="sourceInstructors" [target]="targetInstructors" sourceHeader="Tüm Kişiler"
+    targetHeader="Dersi Verenler" [responsive]="true" filterBy="name,surname" dragdrop="true"
+    sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addUserForLesson($event)"
+    (onMoveToSource)="deleteUserForLesson($event)">
+    <ng-template let-user pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div style="font-size:14px;margin:15px 5px 0 0">{{user.name}} - {{user.surname}} </div>
+      </div>
+    </ng-template>
+  </p-pickList>
+
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+
     </div>
   </p-footer>
 </p-dialog>

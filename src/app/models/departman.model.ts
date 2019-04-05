@@ -5,6 +5,7 @@ export interface DepartmanModel {
     departmanCode?: string;
     facultyId?: number;
     faculty?: FacultyModel;
+    userId?: number;
 }
 
 export interface AddDepartmanModel {
@@ -17,4 +18,5 @@ export interface UpdateDepartmanModel {
     title: string;
     departmanCode: string;
     facultyId: number;
+    userId?: number;
 }

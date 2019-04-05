@@ -1,9 +1,12 @@
+import { DepartmentService } from './../../services/department.service';
+import { DepartmanModel } from 'src/app/models/departman.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../services/menu.service';
 import { faAddressBook, faFeather, faAdjust, faHome, faProjectDiagram, faCalendarAlt, faUndoAlt, faUsers, faQuestion, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ListUserModel } from 'src/app/models';
+import { Roles } from 'src/app/enums';
 @Component({
   selector: 'dpa-side-menu',
   templateUrl: './side-menu.component.html',
@@ -36,6 +39,8 @@ export class SideMenuComponent implements OnInit {
   menuState: string;
 
   user: ListUserModel;
+  department: DepartmanModel;
+  public roles = Roles;
 
   icons = {
     faHome,
@@ -50,12 +55,16 @@ export class SideMenuComponent implements OnInit {
     faAdjust
   }
 
-  constructor(private menuService: MenuService, private authService: AuthService) { }
+  constructor(private menuService: MenuService, private authService: AuthService, private departmentService: DepartmentService) { }
 
   ngOnInit() {
-    this.authService.getMe().subscribe((user)=>{
+    this.authService.getMe().subscribe((user) => {
       this.user = user;
-    })
+      this.departmentService.getMyDepartment().subscribe((department) => {
+        this.department = department;
+        console.log(this.department);
+      })
+    });
     this.menuService.isMax$.subscribe((menuState) => {
       this.isMax = menuState;
       this.menuState = (this.isMax === true) ? 'open' : 'collapsed';

@@ -248,16 +248,11 @@ export class InstructorsComponent implements OnInit {
       targetDers = lessons1;
       this.lessonService.getAll().subscribe((lessons2) => {
         lessons2.map((ls) => {
-          console.log("targetDers", targetDers);
-          console.log("ls", ls);
-          let tempA = targetDers.filter((opt) => opt.lessonCode == ls.lessonCode);
-          console.log("uz:", tempA.length);
+          let tempA = targetDers.filter((opt) => opt.lessonId == ls.lessonId);
           if (tempA.length < 1) {
-            console.log("eklendi");
             sourceDers.push(ls);
           }
         });
-        console.log("FİN");
         this.targetDers = targetDers;
         this.sourceDers = sourceDers;
       });

@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services';
 import { DepartmentService } from './../../services/department.service';
 import { FacultyService } from './../../services/faculty.service';
 import { Component, OnInit } from '@angular/core';
@@ -52,6 +53,7 @@ export class DepartmentsComponent implements OnInit {
     private route: ActivatedRoute,
     private facultyService: FacultyService,
     private departmentService: DepartmentService,
+    private authService: AuthService,
     private router: Router
   ) {
   }
@@ -76,7 +78,8 @@ export class DepartmentsComponent implements OnInit {
     this.cols = [
       { field: 'departmanCode', header: 'Kodu' },
       { field: 'title', header: 'Adı' },
-      { field: 'facultyId', header: 'Fakülte' }
+      { field: 'facultyId', header: 'Fakülte' },
+      { field: 'userId', header: "Bölüm Başkanı" }
     ];
 
     this.brItems = [
@@ -89,7 +92,9 @@ export class DepartmentsComponent implements OnInit {
 
   fillDropdownOptions() {
     this.dropdownOptions.facultyOptions = [];
+    this.dropdownOptions.userOptions = [];
     let facultyOptions = [];
+    let userOptions = [];
     this.facultyService.getAll().subscribe((faculties) => {
       faculties.map((faculty) => {
         facultyOptions.push({
@@ -98,7 +103,16 @@ export class DepartmentsComponent implements OnInit {
         });
       });
       this.dropdownOptions.facultyOptions = facultyOptions;
-    })
+      this.authService.getAll().subscribe((users) => {
+        users.map((user) => {
+          userOptions.push({
+            "name": user.name + " " + user.surname,
+            "code": user.userId
+          });
+        });
+        this.dropdownOptions.userOptions = userOptions;
+      });
+    });
   }
 
 
@@ -132,7 +146,8 @@ export class DepartmentsComponent implements OnInit {
       let updateDepartmanModel: UpdateDepartmanModel = {
         title: this.item.title,
         departmanCode: this.item.departmanCode,
-        facultyId: this.item.facultyId
+        facultyId: this.item.facultyId,
+        userId: this.item.userId
       }
       let id = this.item.departmanId;
       this.departmentService.update(updateDepartmanModel, id).subscribe(() => {
@@ -166,6 +181,7 @@ export class DepartmentsComponent implements OnInit {
     this.newItem = false;
     this.item = this.clone(event.data);
     this.selectedOptions.facultyOptions = (this.dropdownOptions.facultyOptions as any[]).find((option) => option.code == this.selectedItem.facultyId);
+    this.selectedOptions.userOptions = (this.dropdownOptions.userOptions as any[]).find((option) => option.code == this.selectedItem.userId);
     this.displayDialog = true;
   }
 

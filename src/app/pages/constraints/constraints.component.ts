@@ -119,7 +119,8 @@ export class ConstraintsComponent implements OnInit {
         educationType: this.constraint.educationType,
         userId: this.constraint.userId
       }
-      this.constraintService.add(addConstraintModel).subscribe(() => {
+      this.constraintService.add(addConstraintModel).subscribe((res) => {
+        this.constraint.constraintId = res.data;
         constraints.push(this.constraint);
         this.constraints = constraints;
         this.constraint = null;

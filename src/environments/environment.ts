@@ -3,5 +3,6 @@ export const environment = {
 };
 
 export const server = {
-  url: "http://dpaapi.azurewebsites.net"
+  // url: "http://dpaapi.azurewebsites.net"
+  url: "http://localhost:49971"
 }
