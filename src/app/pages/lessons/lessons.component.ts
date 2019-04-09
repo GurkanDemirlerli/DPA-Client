@@ -5,10 +5,9 @@ import { InstructorLessonService } from './../../services/instructor-lesson.serv
 import { DepartmentLessonService } from './../../services/department-lesson.service';
 import { LessonService } from './../../services/lesson.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmanModel } from 'src/app/models/departman.model';
 import { MenuItem, SelectItem } from 'primeng/api';
-
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -18,14 +17,9 @@ import {
   UpdateLessonModel,
   AddLessonModel,
   AddDepartmentLessonModel,
-  UserModel,
   AddUserLessonModel
 } from 'src/app/models';
-import {
-  FacultyMockService,
-  DepartmentMockService,
-  LessonMockService
-} from 'src/app/mocks';
+
 import {
   LessonTypesTableView,
   LessonTypes,
@@ -86,13 +80,12 @@ export class LessonsComponent implements OnInit {
   };
 
   constructor(
-    private route: ActivatedRoute,
     private departmentService: DepartmentService,
     private departmentLessonService: DepartmentLessonService,
     private instructorLessonService: InstructorLessonService,
     private lessonService: LessonService,
     private authService: AuthService,
-    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -167,13 +160,16 @@ export class LessonsComponent implements OnInit {
         educationType: this.lesson.educationType,
         departmanId: this.lesson.departmanId
       }
-      this.lessonService.add(addLessonModel).subscribe(() => {
+      this.lessonService.add(addLessonModel).subscribe((res) => {
+        this.lesson.lessonId = res.data;
         lessons.push(this.lesson);
         this.lessons = lessons;
         this.lesson = null;
         this.displayDialog = false;
+        this.toastr.success('Ders Başarıyla Eklendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Ders eklenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -195,8 +191,10 @@ export class LessonsComponent implements OnInit {
         this.lessons = lessons;
         this.lesson = null;
         this.displayDialog = false;
+        this.toastr.success('Ders Başarıyla Güncellendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Ders güncellenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -210,9 +208,11 @@ export class LessonsComponent implements OnInit {
       this.lessons = this.lessons.filter((val, i) => i != index);
       this.lesson = null;
       this.displayDialog = false;
+      this.toastr.success('Ders Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
     }, () => {
+      this.toastr.error("Ders silinirken bir hata oluştu", "Sunucu Hatası");
 
     });
   }

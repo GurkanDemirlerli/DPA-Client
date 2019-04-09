@@ -6,21 +6,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectItem } from 'primeng/primeng';
 import * as _ from 'lodash';
-
+import { ToastrService } from 'ngx-toastr';
 import {
-  UserModel,
   AddUserModel,
   UpdateUserModel,
   ListUserModel,
   LessonModel,
   AddUserLessonModel
 } from 'src/app/models';
-import {
-  FacultyMockService,
-  DepartmentMockService,
-  LessonMockService,
-  UserMockService
-} from 'src/app/mocks';
+
 import {
   Roles,
   Titles,
@@ -84,7 +78,8 @@ export class InstructorsComponent implements OnInit {
     private lessonService: LessonService,
     private instructorLessonService: InstructorLessonService,
     private userService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -193,9 +188,11 @@ export class InstructorsComponent implements OnInit {
         this.users = users;
         this.user = null;
         this.displayDialog = false;
+        this.toastr.success('Kullanıcı Başarıyla Eklendi', 'Başarılı');
         // })
       }, (err) => {
         console.log(err);
+        this.toastr.error("Kullanıcı eklenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -216,8 +213,10 @@ export class InstructorsComponent implements OnInit {
         this.users = users;
         this.user = null;
         this.displayDialog = false;
+        this.toastr.success('Kullanıcı Başarıyla Güncellendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Kullanıcı güncellenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -231,9 +230,11 @@ export class InstructorsComponent implements OnInit {
       this.users = this.users.filter((val, i) => i != index);
       this.user = null;
       this.displayDialog = false;
+      this.toastr.success('Kullanıcı Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
     }, () => {
+      this.toastr.error("Kullanıcı silinirken bir hata oluştu", "Sunucu Hatası");
 
     });
   }

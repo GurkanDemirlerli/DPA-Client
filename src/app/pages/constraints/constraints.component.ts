@@ -1,19 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 
 import {
   ConstraintModel,
   AddConstraintModel,
   UpdateConstraintModel
 } from 'src/app/models';
-import {
-  FacultyMockService,
-  ConstraintMockService,
-  DepartmentMockService,
-  LessonMockService
-} from 'src/app/mocks';
+
 import {
   EducationTypesTableView,
   EducationTypes
@@ -62,8 +57,7 @@ export class ConstraintsComponent implements OnInit {
 
   constructor(
     private constraintService: ConstraintService,
-    private router: Router,
-    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -125,10 +119,11 @@ export class ConstraintsComponent implements OnInit {
         this.constraints = constraints;
         this.constraint = null;
         this.displayDialog = false;
+        this.toastr.success('Kısıt Başarıyla Eklendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Kısıt eklenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
-
       });
     } else {
       console.log(this.constraint);
@@ -147,8 +142,10 @@ export class ConstraintsComponent implements OnInit {
         this.constraints = constraints;
         this.constraint = null;
         this.displayDialog = false;
+        this.toastr.success('Kısıt Başarıyla Güncellendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Kısıt güncellenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -162,9 +159,11 @@ export class ConstraintsComponent implements OnInit {
       this.constraints = this.constraints.filter((val, i) => i != index);
       this.constraint = null;
       this.displayDialog = false;
+      this.toastr.success('Kısıt Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
     }, () => {
+      this.toastr.error("Kısıt silinirken bir hata oluştu", "Sunucu Hatası");
 
     });
   }

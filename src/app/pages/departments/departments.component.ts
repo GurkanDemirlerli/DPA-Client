@@ -2,9 +2,8 @@ import { AuthService } from 'src/app/services';
 import { DepartmentService } from './../../services/department.service';
 import { FacultyService } from './../../services/faculty.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem, SelectItem } from 'primeng/api';
-
+import { ToastrService } from 'ngx-toastr';
 
 
 import {
@@ -13,10 +12,7 @@ import {
   UpdateDepartmanModel,
   DepartmanModel
 } from 'src/app/models';
-import {
-  FacultyMockService,
-  DepartmentMockService
-} from 'src/app/mocks';
+
 
 
 @Component({
@@ -50,11 +46,10 @@ export class DepartmentsComponent implements OnInit {
   };
 
   constructor(
-    private route: ActivatedRoute,
     private facultyService: FacultyService,
     private departmentService: DepartmentService,
     private authService: AuthService,
-    private router: Router
+    private toastr: ToastrService
   ) {
   }
 
@@ -131,13 +126,16 @@ export class DepartmentsComponent implements OnInit {
         departmanCode: this.item.departmanCode,
         facultyId: this.item.facultyId
       }
-      this.departmentService.add(addDepartmanModel).subscribe(() => {
+      this.departmentService.add(addDepartmanModel).subscribe((res) => {
+        this.item.departmanId = res.data;
         departments.push(this.item);
         this.items = departments;
         this.item = null;
         this.displayDialog = false;
+        this.toastr.success('Bölüm Başarıyla Eklendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Bölüm eklenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -155,8 +153,10 @@ export class DepartmentsComponent implements OnInit {
         this.items = departments;
         this.item = null;
         this.displayDialog = false;
+        this.toastr.success('Bölüm Başarıyla Güncellendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Bölüm güncellenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -170,9 +170,11 @@ export class DepartmentsComponent implements OnInit {
       this.items = this.items.filter((val, i) => i != index);
       this.item = null;
       this.displayDialog = false;
+      this.toastr.success('Bölüm Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
     }, () => {
+      this.toastr.error("Bölüm silinirken bir hata oluştu", "Sunucu Hatası");
 
     });
   }

@@ -3,17 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-
+import { ToastrService } from 'ngx-toastr';
+import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 import {
   FacultyModel,
   UpdateFacultyModel,
   AddFacultyModel
 } from 'src/app/models';
-
-import {
-  FacultyMockService,
-} from 'src/app/mocks';
 
 
 @Component({
@@ -36,6 +33,11 @@ import {
 })
 export class FacultiesComponent implements OnInit {
 
+  mform = new FormGroup({
+    facultyCode: new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
+  });
+
   displayDialog: boolean;
 
   faculty: FacultyModel = {};
@@ -50,9 +52,20 @@ export class FacultiesComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor(private facultyService: FacultyService, private router: Router) { }
+  constructor(
+    private facultyService: FacultyService,
+    private router: Router,
+    private toastr: ToastrService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+
+    //   this.mform = this.fb.group({
+    //     'facultyCode': new FormControl('', Validators.required),
+    //     'title': new FormControl('', Validators.required),
+    // });
+
     this.facultyService.getAll().subscribe((faculties) => {
       this.faculties = faculties;
     })
@@ -81,13 +94,16 @@ export class FacultiesComponent implements OnInit {
         title: this.faculty.title,
         facultyCode: this.faculty.facultyCode
       }
-      this.facultyService.add(addFacultyModel).subscribe(() => {
+      this.facultyService.add(addFacultyModel).subscribe((res) => {
+        this.faculty.facultyId = res.data;
         faculties.push(this.faculty);
         this.faculties = faculties;
         this.faculty = null;
         this.displayDialog = false;
+        this.toastr.success('Fakülte Başarıyla Eklendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Fakülte eklenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -103,10 +119,11 @@ export class FacultiesComponent implements OnInit {
         this.faculties = faculties;
         this.faculty = null;
         this.displayDialog = false;
+        this.toastr.success('Fakülte Başarıyla Güncellendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Fakülte güncellenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
-
       });
     }
 
@@ -118,10 +135,11 @@ export class FacultiesComponent implements OnInit {
       this.faculties = this.faculties.filter((val, i) => i != index);
       this.faculty = null;
       this.displayDialog = false;
+      this.toastr.success('Fakülte Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
     }, () => {
-
+      this.toastr.error("Fakülte silinirken bir hata oluştu", "Sunucu Hatası");
     });
   }
 

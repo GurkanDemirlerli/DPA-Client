@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesComponent } from './pages.component';
 import { LayoutModule } from './../layout/layout.module';
 import { NgModule } from '@angular/core';
@@ -60,7 +60,8 @@ import { MyDepartmentLessonsComponent } from './my-department-lessons/my-departm
         FormsModule,
         ButtonModule,
         BreadcrumbModule,
-        PickListModule
+        PickListModule,
+        ReactiveFormsModule
 
     ],
     exports: [],

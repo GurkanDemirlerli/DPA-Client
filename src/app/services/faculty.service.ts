@@ -31,9 +31,9 @@ export class FacultyService {
     }
 
 
-    public add(model: AddFacultyModel): Observable<void> {
+    public add(model: AddFacultyModel): Observable<any> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.post<void>(this.domain + 'Faculty', model, headers)
+        return this.http.post<any>(this.domain + 'Faculty', model, headers)
             .pipe(
                 tap(() => {
                 }),

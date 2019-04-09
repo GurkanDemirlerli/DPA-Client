@@ -31,9 +31,9 @@ export class LessonService {
     }
 
 
-    public add(model: AddLessonModel): Observable<void> {
+    public add(model: AddLessonModel): Observable<any> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.post<void>(this.domain + 'Lesson', model, headers)
+        return this.http.post<any>(this.domain + 'Lesson', model, headers)
             .pipe(
                 tap(() => {
                 }),

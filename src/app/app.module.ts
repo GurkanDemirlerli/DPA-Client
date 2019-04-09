@@ -21,7 +21,7 @@ import { RoleGuard, AuthGuard, AuthNotAllowed } from './guards/auth.guard';
 import { UserMockService } from './mocks/user.mock.service';
 import { ConstraintMockService } from './mocks/constraint.mock.service';
 import { DepartmentLessonService } from './services/department-lesson.service';
-
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,8 @@ import { DepartmentLessonService } from './services/department-lesson.service';
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     LocationMockService,

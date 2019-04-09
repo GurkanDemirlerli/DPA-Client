@@ -33,9 +33,9 @@ export class DepartmentService {
     }
 
 
-    public add(model: AddDepartmanModel): Observable<void> {
+    public add(model: AddDepartmanModel): Observable<any> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.post<void>(this.domain + 'Departman', model, headers)
+        return this.http.post<any>(this.domain + 'Departman', model, headers)
             .pipe(
                 tap(() => {
                 }),

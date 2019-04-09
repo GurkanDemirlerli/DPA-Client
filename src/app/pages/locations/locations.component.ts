@@ -3,23 +3,15 @@ import { LocationService } from './../../services/location.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, SelectItem } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 
 import {
   LocationModel,
   AddLocationModel,
   UpdateLocationModel
 } from 'src/app/models';
+
 import {
-  FacultyMockService,
-  ConstraintMockService,
-  DepartmentMockService,
-  LessonMockService,
-  LocationMockService
-} from 'src/app/mocks';
-import {
-  EducationTypesTableView,
-  EducationTypes
 } from 'src/app/enums';
 
 
@@ -61,11 +53,9 @@ export class LocationsComponent implements OnInit {
 
 
   constructor(
-    private constraintService: ConstraintMockService,
     private locationService: LocationService,
-    private departmentService: DepartmentMockService,
     private facultyService: FacultyService,
-    private lessonService: LessonMockService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -118,13 +108,16 @@ export class LocationsComponent implements OnInit {
         title: this.item.title,
         facultyId: this.item.facultyId
       }
-      this.locationService.add(addModel).subscribe(() => {
+      this.locationService.add(addModel).subscribe((res) => {
+        this.item.locationId = res.data;
         items.push(this.item);
         this.items = items;
         this.item = null;
         this.displayDialog = false;
+        this.toastr.success('Derslik Başarıyla Eklendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Derslik eklenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -140,8 +133,10 @@ export class LocationsComponent implements OnInit {
         this.items = items;
         this.item = null;
         this.displayDialog = false;
+        this.toastr.success('Derslik Başarıyla Güncellendi', 'Başarılı');
       }, (err) => {
         console.log(err);
+        this.toastr.error("Derslik güncellenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
 
       });
@@ -155,9 +150,11 @@ export class LocationsComponent implements OnInit {
       this.items = this.items.filter((val, i) => i != index);
       this.item = null;
       this.displayDialog = false;
+      this.toastr.success('Derslik Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
     }, () => {
+      this.toastr.error("Derslik silinirken bir hata oluştu", "Sunucu Hatası");
 
     });
   }

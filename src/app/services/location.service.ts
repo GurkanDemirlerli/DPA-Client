@@ -31,9 +31,9 @@ export class LocationService {
     }
 
 
-    public add(model: AddLocationModel): Observable<void> {
+    public add(model: AddLocationModel): Observable<any> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.post<void>(this.domain + 'Location', model, headers)
+        return this.http.post<any>(this.domain + 'Location', model, headers)
             .pipe(
                 tap(() => {
                 }),
