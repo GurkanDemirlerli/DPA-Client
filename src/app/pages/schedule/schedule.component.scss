@@ -1,0 +1,207 @@
+.schedule {
+  &-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  &-hours {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-right: 5px;
+  }
+
+  &-hour {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    color: gray;
+  }
+
+  &-day {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 2px;
+    height: 740px;
+
+    &-header {
+      height: 40px;
+      border: 1px solid rgb(204, 204, 204);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 1px 3px 1px rgb(235, 233, 233);
+    }
+
+    &-content {
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      border: 1px solid #e7e7e7;
+      border-radius: 4px;
+      box-shadow: 0px 1px 3px 1px rgb(235, 233, 233);
+      // background: rgb(236, 236, 236);
+    }
+
+    &-grid {
+      z-index: -99;
+      position: absolute;
+      width: 100%;
+      height: 100px;
+      left: 0;
+      top: 0;
+
+      &-row {
+        border-bottom: 1px solid rgb(233, 233, 233);
+        height: 40px;
+      }
+    }
+  }
+
+  &-column {
+    flex: 1;
+    max-width: 14.285%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid rgb(233, 233, 233);
+  }
+
+  &-lesson {
+    border: 1px solid rgb(255, 255, 255);
+    overflow: hidden;
+    background: rgba(30, 153, 181, 0.666);
+
+    text-overflow: ellipsis;
+    border-radius: 4px;
+    // box-shadow: 0px 1px 3px 1px rgb(202, 202, 202);
+  }
+}
+
+.ders {
+  // font-weight: 300;
+  color: white;
+  font-size: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &-adi {
+    display: flex;
+    justify-content: center;
+    padding: 1px;
+    box-sizing: content-box;
+    background: rgb(30, 153, 181);
+    // border-bottom: 1px solid rgb(0, 97, 138);
+  }
+  &-loc {
+    color: black;
+    padding: 1px;
+  }
+  &-ins {
+    color: black;
+    padding: 1px;
+  }
+}
+
+.filter {
+  &-forms {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+
+    &-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      font-size: 20px;
+      color: black;
+      font-weight: 600;
+    }
+    &-content {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  &-wrapper {
+    margin: 0 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    input {
+      padding: 3px;
+      border: 1px solid rgb(198, 198, 198);
+      border-radius: 5px;
+    }
+  }
+  &-label {
+    margin-right: 10px;
+    font-size: 15px;
+    color: black;
+    font-weight: 600;
+  }
+}
+
+.ders-detay {
+  display: flex;
+  flex-direction: column;
+  &-item {
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+
+    &-label {
+      color: black;
+      font-weight: 600;
+      min-width: 30%;
+    }
+
+    &-content {
+      margin-left: 5px;
+      flex: 1;
+    }
+    
+  }
+  &-header {
+    margin:5px;
+    color: black;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    font-size: 17px;
+  }
+}
+
+.option {
+  &s {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+
+    &-header {
+      margin:5px;
+      color: black;
+      font-weight: 600;
+      display: flex;
+      flex-direction: row;
+      font-size: 17px;
+    }
+  }
+}
+
+.dialog-wrapper {
+  margin:20px;
+  display: flex;
+  flex-direction: column;
+}

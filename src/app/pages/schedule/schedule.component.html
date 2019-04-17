@@ -1,3 +1,208 @@
-<p>
-  schedule works!
-</p>
+<div class="filter-forms">
+  <div class="filter-forms-header">
+  </div>
+  <div class="filter-forms-content">
+    <div class="filter-wrapper">
+      <div class="filter-label">
+        Ders Adı :
+      </div>
+      <input type="text" [(ngModel)]="filtre.name" (ngModelChange)="filtrele()">
+    </div>
+    <div class="filter-wrapper">
+      <div class="filter-label">
+        Eğitimci :
+      </div>
+      <input type="text" [(ngModel)]="filtre.ins" (ngModelChange)="filtrele()">
+    </div>
+    <div class="filter-wrapper">
+      <div class="filter-label">
+        Derslik :
+      </div>
+      <input type="text" [(ngModel)]="filtre.loc" (ngModelChange)="filtrele()">
+    </div>
+  </div>
+
+</div>
+<div class="schedule-wrapper">
+  <div class="schedule-hours">
+    <div class="schedule-hour">
+      07:00
+    </div>
+    <div class="schedule-hour">
+      08:00
+    </div>
+    <div class="schedule-hour">
+      09:00
+    </div>
+    <div class="schedule-hour">
+      10:00
+    </div>
+    <div class="schedule-hour">
+      11:00
+    </div>
+    <div class="schedule-hour">
+      12:00
+    </div>
+    <div class="schedule-hour">
+      13:00
+    </div>
+    <div class="schedule-hour">
+      14:00
+    </div>
+    <div class="schedule-hour">
+      15:00
+    </div>
+    <div class="schedule-hour">
+      16:00
+    </div>
+    <div class="schedule-hour">
+      17:00
+    </div>
+    <div class="schedule-hour">
+      18:00
+    </div>
+    <div class="schedule-hour">
+      19:00
+    </div>
+    <div class="schedule-hour">
+      20:00
+    </div>
+    <div class="schedule-hour">
+      21:00
+    </div>
+    <div class="schedule-hour">
+      22:00
+    </div>
+    <div class="schedule-hour">
+      23:00
+    </div>
+  </div>
+
+  <ng-container *ngFor="let day of schedule?.days; let gnid=index">
+    <div class="schedule-day" *ngIf="goster == gnid || goster == 6">
+      <div class="schedule-day-header">
+        {{gunler[gnid]}}
+      </div>
+      <div class="schedule-day-content">
+        <div class="schedule-column" *ngFor="let column of  day?.columns; let clid=index">
+          <div class="schedule-lesson" *ngFor="let lesson of  column?.lessons; let i= index"
+            [style.margin-top]="i > 0 ? (lesson.hour - (column.lessons[i-1].hour + column.lessons[i-1].length)) *40 + 'px' : (lesson.hour -7) *40 + 'px' "
+            [style.height]="(lesson.length*40)+'px'" (click)="selectLesson($event,lesson)">
+            <div class="ders">
+              <div class="ders-adi">
+                <!-- {{lesson.name }} -->
+                {{ (lesson.name.length>8)? (lesson.name | slice:0:8)+'..':(lesson.name) }}
+              </div>
+              <div class="ders-loc">
+                {{ (lesson.location.name.length>8)? (lesson.location.name | slice:0:8)+'..':(lesson.location.name) }}
+              </div>
+              <div class="ders-ins">
+                {{ (lesson.instructors[0].name.length>8)? (lesson.instructors[0].name | slice:0:8)+'..':(lesson.instructors[0].name) }}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <ng-container *ngIf="day.columns.length < 7">
+          <div class="schedule-column" *ngFor="let item of [].constructor(7-day?.columns.length); let i=index">
+          </div>
+        </ng-container>
+
+
+        <div class="schedule-day-grid">
+          <div class="schedule-day-grid-row" *ngFor="let number of [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </ng-container>
+
+</div>
+
+
+
+<p-dialog [(visible)]="displayDialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}"
+  [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <div class="dialog-wrapper">
+
+    <div class="ders-detay">
+      <div class="ders-detay-header">
+        DERS BİLGİLERİ
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Ders Adı
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.name}}</p>
+        </div>
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Grup
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.group}}</p>
+        </div>
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Ders Vakti
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.day}} {{selected?.hour}} {{selected?.length}} </p>
+        </div>
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Derslik
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.location.name}}</p>
+        </div>
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Eğitimciler
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.instructors[0].name}}</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="options">
+      <div class="options-header">
+        DÜZENLE
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Ders Vakti
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.day}} {{selected?.hour}} {{selected?.length}} </p>
+        </div>
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Derslik
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.day}} {{selected?.hour}} {{selected?.length}} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>

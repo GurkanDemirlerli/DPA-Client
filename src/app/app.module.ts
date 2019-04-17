@@ -22,6 +22,7 @@ import { UserMockService } from './mocks/user.mock.service';
 import { ConstraintMockService } from './mocks/constraint.mock.service';
 import { DepartmentLessonService } from './services/department-lesson.service';
 import { ToastrModule } from 'ngx-toastr';
+import { ScheduleMockService } from './mocks/schedule.mock.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,7 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot()
   ],
   providers: [
+    ScheduleMockService,
     LocationMockService,
     ConstraintMockService,
     UserMockService,

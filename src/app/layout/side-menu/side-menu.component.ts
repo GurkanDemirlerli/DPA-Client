@@ -64,6 +64,8 @@ export class SideMenuComponent implements OnInit {
         this.department = department;
         console.log(this.department);
       })
+    }, (err) => {
+
     });
     this.menuService.isMax$.subscribe((menuState) => {
       this.isMax = menuState;

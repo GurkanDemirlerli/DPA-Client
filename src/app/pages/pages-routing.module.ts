@@ -19,7 +19,8 @@ const routes: Routes = [
     {
         path: '',
         component: PagesComponent,
-        children: [{
+        children: [
+            {
             path: 'schedule',
             component: ScheduleComponent
         },

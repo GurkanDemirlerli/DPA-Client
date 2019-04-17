@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 export class MenuService {
     //true büyük menü, false küçük menü.
 
-    isMax = new BehaviorSubject<boolean>(true);
+    isMax = new BehaviorSubject<boolean>(false);
     isMax$ = this.isMax.asObservable();
 
     toggleMenuSize(size: boolean): void {
