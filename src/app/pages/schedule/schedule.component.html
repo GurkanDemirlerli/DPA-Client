@@ -124,8 +124,8 @@
 
 
 
-<p-dialog [(visible)]="displayDialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}"
-  [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+<p-dialog [(visible)]="displayDialog" [contentStyle]="{'overflow':'visible'}" [modal]="true" [responsive]="true"
+  [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
   <div class="dialog-wrapper">
 
     <div class="ders-detay">
@@ -186,11 +186,24 @@
       </div>
       <div class="ders-detay-item">
         <div class="ders-detay-item-label">
-          Ders Vakti
+          Gün
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.day}} {{selected?.hour}} {{selected?.length}} </p>
+          <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.gun"
+            [options]="dropdownOptions.gunOptions" placeholder="Seçiniz" (onChange)="saatleriFiltrele($event)">
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
+          Saat
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.saat"
+            [options]="dropdownOptions.saatOptions" placeholder="Seçiniz" (onChange)="derslikleriFiltrele($event)">
+          </p-dropdown>
         </div>
       </div>
       <div class="ders-detay-item">
@@ -199,9 +212,13 @@
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.day}} {{selected?.hour}} {{selected?.length}} </p>
+          <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.derslik"
+            [options]="dropdownOptions.derslikOptions" placeholder="Seçiniz">
+          </p-dropdown>
         </div>
       </div>
+
+      <button type="button" pButton icon="fa fa-check" (click)="saveSchedule()" label="Kaydet"></button>
     </div>
   </div>
 

@@ -120,6 +120,71 @@ export class Schedule {
 
         console.log("Kullanilabilir Saatler", saatler);
 
+        return saatler;
+
+    }
+
+    secilebilirDerslikler(dersId: number, gunNo: number, saatNo: number) {
+        let ders: ScheduleLesson = this.filtresiz.find((opt) => {
+            return opt.id === dersId;
+        });
+
+        let others: ScheduleLesson[] = this.filtresiz.filter((opt) => {
+            return opt.id !== dersId;
+        });
+
+        let gunDersleri = others.filter((opt) => {
+            return opt.day === gunNo;
+        });
+
+        let derslikler: ScheduleLocation[] = [];
+
+        for (let i = 0; i < this.filtresiz.length; i++) {
+            const element = this.filtresiz[i];
+            let eklenebilir = false;
+            const bulunan = derslikler.filter((opt) => {
+               return opt.id === element.location.id;
+            });
+            if (bulunan.length < 1) {
+                eklenebilir = true;
+            }
+
+            if (eklenebilir) {
+                derslikler.push(element.location);
+            }
+            eklenebilir = false;
+        }
+
+        let secilebilirDerslikler: ScheduleLocation[] = [];
+
+        let eszamanliDersler: ScheduleLesson[] = gunDersleri.filter((opt) => {
+            let kirmiziAralik: number[] = [];
+            for (let i = saatNo; i < saatNo + ders.length; i++) {
+                kirmiziAralik.push(i);
+            }
+
+            for (let i = opt.hour; i < opt.hour + opt.length; i++) {
+                if (kirmiziAralik.includes(i)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        console.log("Es zamanli", eszamanliDersler);
+
+        secilebilirDerslikler = derslikler.filter((opt) => {
+            for (let i = 0; i < eszamanliDersler.length; i++) {
+                const eszamanli = eszamanliDersler[i];
+                if (opt.id === eszamanli.location.id) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        return secilebilirDerslikler;
+
     }
 
     private sutunOlustur(gunNo, sutunNo): ScheduleColumn {

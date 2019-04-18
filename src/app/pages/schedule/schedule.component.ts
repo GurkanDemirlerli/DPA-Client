@@ -32,6 +32,8 @@ export class ScheduleComponent implements OnInit {
 
   dropdownOptions: any = {};
 
+  duzenlemeModeli: any = {};
+
   constructor(private scheduleService: ScheduleMockService) { }
 
   showDialog() {
@@ -39,15 +41,17 @@ export class ScheduleComponent implements OnInit {
   }
 
   selectLesson(event: Event, lesson: ScheduleLesson) {
+    this.duzenlemeModeli = {};
     this.selected = lesson;
     this.displayDialog = true;
     event.preventDefault();
-    this.schedule.secilebilirSaatler(lesson.id,1);
+    // this.schedule.secilebilirSaatler(lesson.id, 1);
   }
 
-  fillDropdownOptions(){
+  fillDropdownOptions() {
     this.dropdownOptions.gunOptions = gunOptions;
-    this.dropdownOptions.saatOptions = saatOptions;
+    this.dropdownOptions.saatOptions = [];
+    this.dropdownOptions.derslikOptions = [];
   }
 
   getRandomColor() {
@@ -60,22 +64,61 @@ export class ScheduleComponent implements OnInit {
     return colors[Math.floor(Math.random() * (3 - 0 + 1)) + 0];
   }
 
-  // fillDropdownOptions() {
-  //   this.dropdownOptions.gunOptions = gunOptions;
-  //   this.dropdownOptions.
-  //   this.dropdownOptions.titleTypeOptions = titleTypeOptions;
-  //   this.dropdownOptions.departmanOptions = [];
-  //   let departmanOptions = [];
-  //   this.departmentService.getAll().subscribe((departmans) => {
-  //     departmans.map((departman) => {
-  //       departmanOptions.push({
-  //         "name": departman.title,
-  //         "code": departman.departmanId
-  //       });
-  //     });
-  //     this.dropdownOptions.departmanOptions = departmanOptions;
-  //   })
-  // }
+  saatleriFiltrele() {
+    this.dropdownOptions.saatOptions = [];
+    this.dropdownOptions.derslikOptions = [];
+    let saatler = this.schedule.secilebilirSaatler(this.selected.id, this.duzenlemeModeli.gun);
+    for (let i = 0; i < saatler.length; i++) {
+      let saat = saatler[i];
+      (this.dropdownOptions.saatOptions as any[]).push({
+        label: saat + ":00" + "-" + (saat + this.selected.length) + ":00", value: saat
+      })
+    }
+    this.duzenlemeModeli.saat = null;
+    this.duzenlemeModeli.derslik = null;
+  }
+
+  derslikleriFiltrele() {
+    this.dropdownOptions.derslikOptions = [];
+    let derslikler = this.schedule.secilebilirDerslikler(this.selected.id, this.duzenlemeModeli.gun, this.duzenlemeModeli.saat);
+    console.log("DERSLİKLER", derslikler);
+    for (let i = 0; i < derslikler.length; i++) {
+      let derslik = derslikler[i];
+      (this.dropdownOptions.derslikOptions as any[]).push({
+        label: derslik.name, value: derslik
+      })
+    }
+    console.log(derslikler);
+    this.duzenlemeModeli.derslik = null;
+  }
+
+  saveSchedule() {
+    let ders: ScheduleLesson = this.lessons.find((opt) => {
+      return opt.id === this.selected.id;
+    });
+
+    let others: ScheduleLesson[] = this.lessons.filter((opt) => {
+      return opt.id !== this.selected.id;
+    });
+
+    console.log(this.duzenlemeModeli);
+
+    if (this.duzenlemeModeli.gun != null && this.duzenlemeModeli.saat != null && this.duzenlemeModeli.derslik != null) {
+      ders.day = this.duzenlemeModeli.gun;
+      ders.hour = this.duzenlemeModeli.saat;
+      ders.location = this.duzenlemeModeli.derslik;
+
+      others.push(ders);
+
+      this.lessons = others;
+
+      let schedule = new Schedule();
+      this.schedule = schedule.make(others);
+
+      this.displayDialog = false;
+      this.selected = null;
+    }
+  }
 
   ngOnInit() {
     this.scheduleService.get().subscribe((lessons) => {
@@ -84,6 +127,7 @@ export class ScheduleComponent implements OnInit {
       this.schedule = schedule.make(lessons);
       this.schedule.filtere(this.filtre);
       this.goster = 6;
+      this.fillDropdownOptions();
       console.log(this.schedule);
     }, (err) => {
       console.log(err);
