@@ -2,6 +2,9 @@ import { gunOptions, saatOptions } from './dropdown.data';
 import { Component, OnInit } from '@angular/core';
 import { ScheduleMockService } from 'src/app/mocks/schedule.mock.service';
 import { Schedule, ScheduleLesson } from './schedule';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'dpa-schedule',
@@ -33,6 +36,13 @@ export class ScheduleComponent implements OnInit {
   dropdownOptions: any = {};
 
   duzenlemeModeli: any = {};
+
+  dersStyle = {
+    adi: {},
+    loc: {},
+    wrapper: {},
+    ins: {}
+  };
 
   constructor(private scheduleService: ScheduleMockService) { }
 
@@ -128,6 +138,8 @@ export class ScheduleComponent implements OnInit {
       this.schedule.filtere(this.filtre);
       this.goster = 6;
       this.fillDropdownOptions();
+
+
       console.log(this.schedule);
     }, (err) => {
       console.log(err);
@@ -136,6 +148,47 @@ export class ScheduleComponent implements OnInit {
 
   filtrele() {
     this.schedule.filtere(this.filtre);
+  }
+
+  async downloadPDF() {
+    this.dersStyle = {
+      wrapper: {
+        'font-size': '13px',
+        'font-weight': '600px',
+      },
+      adi: {
+        'font-size': '15px',
+        'background': 'transparent'
+      },
+      loc: {
+        'padding-left': '20px'
+      },
+      ins: {
+        'padding-left': '20px'
+      }
+
+    }
+    document.getElementById('body').style.width = "7000px";
+    const pdf = new jsPDF('l', 'px', [1920, 1080]);
+
+    for (let i = 0; i < 5; i++) {
+      const data = document.getElementById('gun' + i);
+      let canvas = await html2canvas(data);
+      const contentDataURL = canvas.toDataURL('image.png');
+      const imgWidth = 1350;
+      const imgHeight = 700;
+      if (i != 0) pdf.addPage(1920, 1080);
+      pdf.addImage(contentDataURL, 'PNG', 100 / 2, 50, imgWidth, imgHeight);
+    }
+    pdf.save('schedule.pdf');
+    document.getElementById('body').style.width = "100%";
+    this.dersStyle = {
+      adi: {},
+      loc: {},
+      wrapper: {},
+      ins: {}
+    };
+
   }
 
 }

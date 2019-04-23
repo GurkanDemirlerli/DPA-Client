@@ -21,9 +21,9 @@
       <input type="text" [(ngModel)]="filtre.loc" (ngModelChange)="filtrele()">
     </div>
   </div>
-
+  <button (click)="downloadPDF()"></button>
 </div>
-<div class="schedule-wrapper">
+<div class="schedule-wrapper" id="pdfDoc">
   <div class="schedule-hours">
     <div class="schedule-hour">
       07:00
@@ -79,24 +79,24 @@
   </div>
 
   <ng-container *ngFor="let day of schedule?.days; let gnid=index">
-    <div class="schedule-day" *ngIf="goster == gnid || goster == 6">
+    <div class="schedule-day" [attr.id]="'gun' + gnid" *ngIf="goster == gnid || goster == 6">
       <div class="schedule-day-header">
         {{gunler[gnid]}}
       </div>
       <div class="schedule-day-content">
         <div class="schedule-column" *ngFor="let column of  day?.columns; let clid=index">
-          <div class="schedule-lesson" *ngFor="let lesson of  column?.lessons; let i= index"
+          <div class="schedule-lesson"  *ngFor="let lesson of  column?.lessons; let i= index"
             [style.margin-top]="i > 0 ? (lesson.hour - (column.lessons[i-1].hour + column.lessons[i-1].length)) *40 + 'px' : (lesson.hour -7) *40 + 'px' "
             [style.height]="(lesson.length*40)+'px'" (click)="selectLesson($event,lesson)">
-            <div class="ders">
-              <div class="ders-adi">
+            <div class="ders" [ngStyle]="dersStyle.wrapper">
+              <div class="ders-adi" [ngStyle]="dersStyle.adi">
                 <!-- {{lesson.name }} -->
                 {{ (lesson.name.length>8)? (lesson.name | slice:0:8)+'..':(lesson.name) }}
               </div>
-              <div class="ders-loc">
+              <div class="ders-loc" [ngStyle]="dersStyle.loc">
                 {{ (lesson.location.name.length>8)? (lesson.location.name | slice:0:8)+'..':(lesson.location.name) }}
               </div>
-              <div class="ders-ins">
+              <div class="ders-ins" [ngStyle]="dersStyle.ins">
                 {{ (lesson.instructors[0].name.length>8)? (lesson.instructors[0].name | slice:0:8)+'..':(lesson.instructors[0].name) }}
               </div>
             </div>
