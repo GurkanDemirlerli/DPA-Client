@@ -10,6 +10,12 @@
     </div>
     <div class="filter-wrapper">
       <div class="filter-label">
+        Grup :
+      </div>
+      <input type="text" [(ngModel)]="filtre.grp" (ngModelChange)="filtrele()">
+    </div>
+    <div class="filter-wrapper">
+      <div class="filter-label">
         Eğitimci :
       </div>
       <input type="text" [(ngModel)]="filtre.ins" (ngModelChange)="filtrele()">
@@ -85,26 +91,29 @@
       </div>
       <div class="schedule-day-content">
         <div class="schedule-column" *ngFor="let column of  day?.columns; let clid=index">
-          <div class="schedule-lesson"  *ngFor="let lesson of  column?.lessons; let i= index"
-            [style.margin-top]="i > 0 ? (lesson.hour - (column.lessons[i-1].hour + column.lessons[i-1].length)) *40 + 'px' : (lesson.hour -7) *40 + 'px' "
-            [style.height]="(lesson.length*40)+'px'" (click)="selectLesson($event,lesson)">
+          <div class="schedule-lesson" *ngFor="let block of  column?.blocks; let i= index"
+            [style.margin-top]="i > 0 ? (block.units[0].starTime - (column.blocks[i-1].units[0].starTime + column.blocks[i-1].units.length)) *40 + 'px' : (block.units[0].starTime -7) *40 + 'px' "
+            [style.height]="(block.units.length*40)+'px'" (click)="selectLesson($event,block)">
             <div class="ders" [ngStyle]="dersStyle.wrapper">
               <div class="ders-adi" [ngStyle]="dersStyle.adi">
                 <!-- {{lesson.name }} -->
-                {{ (lesson.name.length>8)? (lesson.name | slice:0:8)+'..':(lesson.name) }}
-              </div>
-              <div class="ders-loc" [ngStyle]="dersStyle.loc">
-                {{ (lesson.location.name.length>8)? (lesson.location.name | slice:0:8)+'..':(lesson.location.name) }}
+                {{ (block.units[0].lesson.name.length>11)? (block.units[0].lesson.name | slice:0:11)+'..':(block.units[0].lesson.name) }}
               </div>
               <div class="ders-ins" [ngStyle]="dersStyle.ins">
-                {{ (lesson.instructors[0].name.length>8)? (lesson.instructors[0].name | slice:0:8)+'..':(lesson.instructors[0].name) }}
+                {{ (block.units[0].user.name.length>11)? (block.units[0].user.name | slice:0:11)+'..':(block.units[0].user.name) }}
+              </div>
+              <div class="ders-loc" [ngStyle]="dersStyle.loc">
+                {{ (block.units[0].location.title.length>11)? (block.units[0].location.title | slice:0:11)+'..':(block.units[0].location.title) }}
+              </div>
+              <div class="ders-ins" [ngStyle]="dersStyle.ins">
+                {{ block.units[0].groupType}}
               </div>
             </div>
 
           </div>
         </div>
-        <ng-container *ngIf="day.columns.length < 7">
-          <div class="schedule-column" *ngFor="let item of [].constructor(7-day?.columns.length); let i=index">
+        <ng-container *ngIf="day.columns.length < 5">
+          <div class="schedule-column" *ngFor="let item of [].constructor(5-day?.columns.length); let i=index">
           </div>
         </ng-container>
 
@@ -138,7 +147,7 @@
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.name}}</p>
+          <p>{{selected?.units[0].lesson.name}}</p>
         </div>
       </div>
       <div class="ders-detay-item">
@@ -147,7 +156,7 @@
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.group}}</p>
+          <p>{{selected?.units[0].groupType}}</p>
         </div>
       </div>
       <div class="ders-detay-item">
@@ -156,8 +165,8 @@
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.day}} {{selected?.hour}} {{selected?.length}} </p>
-        </div>
+          <p>{{selected?.units[0].dayOfTheWeekType}} {{selected?.units[0].starTime}} {{selected?.units.length}} </p>
+        </div>  
       </div>
       <div class="ders-detay-item">
         <div class="ders-detay-item-label">
@@ -165,7 +174,7 @@
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.location.name}}</p>
+          <p>{{selected?.units[0].location.title}}</p>
         </div>
       </div>
       <div class="ders-detay-item">
@@ -174,7 +183,7 @@
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.instructors[0].name}}</p>
+          <p>{{selected?.units[0].user.name}}</p>
         </div>
       </div>
     </div>

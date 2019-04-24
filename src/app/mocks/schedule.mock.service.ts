@@ -18,269 +18,906 @@ export class ScheduleMockService {
 
         let gun0 = [
             {
-                id: 9001,
-                name: "Lesson9",
-                group: "A",
-                location: {
-                    id: 1,
-                    name: "Loc1"
+                "unitLessonId": 1,
+                "starTime": 9,
+                "endTime": 10,
+                "groupType": 1,
+                "dayOfTheWeekType": 1,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
                 },
-                instructors: [
-                    {
-                        id: 1,
-                        name: "Ins1"
-                    },
-                ],
-                day: 0,
-                hour: 12,
-                length: 3
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 1,
+                    "title": "1000"
+                }
             },
+            {
+                "unitLessonId": 2,
+                "starTime": 10,
+                "endTime": 11,
+                "groupType": 2,
+                "dayOfTheWeekType": 1,
+                "lesson": {
+                    "lessonId": 1,
+                    "name": "TÜRK DİLİ",
+                    "lessonCode": "TUR 101",
+                    "akts": 4,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 8,
+                    "name": "Ahmet",
+                    "surname": "Arslan",
+                    "email": "ahmetarslan@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 2
+                },
+                "location": {
+                    "locationId": 6,
+                    "title": "1005"
+                }
+            },
+            {
+                "unitLessonId": 3,
+                "starTime": 9,
+                "endTime": 10,
+                "groupType": 2,
+                "dayOfTheWeekType": 1,
+                "lesson": {
+                    "lessonId": 1,
+                    "name": "TÜRK DİLİ",
+                    "lessonCode": "TUR 101",
+                    "akts": 4,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 8,
+                    "name": "Ahmet",
+                    "surname": "Arslan",
+                    "email": "ahmetarslan@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 2
+                },
+                "location": {
+                    "locationId": 6,
+                    "title": "1005"
+                }
+            },
+            {
+                "unitLessonId": 4,
+                "starTime": 13,
+                "endTime": 14,
+                "groupType": 1,
+                "dayOfTheWeekType": 5,
+                "lesson": {
+                    "lessonId": 1,
+                    "name": "TÜRK DİLİ",
+                    "lessonCode": "TUR 101",
+                    "akts": 4,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 8,
+                    "name": "Ahmet",
+                    "surname": "Arslan",
+                    "email": "ahmetarslan@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 2
+                },
+                "location": {
+                    "locationId": 2,
+                    "title": "1001"
+                }
+            },
+            {
+                "unitLessonId": 5,
+                "starTime": 12,
+                "endTime": 13,
+                "groupType": 1,
+                "dayOfTheWeekType": 5,
+                "lesson": {
+                    "lessonId": 1,
+                    "name": "TÜRK DİLİ",
+                    "lessonCode": "TUR 101",
+                    "akts": 4,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 8,
+                    "name": "Ahmet",
+                    "surname": "Arslan",
+                    "email": "ahmetarslan@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 2
+                },
+                "location": {
+                    "locationId": 2,
+                    "title": "1001"
+                }
+            },
+            {
+                "unitLessonId": 6,
+                "starTime": 11,
+                "endTime": 12,
+                "groupType": 2,
+                "dayOfTheWeekType": 5,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 9,
+                    "title": "1008"
+                }
+            },
+            {
+                "unitLessonId": 7,
+                "starTime": 10,
+                "endTime": 11,
+                "groupType": 2,
+                "dayOfTheWeekType": 5,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 9,
+                    "title": "1008"
+                }
+            },
+            {
+                "unitLessonId": 8,
+                "starTime": 9,
+                "endTime": 10,
+                "groupType": 2,
+                "dayOfTheWeekType": 5,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 9,
+                    "title": "1008"
+                }
+            },
+            {
+                "unitLessonId": 9,
+                "starTime": 14,
+                "endTime": 15,
+                "groupType": 1,
+                "dayOfTheWeekType": 4,
+                "lesson": {
+                    "lessonId": 3,
+                    "name": "MATEMATİK I",
+                    "lessonCode": "MAT 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 3,
+                    "name": "Cemil",
+                    "surname": "Öz",
+                    "email": "coz@sakarya.edu.tr",
+                    "roles": 2,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 10,
+                    "title": "1009"
+                }
+            },
+            {
+                "unitLessonId": 10,
+                "starTime": 13,
+                "endTime": 14,
+                "groupType": 1,
+                "dayOfTheWeekType": 4,
+                "lesson": {
+                    "lessonId": 3,
+                    "name": "MATEMATİK I",
+                    "lessonCode": "MAT 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 3,
+                    "name": "Cemil",
+                    "surname": "Öz",
+                    "email": "coz@sakarya.edu.tr",
+                    "roles": 2,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 10,
+                    "title": "1009"
+                }
+            },
+            {
+                "unitLessonId": 11,
+                "starTime": 12,
+                "endTime": 13,
+                "groupType": 1,
+                "dayOfTheWeekType": 4,
+                "lesson": {
+                    "lessonId": 1,
+                    "name": "TÜRK DİLİ",
+                    "lessonCode": "TUR 101",
+                    "akts": 4,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 8,
+                    "name": "Ahmet",
+                    "surname": "Arslan",
+                    "email": "ahmetarslan@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 2
+                },
+                "location": {
+                    "locationId": 11,
+                    "title": "10010"
+                }
+            },
+            {
+                "unitLessonId": 12,
+                "starTime": 11,
+                "endTime": 12,
+                "groupType": 1,
+                "dayOfTheWeekType": 4,
+                "lesson": {
+                    "lessonId": 1,
+                    "name": "TÜRK DİLİ",
+                    "lessonCode": "TUR 101",
+                    "akts": 4,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 8,
+                    "name": "Ahmet",
+                    "surname": "Arslan",
+                    "email": "ahmetarslan@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 2
+                },
+                "location": {
+                    "locationId": 11,
+                    "title": "10010"
+                }
+            },
+            {
+                "unitLessonId": 13,
+                "starTime": 10,
+                "endTime": 11,
+                "groupType": 1,
+                "dayOfTheWeekType": 4,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 16,
+                    "title": "10015"
+                }
+            },
+            {
+                "unitLessonId": 14,
+                "starTime": 9,
+                "endTime": 10,
+                "groupType": 1,
+                "dayOfTheWeekType": 4,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 16,
+                    "title": "10015"
+                }
+            },
+            {
+                "unitLessonId": 15,
+                "starTime": 12,
+                "endTime": 13,
+                "groupType": 2,
+                "dayOfTheWeekType": 3,
+                "lesson": {
+                    "lessonId": 6,
+                    "name": "PROGRAMLAMAYA GİRİŞ",
+                    "lessonCode": "BSM 103",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 4,
+                    "name": "Ümit",
+                    "surname": "Kocabıçak",
+                    "email": "umit@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 15,
+                    "title": "10014"
+                }
+            },
+            {
+                "unitLessonId": 16,
+                "starTime": 11,
+                "endTime": 12,
+                "groupType": 2,
+                "dayOfTheWeekType": 3,
+                "lesson": {
+                    "lessonId": 6,
+                    "name": "PROGRAMLAMAYA GİRİŞ",
+                    "lessonCode": "BSM 103",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 4,
+                    "name": "Ümit",
+                    "surname": "Kocabıçak",
+                    "email": "umit@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 15,
+                    "title": "10014"
+                }
+            },
+            {
+                "unitLessonId": 17,
+                "starTime": 10,
+                "endTime": 11,
+                "groupType": 1,
+                "dayOfTheWeekType": 3,
+                "lesson": {
+                    "lessonId": 4,
+                    "name": "LİNEER CEBİR",
+                    "lessonCode": "MAT 113",
+                    "akts": 4,
+                    "credit": 2,
+                    "weeklyHour": 2,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 14,
+                    "name": "Meltem",
+                    "surname": "Aydın",
+                    "email": "meltemayy@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 4
+                },
+                "location": {
+                    "locationId": 10,
+                    "title": "1009"
+                }
+            },
+            {
+                "unitLessonId": 18,
+                "starTime": 9,
+                "endTime": 10,
+                "groupType": 1,
+                "dayOfTheWeekType": 3,
+                "lesson": {
+                    "lessonId": 4,
+                    "name": "LİNEER CEBİR",
+                    "lessonCode": "MAT 113",
+                    "akts": 4,
+                    "credit": 2,
+                    "weeklyHour": 2,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 14,
+                    "name": "Meltem",
+                    "surname": "Aydın",
+                    "email": "meltemayy@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 4
+                },
+                "location": {
+                    "locationId": 10,
+                    "title": "1009"
+                }
+            },
+            {
+                "unitLessonId": 19,
+                "starTime": 14,
+                "endTime": 15,
+                "groupType": 2,
+                "dayOfTheWeekType": 2,
+                "lesson": {
+                    "lessonId": 3,
+                    "name": "MATEMATİK I",
+                    "lessonCode": "MAT 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 3,
+                    "name": "Cemil",
+                    "surname": "Öz",
+                    "email": "coz@sakarya.edu.tr",
+                    "roles": 2,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 1,
+                    "title": "1000"
+                }
+            },
+            {
+                "unitLessonId": 20,
+                "starTime": 13,
+                "endTime": 14,
+                "groupType": 2,
+                "dayOfTheWeekType": 2,
+                "lesson": {
+                    "lessonId": 3,
+                    "name": "MATEMATİK I",
+                    "lessonCode": "MAT 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 3,
+                    "name": "Cemil",
+                    "surname": "Öz",
+                    "email": "coz@sakarya.edu.tr",
+                    "roles": 2,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 1,
+                    "title": "1000"
+                }
+            },
+            {
+                "unitLessonId": 21,
+                "starTime": 12,
+                "endTime": 13,
+                "groupType": 1,
+                "dayOfTheWeekType": 2,
+                "lesson": {
+                    "lessonId": 6,
+                    "name": "PROGRAMLAMAYA GİRİŞ",
+                    "lessonCode": "BSM 103",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 4,
+                    "name": "Ümit",
+                    "surname": "Kocabıçak",
+                    "email": "umit@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 8,
+                    "title": "1007"
+                }
+            },
+            {
+                "unitLessonId": 22,
+                "starTime": 11,
+                "endTime": 12,
+                "groupType": 1,
+                "dayOfTheWeekType": 2,
+                "lesson": {
+                    "lessonId": 6,
+                    "name": "PROGRAMLAMAYA GİRİŞ",
+                    "lessonCode": "BSM 103",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 4,
+                    "name": "Ümit",
+                    "surname": "Kocabıçak",
+                    "email": "umit@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 8,
+                    "title": "1007"
+                }
+            },
+            {
+                "unitLessonId": 23,
+                "starTime": 10,
+                "endTime": 11,
+                "groupType": 1,
+                "dayOfTheWeekType": 2,
+                "lesson": {
+                    "lessonId": 5,
+                    "name": "BİLGİSAYAR MÜHENDİSLİĞİNE GİRİŞ",
+                    "lessonCode": "BSM 101",
+                    "akts": 4,
+                    "credit": 2,
+                    "weeklyHour": 2,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 7,
+                    "name": "Cüneyt",
+                    "surname": "Bayılmış",
+                    "email": "cbayilmis@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 3
+                },
+                "location": {
+                    "locationId": 4,
+                    "title": "1003"
+                }
+            },
+            {
+                "unitLessonId": 24,
+                "starTime": 9,
+                "endTime": 10,
+                "groupType": 1,
+                "dayOfTheWeekType": 2,
+                "lesson": {
+                    "lessonId": 5,
+                    "name": "BİLGİSAYAR MÜHENDİSLİĞİNE GİRİŞ",
+                    "lessonCode": "BSM 101",
+                    "akts": 4,
+                    "credit": 2,
+                    "weeklyHour": 2,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 7,
+                    "name": "Cüneyt",
+                    "surname": "Bayılmış",
+                    "email": "cbayilmis@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 3
+                },
+                "location": {
+                    "locationId": 4,
+                    "title": "1003"
+                }
+            },
+            {
+                "unitLessonId": 25,
+                "starTime": 13,
+                "endTime": 14,
+                "groupType": 1,
+                "dayOfTheWeekType": 1,
+                "lesson": {
+                    "lessonId": 6,
+                    "name": "PROGRAMLAMAYA GİRİŞ",
+                    "lessonCode": "BSM 103",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 4,
+                    "name": "Ümit",
+                    "surname": "Kocabıçak",
+                    "email": "umit@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 7,
+                    "title": "1006"
+                }
+            },
+            {
+                "unitLessonId": 26,
+                "starTime": 12,
+                "endTime": 13,
+                "groupType": 1,
+                "dayOfTheWeekType": 1,
+                "lesson": {
+                    "lessonId": 6,
+                    "name": "PROGRAMLAMAYA GİRİŞ",
+                    "lessonCode": "BSM 103",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 4,
+                    "name": "Ümit",
+                    "surname": "Kocabıçak",
+                    "email": "umit@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 7,
+                    "title": "1006"
+                }
+            },
+            {
+                "unitLessonId": 27,
+                "starTime": 11,
+                "endTime": 12,
+                "groupType": 1,
+                "dayOfTheWeekType": 1,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 1,
+                    "title": "1000"
+                }
+            },
+            {
+                "unitLessonId": 28,
+                "starTime": 10,
+                "endTime": 11,
+                "groupType": 1,
+                "dayOfTheWeekType": 1,
+                "lesson": {
+                    "lessonId": 2,
+                    "name": "FİZİK I",
+                    "lessonCode": "FIZ 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 5,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 2,
+                    "name": "Celal",
+                    "surname": "Çeken",
+                    "email": "celalceken@sakarya.edu.tr",
+                    "roles": 1,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 1,
+                    "title": "1000"
+                }
+            },
+            {
+                "unitLessonId": 29,
+                "starTime": 9,
+                "endTime": 10,
+                "groupType": 1,
+                "dayOfTheWeekType": 5,
+                "lesson": {
+                    "lessonId": 3,
+                    "name": "MATEMATİK I",
+                    "lessonCode": "MAT 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 3,
+                    "name": "Cemil",
+                    "surname": "Öz",
+                    "email": "coz@sakarya.edu.tr",
+                    "roles": 2,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 14,
+                    "title": "10013"
+                }
+            },
+            {
+                "unitLessonId": 30,
+                "starTime": 10,
+                "endTime": 11,
+                "groupType": 1,
+                "dayOfTheWeekType": 5,
+                "lesson": {
+                    "lessonId": 3,
+                    "name": "MATEMATİK I",
+                    "lessonCode": "MAT 111",
+                    "akts": 6,
+                    "credit": 4,
+                    "weeklyHour": 4,
+                    "semesterType": 1,
+                    "lessonType": 1
+                },
+                "user": {
+                    "userId": 3,
+                    "name": "Cemil",
+                    "surname": "Öz",
+                    "email": "coz@sakarya.edu.tr",
+                    "roles": 2,
+                    "status": 1,
+                    "title": 1
+                },
+                "location": {
+                    "locationId": 14,
+                    "title": "10013"
+                }
+            }
         ];
-
-        let gun1 = [
-            {
-                id: 1001,
-                name: "Veri Yapıları",
-                group: "A",
-                location: {
-                    id: 1,
-                    name: "Loc1"
-                },
-                instructors: [
-                    {
-                        id: 1,
-                        name: "Ins1"
-                    },
-                ],
-                day: 1,
-                hour: 9,
-                length: 2
-            }, {
-                id: 2001,
-                name: "Biçimsel Diller ve Soyut Makineler",
-                group: "A",
-                location: {
-                    id: 2,
-                    name: "Loc2"
-                },
-                instructors: [
-                    {
-                        id: 10,
-                        name: "Ins10"
-                    }
-                ],
-                day: 1,
-                hour: 9,
-                length: 2
-            }, {
-                id: 1002,
-                name: "Proje Yönetimi",
-                group: "B",
-                location: {
-                    id: 3,
-                    name: "Loc3"
-                },
-                instructors: [
-                    {
-                        id: 4,
-                        name: "Ins4"
-                    }
-                ],
-                day: 1,
-                hour: 9,
-                length: 2
-            }, {
-                id: 3001,
-                name: "Lesson3",
-                group: "A",
-                location: {
-                    id: 4,
-                    name: "Loc4"
-                },
-                instructors: [
-                    {
-                        id: 5,
-                        name: "Ins5"
-                    }
-                ],
-                day: 1,
-                hour: 9,
-                length: 3
-            }, {
-                id: 4001,
-                name: "Lesson4",
-                group: "A",
-                location: {
-                    id: 5,
-                    name: "Loc5"
-                },
-                instructors: [
-                    {
-                        id: 6,
-                        name: "Ins6"
-                    }
-                ],
-                day: 1,
-                hour: 10,
-                length: 2
-            }, {
-                id: 5001,
-                name: "Lesson5",
-                group: "A",
-                location: {
-                    id: 6,
-                    name: "Loc6"
-                },
-                instructors: [
-                    {
-                        id: 7,
-                        name: "Ins7"
-                    }
-                ],
-                day: 1,
-                hour: 10,
-                length: 3
-            }, {
-                id: 5002,
-                name: "Lesson5",
-                group: "B",
-                location: {
-                    id: 7,
-                    name: "Loc7"
-                },
-                instructors: [
-                    {
-                        id: 8,
-                        name: "Ins8"
-                    }
-                ],
-                day: 1,
-                hour: 10,
-                length: 3
-            }, {
-                id: 6001,
-                name: "Lesson6",
-                group: "A",
-                location: {
-                    id: 8,
-                    name: "Loc8"
-                },
-                instructors: [
-                    {
-                        id: 1,
-                        name: "Ins1"
-                    }
-                ],
-                day: 1,
-                hour: 11,
-                length: 2
-            }, {
-                id: 6002,
-                name: "Lesson6",
-                group: "B",
-                location: {
-                    id: 2,
-                    name: "Loc2"
-                },
-                instructors: [
-                    {
-                        id: 3,
-                        name: "Ins3"
-                    }
-                ],
-                day: 1,
-                hour: 11,
-                length: 2
-            }, {
-                id: 7002,
-                name: "Lesson7",
-                group: "B",
-                location: {
-                    id: 2,
-                    name: "Loc2"
-                },
-                instructors: [
-                    {
-                        id: 10,
-                        name: "Ins10"
-                    }
-                ],
-                day: 1,
-                hour: 17,
-                length: 2
-            }, {
-                id: 8002,
-                name: "Lesson8",
-                group: "B",
-                location: {
-                    id: 2,
-                    name: "Loc2"
-                },
-                instructors: [
-                    {
-                        id: 4,
-                        name: "Ins4"
-                    }
-                ],
-                day: 1,
-                hour: 13,
-                length: 2
-            },
-            {
-                id: 8003,
-                name: "Lesson8",
-                group: "C",
-                location: {
-                    id: 15,
-                    name: "Loc15"
-                },
-                instructors: [
-                    {
-                        id: 21,
-                        name: "Ins11"
-                    }
-                ],
-                day: 1,
-                hour: 14,
-                length: 2
-            },
-            {
-                id: 1003,
-                name: "Lesson1",
-                group: "C",
-                location: {
-                    id: 2,
-                    name: "Loc2"
-                },
-                instructors: [
-                    {
-                        id: 10,
-                        name: "Ins10"
-                    }
-                ],
-                day: 1,
-                hour: 11,
-                length: 3
-            },
-            {
-                id: 2003,
-                name: "Lesson2",
-                group: "C",
-                location: {
-                    id: 2,
-                    name: "Loc2"
-                },
-                instructors: [
-                    {
-                        id: 8,
-                        name: "Ins8"
-                    }
-                ],
-                day: 1,
-                hour: 13,
-                length: 3
-            },
-        ];
-        this.lessons = [...gun0, ...gun1];
+        this.lessons = [...gun0];
     }
 }

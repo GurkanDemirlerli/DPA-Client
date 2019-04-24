@@ -19,10 +19,10 @@ export const saatOptions = [
 ];
 
 export const gunOptions = [
-    { label: "Pazartesi", value: 0 },
-    { label: "Salı", value: 1 },
-    { label: "Çarşamba", value: 2 },
-    { label: "Perşembe", value: 3 },
-    { label: "Cuma", value: 4 },
+    { label: "Pazartesi", value: 1 },
+    { label: "Salı", value: 2 },
+    { label: "Çarşamba", value: 3 },
+    { label: "Perşembe", value: 4 },
+    { label: "Cuma", value: 5 },
 ];
 
