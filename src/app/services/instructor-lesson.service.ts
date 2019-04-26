@@ -1,3 +1,4 @@
+import { ListUserModel } from './../models/list-user.model';
 import { Injectable } from '@angular/core';
 import { server } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -44,7 +45,6 @@ export class InstructorLessonService {
         return this.http.put<void>(this.domain + `InstructorLesson/${lessonId}/lesson`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );
@@ -55,7 +55,6 @@ export class InstructorLessonService {
         return this.http.put<void>(this.domain + `InstructorLesson/${userId}/instructor`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );
@@ -66,13 +65,12 @@ export class InstructorLessonService {
         return this.http.get<LessonModel[]>(this.domain + `InstructorLesson/${userId}/lessons`, headers)
             .pipe(
                 tap((res) => {
-                    console.log(res);
                 }),
                 catchError(this.handleError)
             );
     }
 
-    public getUsersByLessonId(lessonId: number): Observable<LessonModel[]> {
+    public getUsersByLessonId(lessonId: number): Observable<ListUserModel[]> {
         const headers = ServicesHelpers.createAuthenticationHeader();
         return this.http.get<LessonModel[]>(this.domain + `InstructorLesson/${lessonId}/instuctors`, headers)
             .pipe(

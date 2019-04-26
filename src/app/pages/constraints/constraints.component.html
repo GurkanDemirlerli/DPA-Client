@@ -2,39 +2,39 @@
   <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
 </div>
 <br>
-  <p-table [columns]="cols" [value]="constraints" selectionMode="single" [(selection)]="selectedConstraint"
-    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
-    <ng-template pTemplate="caption">
-      Sakarya Üniversitesi Fakülteleri
-    </ng-template>
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns" [pSortableColumn]="col.field" colspan="col.colspan"
-          [ngStyle]="{'width': col.width}">
-          {{col.header}}
-          <p-sortIcon [field]="col.field"></p-sortIcon>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [pSelectableRow]="rowData">
-        <td *ngFor="let col of columns">
-          <ng-container *ngIf="col.field === 'educationType';else second">
-            {{ educationTypesTableView[educationTypes[rowData[col.field]]] }}
-          </ng-container>
-          <ng-template #second>
-            {{rowData[col.field]}}
-          </ng-template>
-        </td>
-      </tr>
-    </ng-template>
+<p-table [columns]="cols" [value]="constraints" selectionMode="single" [(selection)]="selectedConstraint"
+  (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    Kısıtlar
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" colspan="col.colspan"
+        [ngStyle]="{'width': col.width}">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <ng-container *ngIf="col.field === 'educationType';else second">
+          {{ educationTypesTableView[educationTypes[rowData[col.field]]] }}
+        </ng-container>
+        <ng-template #second>
+          {{rowData[col.field]}}
+        </ng-template>
+      </td>
+    </tr>
+  </ng-template>
 
-    <ng-template pTemplate="summary" let-rowData>
-      <div style="text-align:left">
-        <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-      </div>
-    </ng-template>
-  </p-table>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add" *ngIf="canAdd"></button>
+    </div>
+  </ng-template>
+</p-table>
 
 
 <p-dialog header="Kısıt Oluştur" [(visible)]="displayDialog" [modal]="true" [responsive]="true" [width]="350"
@@ -75,6 +75,26 @@
     </div>
     <div class="ui-grid-row">
       <div class="form-group ui-grid-col-12">
+        <b>Başlangıç Saati</b>
+        <div class="ui-grid-row">
+          <p-dropdown [options]="dropdownOptions.saatOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
+            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.startTimeOptions"
+            (onChange)="constraint.startTime = $event.value"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-12">
+        <b>Bitiş Saati</b>
+        <div class="ui-grid-row">
+          <p-dropdown [options]="dropdownOptions.saatOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
+            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.endTimeOptions"
+            (onChange)="constraint.endTime = $event.value"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="form-group ui-grid-col-12">
         <b>Açıklama</b>
         <textarea [(ngModel)]="constraint.description" rows="2" cols="30" placeholder="Açıklama"
           pInputTextarea></textarea>
@@ -91,7 +111,7 @@
       </div>
     </div>
 
-    <div class="ui-grid-row">
+    <!-- <div class="ui-grid-row">
       <div class="ui-grid-col-10">
         <b>IsActive</b>
       </div>
@@ -99,7 +119,7 @@
         <p-inputSwitch [(ngModel)]="checkboxes.isActive" (onChange)="constraint.isActive = checkboxes.isActive">
         </p-inputSwitch>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <p-footer>

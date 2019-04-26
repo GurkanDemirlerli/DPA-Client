@@ -108,7 +108,6 @@ export class FacultiesComponent implements OnInit {
 
       });
     } else {
-      console.log(this.faculty);
       let updateFacultyModel: UpdateFacultyModel = {
         title: this.faculty.title,
         facultyCode: this.faculty.facultyCode

@@ -1,39 +1,39 @@
 import { MockServiceBase } from './mock.service.base';
 import { Injectable } from '@angular/core';
-import { DepartmanModel, AddDepartmanModel, UpdateDepartmanModel } from '../models/departman.model';
+import { DepartmentModel, AddDepartmentModel, UpdateDepartmentModel } from '../models/department.model';
 import { Observable, of } from 'rxjs';
 
 @Injectable()
-export class DepartmentMockService extends MockServiceBase<DepartmanModel, AddDepartmanModel, UpdateDepartmanModel> {
+export class DepartmentMockService extends MockServiceBase<DepartmentModel, AddDepartmentModel, UpdateDepartmentModel> {
 
 
     constructor() {
-        super("departmanId", [
+        super("departmentId", [
             {
-                "departmanId": 1,
+                "departmentId": 1,
                 "title": "Bilgisayar Mühendisliği",
-                "departmanCode": "CS-1",
+                "departmentCode": "CS-1",
                 "facultyId": 4
             },
             {
-                "departmanId": 2,
+                "departmentId": 2,
                 "title": "Bilişim Sistemleri Mühendisliği",
-                "departmanCode": "CS-2",
+                "departmentCode": "CS-2",
                 "facultyId": 4
             },
             {
-                "departmanId": 3,
+                "departmentId": 3,
                 "title": "Yazılım Mühendisliği",
-                "departmanCode": "CS-3",
+                "departmentCode": "CS-3",
                 "facultyId": 4
             }
         ]);
     }
 
 
-    getDepartmentsForFaculty(facultyId): Observable<DepartmanModel[]> {
-        let data: DepartmanModel[] = [...this.data] as DepartmanModel[];
-        let model: DepartmanModel[] = data.filter(x => x.facultyId == facultyId);
+    getDepartmentsForFaculty(facultyId): Observable<DepartmentModel[]> {
+        let data: DepartmentModel[] = [...this.data] as DepartmentModel[];
+        let model: DepartmentModel[] = data.filter(x => x.facultyId == facultyId);
         return of(model);
     }
 

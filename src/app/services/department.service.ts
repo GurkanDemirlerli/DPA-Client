@@ -8,9 +8,9 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../models/token.model';
 
 import {
-    DepartmanModel,
-    AddDepartmanModel,
-    UpdateDepartmanModel
+    DepartmentModel,
+    AddDepartmentModel,
+    UpdateDepartmentModel
 } from 'src/app/models';
 
 @Injectable()
@@ -21,9 +21,9 @@ export class DepartmentService {
         private http: HttpClient
     ) { }
 
-    public getAll(): Observable<DepartmanModel[]> {
+    public getAll(): Observable<DepartmentModel[]> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.get<DepartmanModel[]>(this.domain + 'Departman', headers)
+        return this.http.get<DepartmentModel[]>(this.domain + 'Department', headers)
             .pipe(
                 tap((res) => {
                     console.log(res);
@@ -33,9 +33,9 @@ export class DepartmentService {
     }
 
 
-    public add(model: AddDepartmanModel): Observable<any> {
+    public add(model: AddDepartmentModel): Observable<any> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.post<any>(this.domain + 'Departman', model, headers)
+        return this.http.post<any>(this.domain + 'Department', model, headers)
             .pipe(
                 tap(() => {
                 }),
@@ -43,22 +43,20 @@ export class DepartmentService {
             );
     }
 
-    public update(model: UpdateDepartmanModel, id: number): Observable<void> {
-        console.log(model);
+    public update(model: UpdateDepartmentModel, id: number): Observable<void> {
         const helper = new JwtHelperService();
         const token = localStorage.getItem('token');
         const decoded: TokenModel = helper.decodeToken(token);
         const updateModel = {
             userId: model.userId,
-            departmanCode: model.departmanCode,
+            departmentCode: model.departmentCode,
             facultyId: model.facultyId,
             title: model.title
         }
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.put<void>(this.domain + `Departman/${id}`, updateModel, headers)
+        return this.http.put<void>(this.domain + `Department/${id}`, updateModel, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );
@@ -66,7 +64,7 @@ export class DepartmentService {
 
     public delete(id: number): Observable<void> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.delete<void>(this.domain + `Departman/${id}`, headers)
+        return this.http.delete<void>(this.domain + `Department/${id}`, headers)
             .pipe(
                 tap(() => {
                 }),
@@ -74,9 +72,9 @@ export class DepartmentService {
             );
     }
 
-    public get(id: number): Observable<DepartmanModel> {
+    public get(id: number): Observable<DepartmentModel> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.get<DepartmanModel>(this.domain + `Departman/${id}`, headers)
+        return this.http.get<DepartmentModel>(this.domain + `Department/${id}`, headers)
             .pipe(
                 tap(() => {
                 }),
@@ -89,12 +87,12 @@ export class DepartmentService {
         const token = localStorage.getItem('token');
         const decoded: TokenModel = helper.decodeToken(token);
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.get<DepartmanModel>(this.domain + `Departman/getDepartmentForHeadOfDepartment/${decoded.sub}`, headers)
-        .pipe(
-            tap(() => {
-            }),
-            catchError(this.handleError)
-        );
+        return this.http.get<DepartmentModel>(this.domain + `Department/getDepartmentForHeadOfDepartment/${decoded.sub}`, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
     }
 
     private handleError(err) {

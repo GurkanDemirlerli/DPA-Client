@@ -29,9 +29,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogoutClick() {
-    console.log('clicked');
     this.authService.signOut().subscribe((res) => {
-      console.log(res);
     }, (error) => {
       this.router.navigate(['/auth/login']);
     }, () => {
@@ -44,7 +42,6 @@ export class HeaderComponent implements OnInit {
   toggleMenu() {
     let menuSize = this.menuService.isMax.value;
     this.menuService.toggleMenuSize(!menuSize);
-    console.log("menu :" + !menuSize);
   }
 
 }

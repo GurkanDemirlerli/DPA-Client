@@ -8,7 +8,8 @@ import { ServicesHelpers } from './helpers';
 import {
     AddDepartmentLessonModel,
     UpdateDepartmentLessonModel,
-    LessonModel
+    LessonModel,
+    DepartmentModel
 } from 'src/app/models';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class DepartmentLessonService {
 
     public add(model: AddDepartmentLessonModel): Observable<any> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.post<any>(this.domain + 'DepartmanLesson', model, headers)
+        return this.http.post<any>(this.domain + 'DepartmentLesson', model, headers)
             .pipe(
                 tap(() => {
                 }),
@@ -31,7 +32,7 @@ export class DepartmentLessonService {
 
     public delete(departmentId: number, lessonId: number): Observable<void> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.delete<void>(this.domain + `DepartmanLesson/${departmentId}/departman/${lessonId}/lesson`, headers)
+        return this.http.delete<void>(this.domain + `DepartmentLesson/${departmentId}/department/${lessonId}/lesson`, headers)
             .pipe(
                 tap(() => {
                 }),
@@ -41,7 +42,7 @@ export class DepartmentLessonService {
 
     public getLessonsByDepartmentId(departmentId: number): Observable<LessonModel[]> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.get<LessonModel[]>(this.domain + `DepartmanLesson/${departmentId}/lessons`, headers)
+        return this.http.get<LessonModel[]>(this.domain + `DepartmentLesson/${departmentId}/lessons`, headers)
             .pipe(
                 tap((res) => {
                     console.log(res);
@@ -50,12 +51,11 @@ export class DepartmentLessonService {
             );
     }
 
-    public getDepartmentsForLessonId(lessonId: number): Observable<LessonModel[]> {
+    public getDepartmentsForLessonId(lessonId: number): Observable<DepartmentModel[]> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.get<LessonModel[]>(this.domain + `DepartmanLesson/${lessonId}/departmans`, headers)
+        return this.http.get<DepartmentModel[]>(this.domain + `DepartmentLesson/${lessonId}/departments`, headers)
             .pipe(
                 tap((res) => {
-                    console.log(res);
                 }),
                 catchError(this.handleError)
             );
@@ -63,10 +63,9 @@ export class DepartmentLessonService {
 
     public updateByDepartmentId(model: UpdateDepartmentLessonModel, departmentId: number): Observable<void> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.put<void>(this.domain + `DepartmanLesson/${departmentId}/departman`, model, headers)
+        return this.http.put<void>(this.domain + `DepartmentLesson/${departmentId}/department`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );
@@ -74,10 +73,9 @@ export class DepartmentLessonService {
 
     public updateByLessonId(model: UpdateDepartmentLessonModel, lessonId: number): Observable<void> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.put<void>(this.domain + `DepartmanLesson/${lessonId}/departman`, model, headers)
+        return this.http.put<void>(this.domain + `DepartmentLesson/${lessonId}/department`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );

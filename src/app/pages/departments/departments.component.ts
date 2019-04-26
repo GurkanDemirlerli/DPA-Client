@@ -8,9 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 
 import {
   FacultyModel,
-  AddDepartmanModel,
-  UpdateDepartmanModel,
-  DepartmanModel
+  AddDepartmentModel,
+  UpdateDepartmentModel,
+  DepartmentModel
 } from 'src/app/models';
 
 
@@ -25,13 +25,13 @@ export class DepartmentsComponent implements OnInit {
 
   displayDialog: boolean;
 
-  item: DepartmanModel = {};
+  item: DepartmentModel = {};
 
-  selectedItem: DepartmanModel;
+  selectedItem: DepartmentModel;
 
   newItem: boolean;
 
-  items: DepartmanModel[];
+  items: DepartmentModel[];
 
   cols: any[];
 
@@ -71,7 +71,7 @@ export class DepartmentsComponent implements OnInit {
     })
 
     this.cols = [
-      { field: 'departmanCode', header: 'Kodu' },
+      { field: 'departmentCode', header: 'Kodu' },
       { field: 'title', header: 'Adı' },
       { field: 'facultyId', header: 'Fakülte' },
       { field: 'userId', header: "Bölüm Başkanı" }
@@ -121,13 +121,13 @@ export class DepartmentsComponent implements OnInit {
   save() {
     let departments = [...this.items];
     if (this.newItem) {
-      let addDepartmanModel: AddDepartmanModel = {
+      let addDepartmentModel: AddDepartmentModel = {
         title: this.item.title,
-        departmanCode: this.item.departmanCode,
+        departmentCode: this.item.departmentCode,
         facultyId: this.item.facultyId
       }
-      this.departmentService.add(addDepartmanModel).subscribe((res) => {
-        this.item.departmanId = res.data;
+      this.departmentService.add(addDepartmentModel).subscribe((res) => {
+        this.item.departmentId = res.data;
         departments.push(this.item);
         this.items = departments;
         this.item = null;
@@ -140,15 +140,14 @@ export class DepartmentsComponent implements OnInit {
 
       });
     } else {
-      console.log(this.item);
-      let updateDepartmanModel: UpdateDepartmanModel = {
+      let updateDepartmentModel: UpdateDepartmentModel = {
         title: this.item.title,
-        departmanCode: this.item.departmanCode,
+        departmentCode: this.item.departmentCode,
         facultyId: this.item.facultyId,
         userId: this.item.userId
       }
-      let id = this.item.departmanId;
-      this.departmentService.update(updateDepartmanModel, id).subscribe(() => {
+      let id = this.item.departmentId;
+      this.departmentService.update(updateDepartmentModel, id).subscribe(() => {
         departments[this.items.indexOf(this.selectedItem)] = this.item;
         this.items = departments;
         this.item = null;
@@ -165,7 +164,7 @@ export class DepartmentsComponent implements OnInit {
   }
 
   delete() {
-    this.departmentService.delete(this.selectedItem.departmanId).subscribe(() => {
+    this.departmentService.delete(this.selectedItem.departmentId).subscribe(() => {
       let index = this.items.indexOf(this.selectedItem);
       this.items = this.items.filter((val, i) => i != index);
       this.item = null;
@@ -187,7 +186,7 @@ export class DepartmentsComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  clone(f: DepartmanModel): DepartmanModel {
+  clone(f: DepartmentModel): DepartmentModel {
     let department = {};
     for (let prop in f) {
       department[prop] = f[prop];

@@ -18,7 +18,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 2,
-                "departmanId": 1
+                "departmentId": 1
             },
             {
                 "lessonId": 2,
@@ -29,7 +29,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 1,
-                "departmanId": 1
+                "departmentId": 1
             }, {
                 "lessonId": 3,
                 "name": "Fizik",
@@ -39,7 +39,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 1,
-                "departmanId": 1
+                "departmentId": 1
             }, {
                 "lessonId": 4,
                 "name": "Mobil Uygulamalar",
@@ -49,7 +49,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 1,
-                "departmanId": 1
+                "departmentId": 1
             }, {
                 "lessonId": 5,
                 "name": "Sayısal Analiz",
@@ -59,7 +59,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 1,
-                "departmanId": 1
+                "departmentId": 1
             }, {
                 "lessonId": 6,
                 "name": "Optimizasyon",
@@ -69,7 +69,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 1,
-                "departmanId": 1
+                "departmentId": 1
             }, {
                 "lessonId": 7,
                 "name": "Programlamaya Giriş",
@@ -79,7 +79,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 1,
-                "departmanId": 1
+                "departmentId": 1
             },
             {
                 "lessonId": 8,
@@ -90,7 +90,7 @@ export class LessonMockService extends MockServiceBase<LessonModel, AddLessonMod
                 "weeklyHour": 5,
                 "lessonType": 1,
                 "educationType": 1,
-                "departmanId": 1
+                "departmentId": 1
             },
         ]);
     }

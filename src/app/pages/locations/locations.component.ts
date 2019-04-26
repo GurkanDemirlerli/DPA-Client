@@ -101,7 +101,6 @@ export class LocationsComponent implements OnInit {
   }
 
   save() {
-    console.log(this.item);
     let items = [...this.items];
     if (this.newItem) {
       let addModel: AddLocationModel = {
@@ -122,7 +121,6 @@ export class LocationsComponent implements OnInit {
 
       });
     } else {
-      console.log(this.item);
       let updateModel: UpdateLocationModel = {
         title: this.item.title,
         facultyId: this.item.facultyId

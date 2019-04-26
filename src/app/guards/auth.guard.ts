@@ -72,7 +72,6 @@ export class AuthNotAllowed implements CanActivate {
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         const helper = new JwtHelperService();
         const token = localStorage.getItem('token');
-        console.log(token);
         if (token == null) {
             return true;
         }

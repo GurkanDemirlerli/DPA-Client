@@ -11,5 +11,5 @@ export interface LessonModelTableView {
     weeklyHour?: WeeklyHours;
     lessonType?: LessonTypesTableView;
     educationType?: EducationTypesTableView;
-    departmanId?: number;
+    departmentId?: number;
 }

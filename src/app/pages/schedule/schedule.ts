@@ -91,13 +91,11 @@ export class Schedule {
         this.rawUnit = units;
         this.filtresizUn = units;
         this.unitsToBlocks();
-        console.log("Sıralanmıs", this.rawBlock);
 
         for (let i = 1; i <= this.gunSayisi; i++) {
             this.days.push(this.gunOlustur(i));
         }
 
-        console.log("DAYS:", this.days);
         return this;
     }
 
@@ -124,7 +122,6 @@ export class Schedule {
                 derslereGoreAyrilmis.push(yeniBlock);
             }
         }
-        console.log("Derslere Göre Ayrılmış :", derslereGoreAyrilmis);
 
         let siralanmis: ScheduleBlock[] = [];
         for (let i = 0; i < derslereGoreAyrilmis.length; i++) {
@@ -150,7 +147,6 @@ export class Schedule {
     }
 
     dersleriFiltrele(gunNo: number): ScheduleBlock[] {
-        // console.log ("RAW BLOCK:" ,this.rawBlock);
         return this.rawBlock.filter((bl) => {
             if (bl.units[0].dayOfTheWeekType === gunNo) {
                 return true;
@@ -160,7 +156,6 @@ export class Schedule {
 
     sutunOlustur(gunNo, sutunNo) {
         let dersler = this.dersleriFiltrele(gunNo);
-        console.log("Dersler :" + gunNo + " :", dersler);
         let column: ScheduleColumn = new ScheduleColumn();
         let eklenebilir = true;
         let eklenecekDers: ScheduleBlock = dersler[0];
@@ -288,7 +283,6 @@ export class Schedule {
 
         });
 
-        console.log("Kullanilabilir Saatler", saatler);
 
         return saatler;
 
@@ -342,7 +336,6 @@ export class Schedule {
             return false;
         });
 
-        console.log("Es zamanli", eszamanliDersler);
 
         secilebilirDerslikler = derslikler.filter((opt) => {
             for (let i = 0; i < eszamanliDersler.length; i++) {

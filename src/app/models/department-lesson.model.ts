@@ -1,9 +1,9 @@
 export interface AddDepartmentLessonModel{
     lessonId: number,
-    departmanId: number
+    departmentId: number
 }
 
 export interface UpdateDepartmentLessonModel{
     lessonId: number,
-    departmanId: number
+    departmentId: number
 }

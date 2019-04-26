@@ -1,4 +1,4 @@
-import { DepartmanModel } from './departman.model';
+import { DepartmentModel } from './department.model';
 import { Roles } from '../enums';
 import { Title } from '@angular/platform-browser';
 
@@ -11,8 +11,8 @@ export interface UserModel {
     email?: string;
     roles?: Roles;
     title?: Title;
-    departmanId?: number;
-    departman?: DepartmanModel;
+    departmentId?: number;
+    department?: DepartmentModel;
 }
 
 export interface AddUserModel {
@@ -23,7 +23,7 @@ export interface AddUserModel {
     email?: string;
     roles?: Roles;
     title?: Title;
-    departmanId?: number;
+    departmentId?: number;
 }
 
 export interface UpdateUserModel {
@@ -34,5 +34,5 @@ export interface UpdateUserModel {
     email?: string;
     roles?: Roles;
     title?: Title;
-    // departmanId?: number;
+    // departmentId?: number;
 }

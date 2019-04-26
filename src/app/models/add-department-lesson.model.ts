@@ -1,4 +1,4 @@
-export interface UpdateDepartmentLessonModel {
+export interface AddDepartmentLessonModel {
     lessonId: number;
     departmentId: number;
 }

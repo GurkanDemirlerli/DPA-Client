@@ -42,12 +42,10 @@ export class LessonService {
     }
 
     public update(model: UpdateLessonModel, id: number): Observable<void> {
-        console.log(model);
         const headers = ServicesHelpers.createAuthenticationHeader();
         return this.http.put<void>(this.domain + `Lesson/${id}`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );

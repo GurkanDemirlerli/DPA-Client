@@ -24,7 +24,6 @@ export class ConstraintService {
         return this.http.get<ConstraintModel[]>(this.domain + 'Constraint', headers)
             .pipe(
                 tap((res) => {
-                    console.log(res);
                 }),
                 catchError(this.handleError)
             );
@@ -42,12 +41,10 @@ export class ConstraintService {
     }
 
     public update(model: UpdateConstraintModel, id: number): Observable<void> {
-        console.log(model);
         const headers = ServicesHelpers.createAuthenticationHeader();
         return this.http.put<void>(this.domain + `Constraint/${id}`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );

@@ -5,7 +5,7 @@ import { InstructorLessonService } from './../../services/instructor-lesson.serv
 import { DepartmentLessonService } from './../../services/department-lesson.service';
 import { LessonService } from './../../services/lesson.service';
 import { Component, OnInit } from '@angular/core';
-import { DepartmanModel } from 'src/app/models/departman.model';
+import { DepartmentModel } from 'src/app/models/department.model';
 import { MenuItem, SelectItem } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 
@@ -28,7 +28,7 @@ import {
 } from 'src/app/enums';
 import {
   weeklyHourOptions,
-  educationTypeOptions,
+  semesterTypeOptions,
   lessonTypeOptions,
   aktsOptions
 } from './dropdown.data';
@@ -45,8 +45,6 @@ export class LessonsComponent implements OnInit {
   public educationTypes = EducationTypes;
   public lessonTypes = LessonTypes;
   public lessonTypesTableView = LessonTypesTableView;
-
-  faculty: FacultyModel;
 
   cols: any[];
 
@@ -67,16 +65,16 @@ export class LessonsComponent implements OnInit {
   selectedOptions: any = {};
 
   displayBolumler: boolean;
-  targetBolumler: DepartmanModel[] = [];
-  sourceBolumler: DepartmanModel[] = [];
+  targetBolumler: DepartmentModel[] = [];
+  sourceBolumler: DepartmentModel[] = [];
 
   displayInstructors: boolean;
   targetInstructors: ListUserModel[] = [];
   sourceInstructors: ListUserModel[] = [];
 
 
-  filters: { departmans: SelectItem[] } = {
-    departmans: []
+  filters: { departments: SelectItem[] } = {
+    departments: []
   };
 
   constructor(
@@ -88,24 +86,48 @@ export class LessonsComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  yazdir(e) {
+    console.log(e);
+  }
+
   ngOnInit() {
     this.lessonService.getAll().subscribe((lessons) => {
-      // lessons.map((lesson) => {
-      //   this.departmentService.get(lesson.departmanId).subscribe((departman) => {
-      //     lesson.departman = departman;
-      //   });
-      // });
-
       this.lessons = lessons;
+      this.lessons.map((ls) => {
+        this.departmentLessonService.getDepartmentsForLessonId(ls.lessonId).subscribe((dps) => {
+          ls.departments = [];
+          ls.departments = dps;
+          ls.departmentsParsed = "";
+          ls.departmentCount = 0;
+          dps.map((ds) => {
+            ls.departmentsParsed = ls.departmentsParsed + ds.title + " , ";
+            ls.departmentCount++;
+          })
+          ls.departmentCount = ls.departmentCount + " Tane";
+          this.instructorLessonService.getUsersByLessonId(ls.lessonId).subscribe((ins) => {
+            ls.users = [];
+            ls.users = ins;
+            ls.usersParsed = "";
+            ls.userCount = 0;
+            ins.map((ins) => {
+              ls.usersParsed = ls.usersParsed + ins.name + " " + ins.surname + " , ";
+              ls.userCount++;
+            });
+            ls.userCount = ls.userCount + " Kişi";
+          });
+        });
+      });
+
       this.cols = [
         { field: 'lessonCode', header: 'Kodu' },
         { field: 'name', header: 'Adı' },
-        { field: 'group', header: 'Grup' },
+        // { field: 'group', header: 'Grup' },
         { field: 'akts', header: 'AKTS' },
         { field: 'weeklyHour', header: 'Saat' },
         { field: 'lessonType', header: 'Ders Tipi' },
-        { field: 'educationType', header: 'Öğrenim Türü' },
-        { field: 'departmanId', header: 'Bölüm' },
+        { field: 'semesterType', header: 'Dönem' },
+        { field: 'departmentCount', header: 'Bölümler', hlpr: 'departmentsParsed' },
+        { field: 'userCount', header: 'Dersi Verenler', hlpr:'usersParsed' },
       ];
 
       this.items = [
@@ -114,15 +136,15 @@ export class LessonsComponent implements OnInit {
       ];
     });
 
-    this.departmentService.getAll().subscribe((departmans) => {
-      this.filters.departmans.push({
+    this.departmentService.getAll().subscribe((departments) => {
+      this.filters.departments.push({
         label: "Tümü",
         value: null
       });
-      departmans.map((departman) => {
-        this.filters.departmans.push({
-          label: departman.title,
-          value: departman.departmanId
+      departments.map((department) => {
+        this.filters.departments.push({
+          label: department.title,
+          value: department.title
         });
       });
     });
@@ -133,7 +155,7 @@ export class LessonsComponent implements OnInit {
 
   fillDropdownOptions() {
     this.dropdownOptions.lessonTypeOptions = lessonTypeOptions;
-    this.dropdownOptions.educationTypeOptions = educationTypeOptions;
+    this.dropdownOptions.semesterTypeOptions = semesterTypeOptions;
     this.dropdownOptions.aktsOptions = aktsOptions;
     this.dropdownOptions.weeklyHourOptions = weeklyHourOptions;
   }
@@ -147,19 +169,19 @@ export class LessonsComponent implements OnInit {
   }
 
   save() {
-    console.log(this.lesson);
     let lessons = [...this.lessons];
     if (this.newLesson) {
       let addLessonModel: AddLessonModel = {
         name: this.lesson.name,
         lessonCode: this.lesson.lessonCode,
-        group: this.lesson.group,
         akts: this.lesson.akts,
         weeklyHour: this.lesson.weeklyHour,
         lessonType: this.lesson.lessonType,
-        educationType: this.lesson.educationType,
-        departmanId: this.lesson.departmanId
+        semesterType: this.lesson.semesterType,
       }
+      //TODO grup ekleme yap
+      addLessonModel.lessonGroupTypes = [1];
+
       this.lessonService.add(addLessonModel).subscribe((res) => {
         this.lesson.lessonId = res.data;
         lessons.push(this.lesson);
@@ -174,17 +196,16 @@ export class LessonsComponent implements OnInit {
 
       });
     } else {
-      console.log(this.lesson);
       let updateLessonModel: UpdateLessonModel = {
         name: this.lesson.name,
         lessonCode: this.lesson.lessonCode,
-        group: this.lesson.group,
         akts: this.lesson.akts,
         weeklyHour: this.lesson.weeklyHour,
         lessonType: this.lesson.lessonType,
-        educationType: this.lesson.educationType,
-        departmanId: this.lesson.departmanId
+        semesterType: this.lesson.semesterType,
+        //TODO apiye grup güncelleme eklenebilir
       }
+
       let id = this.lesson.lessonId;
       this.lessonService.update(updateLessonModel, id).subscribe(() => {
         lessons[this.lessons.indexOf(this.selectedLesson)] = this.lesson;
@@ -222,7 +243,7 @@ export class LessonsComponent implements OnInit {
     this.lesson = this.clone(event.data);
     this.selectedOptions.aktsOptions = (this.dropdownOptions.aktsOptions as any[]).find((option) => option.code == this.lesson.akts);
     this.selectedOptions.lessonTypeOptions = (this.dropdownOptions.lessonTypeOptions as any[]).find((option) => option.code == this.lesson.lessonType);
-    this.selectedOptions.educationTypeOptions = (this.dropdownOptions.educationTypeOptions as any[]).find((option) => option.code == this.lesson.educationType);
+    this.selectedOptions.semesterTypeOptions = (this.dropdownOptions.semesterTypeOptions as any[]).find((option) => option.code == this.lesson.semesterType);
     this.selectedOptions.weeklyHourOptions = (this.dropdownOptions.weeklyHourOptions as any[]).find((option) => option.code == this.lesson.weeklyHour);
     this.displayDialog = true;
   }
@@ -237,14 +258,14 @@ export class LessonsComponent implements OnInit {
 
   bolumler() {
     this.displayBolumler = true;
-    let targetBolumler: DepartmanModel[] = [];
-    let sourceBolumler: DepartmanModel[] = [];
+    let targetBolumler: DepartmentModel[] = [];
+    let sourceBolumler: DepartmentModel[] = [];
 
     this.departmentLessonService.getDepartmentsForLessonId(this.selectedLesson.lessonId).subscribe((departments1) => {
       targetBolumler = departments1;
       this.departmentService.getAll().subscribe((departments2) => {
         departments2.map((ls) => {
-          let tempA = targetBolumler.filter((opt) => opt.departmanId == ls.departmanId);
+          let tempA = targetBolumler.filter((opt) => opt.departmentId == ls.departmentId);
           if (tempA.length < 1) {
             sourceBolumler.push(ls);
           }
@@ -258,7 +279,7 @@ export class LessonsComponent implements OnInit {
   addDepartmentForLesson(e) {
     for (let i = 0; i < e.items.length; i++) {
       let addModel: AddDepartmentLessonModel = {
-        departmanId: e.items[i].departmanId,
+        departmentId: e.items[i].departmentId,
         lessonId: this.lesson.lessonId
       };
       this.departmentLessonService.add(addModel).subscribe((res) => {
@@ -269,8 +290,7 @@ export class LessonsComponent implements OnInit {
 
   deleteDepartmentForLesson(e) {
     for (let i = 0; i < e.items.length; i++) {
-      this.departmentLessonService.delete(e.items[i].departmanId, this.lesson.lessonId).subscribe((res) => {
-        console.log("Beklenen sonuç:", res);
+      this.departmentLessonService.delete(e.items[i].departmentId, this.lesson.lessonId).subscribe((res) => {
       });
     }
   }
@@ -312,7 +332,6 @@ export class LessonsComponent implements OnInit {
   deleteUserForLesson(e) {
     for (let i = 0; i < e.items.length; i++) {
       this.instructorLessonService.delete(e.items[i].userId, this.lesson.lessonId).subscribe((res) => {
-        console.log("Beklenen sonuç:", res);
       });
     }
   }

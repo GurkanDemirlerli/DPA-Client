@@ -42,12 +42,10 @@ export class LocationService {
     }
 
     public update(model: UpdateLocationModel, id: number): Observable<void> {
-        console.log(model);
         const headers = ServicesHelpers.createAuthenticationHeader();
         return this.http.put<void>(this.domain + `Location/${id}`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );

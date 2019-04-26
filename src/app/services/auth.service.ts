@@ -10,10 +10,13 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../models/token.model';
 import { ListUserModel } from '../models';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+  })
 export class AuthService {
 
     private domain = server.url + "/";
+    public user;
 
     constructor(
         private http: HttpClient
@@ -23,6 +26,7 @@ export class AuthService {
         return this.http.post<any>(this.domain + 'Users/SignIn', user)
             .pipe(
                 tap((res) => {
+                    this.user = res.data.userInfo;
                     this.storeUserData(res.data.token);
                 }),
                 catchError(this.handleError)
@@ -35,7 +39,6 @@ export class AuthService {
             .pipe(
                 tap((res) => {
                     localStorage.clear();
-                    console.log(res);
                 }),
                 catchError((err) => {
                     localStorage.clear();
@@ -51,12 +54,11 @@ export class AuthService {
         const decoded: TokenModel = helper.decodeToken(token);
         let endPoint: string = 'Users/instructor';
         if (decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "Administrator") {
-            endPoint = 'Users/headOfDepartmant';
+            endPoint = 'Users/headOfDepartmentt';
         }
         return this.http.post<any>(this.domain + endPoint, model, headers)
             .pipe(
                 tap((res) => {
-                    console.log(res);
                 }),
                 catchError((err) => {
                     return this.handleError(err);
@@ -69,7 +71,6 @@ export class AuthService {
         return this.http.get<ListUserModel[]>(this.domain + 'Users', headers)
             .pipe(
                 tap((res) => {
-                    console.log(res);
                 }),
                 catchError(this.handleError)
             );
@@ -81,7 +82,6 @@ export class AuthService {
         return this.http.put<void>(this.domain + `Users/${id}`, model, headers)
             .pipe(
                 tap((res) => {
-                    console.log(res);
                 }),
                 catchError((err) => {
                     return this.handleError(err);

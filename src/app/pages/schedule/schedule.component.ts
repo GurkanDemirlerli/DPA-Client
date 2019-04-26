@@ -101,14 +101,12 @@ export class ScheduleComponent implements OnInit {
   derslikleriFiltrele() {
     this.dropdownOptions.derslikOptions = [];
     let derslikler = this.schedule.secilebilirDerslikler(this.selected.blockId, this.duzenlemeModeli.gun, this.duzenlemeModeli.saat);
-    console.log("DERSLİKLER", derslikler);
     for (let i = 0; i < derslikler.length; i++) {
       let derslik = derslikler[i];
       (this.dropdownOptions.derslikOptions as any[]).push({
         label: derslik.title, value: derslik
       })
     }
-    console.log(derslikler);
     this.duzenlemeModeli.derslik = null;
   }
 
@@ -153,13 +151,11 @@ export class ScheduleComponent implements OnInit {
       this.lessons = lessons;
       let schedule = new Schedule();
       this.schedule = schedule.make(lessons);
-      console.log("SCHEDULE", this.schedule);
       // this.schedule.filtere(this.filtre);
       this.goster = 6;
       this.fillDropdownOptions();
 
 
-      console.log(this.schedule);
     }, (err) => {
       console.log(err);
     });

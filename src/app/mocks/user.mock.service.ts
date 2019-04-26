@@ -18,7 +18,7 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
                 email: "ntasbasi@sakarya.edu.tr",
                 roles: Roles.User,
                 title: Titles.OgrGor,
-                departmanId: 1,
+                departmentId: 1,
             },
             {
                 userId: 2,
@@ -29,7 +29,7 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
                 email: "yyurtay@sakarya.edu.tr",
                 roles: Roles.User,
                 title: Titles.OgrGor,
-                departmanId: 1,
+                departmentId: 1,
             },
             {
                 userId: 3,
@@ -40,7 +40,7 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
                 email: "coz@sakarya.edu.tr",
                 roles: Roles.Admin,
                 title: Titles.Profesor,
-                departmanId: 1,
+                departmentId: 1,
             },
             {
                 userId: 4,
@@ -51,14 +51,14 @@ export class UserMockService extends MockServiceBase<UserModel, AddUserModel, Up
                 email: "dn1@sakarya.edu.tr",
                 roles: Roles.User,
                 title: Titles.Okutman,
-                departmanId: 3,
+                departmentId: 3,
             }
         ]);
     }
 
-    getUsersForDepartment(departmanId: number): Observable<UserModel[]> {
+    getUsersForDepartment(departmentId: number): Observable<UserModel[]> {
         let data: UserModel[] = [...this.data] as UserModel[];
-        let model: UserModel[] = data.filter(x => x.departmanId == departmanId);
+        let model: UserModel[] = data.filter(x => x.departmentId == departmentId);
         return of(model);
     }
 }

@@ -15,9 +15,13 @@ import {
 } from 'src/app/enums';
 import {
   weeklyHourOptions,
-  educationTypeOptions
+  educationTypeOptions,
+  saatOptions
 } from './dropdown.data';
 import { ConstraintService } from 'src/app/services/constraint.service';
+import { TokenModel } from 'src/app/models/token.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -45,6 +49,7 @@ export class ConstraintsComponent implements OnInit {
 
   items: MenuItem[];
 
+  canAdd: boolean = false;
 
   dropdownOptions: any = {};
 
@@ -57,12 +62,19 @@ export class ConstraintsComponent implements OnInit {
 
   constructor(
     private constraintService: ConstraintService,
+    private authService: AuthService,
     private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.constraintService.getAll().subscribe((constraints) => {
       this.constraints = constraints;
+      this.canAdd = true;
+      constraints.map((cs) => {
+        if (cs.userId === this.authService.user.userId) {
+          this.canAdd = false;
+        }
+      })
     })
 
     this.cols = [
@@ -72,6 +84,8 @@ export class ConstraintsComponent implements OnInit {
       { field: 'isActive', header: 'Aktiflik' },
       { field: 'weeklyHour', header: 'Haftalık Saat' },
       { field: 'educationType', header: 'Öğrenim Türü' },
+      { field: 'startTime', header: 'Başlangıç saati' },
+      { field: 'endTime', header: 'Bitiş saati' },
       { field: 'userId', header: 'Oluşturan' },
     ];
 
@@ -86,6 +100,7 @@ export class ConstraintsComponent implements OnInit {
   fillDropdownOptions() {
     this.dropdownOptions.weeklyHourOptions = weeklyHourOptions;
     this.dropdownOptions.educationTypeOptions = educationTypeOptions;
+    this.dropdownOptions.saatOptions = saatOptions;
   }
 
 
@@ -100,18 +115,25 @@ export class ConstraintsComponent implements OnInit {
 
 
   save() {
-    console.log(this.constraint);
-    this.constraint.userId = 2;
+
     let constraints = [...this.constraints];
     if (this.newConstraint) {
+      const helper = new JwtHelperService();
+      const token = localStorage.getItem('token');
+      const decoded: TokenModel = helper.decodeToken(token);
+      const userId = Number(decoded.sub);
+      this.constraint.userId = userId;
+
       let addConstraintModel: AddConstraintModel = {
+        startTime: this.constraint.startTime,
+        endTime: this.constraint.endTime,
         title: this.constraint.title,
         description: this.constraint.description,
         isFreeDay: this.constraint.isFreeDay,
-        isActive: this.constraint.isActive,
+        isActive: true,
         weeklyHour: this.constraint.weeklyHour,
         educationType: this.constraint.educationType,
-        userId: this.constraint.userId
+        userId: userId
       }
       this.constraintService.add(addConstraintModel).subscribe((res) => {
         this.constraint.constraintId = res.data;
@@ -121,13 +143,13 @@ export class ConstraintsComponent implements OnInit {
         this.displayDialog = false;
         this.toastr.success('Kısıt Başarıyla Eklendi', 'Başarılı');
       }, (err) => {
-        console.log(err);
         this.toastr.error("Kısıt eklenirken bir hata oluştu", "Sunucu Hatası");
       }, () => {
       });
     } else {
-      console.log(this.constraint);
       let updateConstraintModel: UpdateConstraintModel = {
+        startTime: this.constraint.startTime,
+        endTime: this.constraint.endTime,
         title: this.constraint.title,
         description: this.constraint.description,
         isFreeDay: this.constraint.isFreeDay,
@@ -171,10 +193,12 @@ export class ConstraintsComponent implements OnInit {
   onRowSelect(event) {
     this.newConstraint = false;
     this.constraint = this.clone(event.data);
-    this.checkboxes.isFreeDay = false;
-    this.checkboxes.isActive = false;
+    this.checkboxes.isFreeDay = this.constraint.isFreeDay;
+    this.checkboxes.isActive = this.constraint.isActive;
     this.selectedOptions.educationTypeOptions = (this.dropdownOptions.educationTypeOptions as any[]).find((option) => option.code == this.constraint.educationType);
     this.selectedOptions.weeklyHourOptions = (this.dropdownOptions.weeklyHourOptions as any[]).find((option) => option.code == this.constraint.weeklyHour);
+    this.selectedOptions.startTimeOptions = (this.dropdownOptions.saatOptions as any[]).find((option) => option.value == this.constraint.startTime);
+    this.selectedOptions.endTimeOptions = (this.dropdownOptions.saatOptions as any[]).find((option) => option.value == this.constraint.endTime);
     this.displayDialog = true;
   }
 

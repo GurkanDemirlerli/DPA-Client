@@ -5,7 +5,7 @@
 <br>
 
   <p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both"
-    filterBy="departman.title,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
+    filterBy="department.title,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
     <p-header>
       <div class="ui-helper-clearfix">
         <div class="ui-g">
@@ -51,7 +51,7 @@
             <div class="ui-g-10 ui-sm-6"><b>{{roles[user.roles] }}</b></div>
 
             <div class="ui-g-2 ui-sm-6">Bölüm: </div>
-            <div class="ui-g-10 ui-sm-6"><b>{{user.departman?.title}}</b></div>
+            <div class="ui-g-10 ui-sm-6"><b>{{user.department?.title}}</b></div>
 
           </div>
         </div>
@@ -62,7 +62,7 @@
     </ng-template>
     <ng-template let-user pTemplate="gridItem">
       <div style="padding:.5em" class="ui-g-12 ui-md-3">
-        <p-panel [header]="user.departman?.title" [style]="{'text-align':'center'}">
+        <p-panel [header]="user.department?.title" [style]="{'text-align':'center'}">
           <img src="assets/profilepicture.png" width="60">
           <div class="user-detail">{{titlesWord[titles[user.title]] + ' ' +user.name  + ' ' + user.surname | titlecase}}
           </div>
@@ -144,12 +144,12 @@
       </div>
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="departmanId">Bölüm</label>
+          <label for="departmentId">Bölüm</label>
         </div>
         <div class="ui-g-8">
-          <p-dropdown [options]="dropdownOptions.departmanOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
-            optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.departmanOptions"
-            (onChange)="user.departmanId = $event.value.code"></p-dropdown>
+          <p-dropdown [options]="dropdownOptions.departmentOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
+            optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.departmentOptions"
+            (onChange)="user.departmentId = $event.value.code"></p-dropdown>
         </div>
       </div>
 

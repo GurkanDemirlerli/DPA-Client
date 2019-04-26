@@ -1,22 +1,22 @@
 import { FacultyModel } from './faculty.model';
-export interface DepartmanModel {
-    departmanId?: number;
+export interface DepartmentModel {
+    departmentId?: number;
     title?: string;
-    departmanCode?: string;
+    departmentCode?: string;
     facultyId?: number;
     faculty?: FacultyModel;
     userId?: number;
 }
 
-export interface AddDepartmanModel {
+export interface AddDepartmentModel {
     title: string;
-    departmanCode: string;
+    departmentCode: string;
     facultyId: number;
 }
 
-export interface UpdateDepartmanModel {
+export interface UpdateDepartmentModel {
     title: string;
-    departmanCode: string;
+    departmentCode: string;
     facultyId: number;
     userId?: number;
 }

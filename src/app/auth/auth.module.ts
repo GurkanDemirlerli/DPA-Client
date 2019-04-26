@@ -23,8 +23,6 @@ import { RouterModule } from '@angular/router';
         RouterModule
     ],
     exports: [],
-    providers: [
-        AuthService
-    ],
+
 })
 export class AuthModule { }

@@ -24,7 +24,6 @@ export class FacultyService {
         return this.http.get<FacultyModel[]>(this.domain + 'Faculty', headers)
             .pipe(
                 tap((res) => {
-                    console.log(res);
                 }),
                 catchError(this.handleError)
             );
@@ -42,12 +41,10 @@ export class FacultyService {
     }
 
     public update(model: UpdateFacultyModel, id: number): Observable<void> {
-        console.log(model);
         const headers = ServicesHelpers.createAuthenticationHeader();
         return this.http.put<void>(this.domain + `Faculty/${id}`, model, headers)
             .pipe(
                 tap(() => {
-                    console.log('OK');
                 }),
                 catchError(this.handleError)
             );

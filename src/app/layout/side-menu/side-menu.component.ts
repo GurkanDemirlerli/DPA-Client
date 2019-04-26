@@ -1,5 +1,5 @@
 import { DepartmentService } from './../../services/department.service';
-import { DepartmanModel } from 'src/app/models/departman.model';
+import { DepartmentModel } from 'src/app/models/department.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../services/menu.service';
@@ -39,7 +39,7 @@ export class SideMenuComponent implements OnInit {
   menuState: string;
 
   user: ListUserModel;
-  department: DepartmanModel;
+  department: DepartmentModel;
   public roles = Roles;
 
   icons = {
@@ -60,17 +60,18 @@ export class SideMenuComponent implements OnInit {
   ngOnInit() {
     this.authService.getMe().subscribe((user) => {
       this.user = user;
-      this.departmentService.getMyDepartment().subscribe((department) => {
-        this.department = department;
-        console.log(this.department);
-      })
+      if (user.roles == Roles.Admin) {
+        this.departmentService.getMyDepartment().subscribe((department) => {
+          this.department = department;
+        });
+      }
     }, (err) => {
 
     });
+
     this.menuService.isMax$.subscribe((menuState) => {
       this.isMax = menuState;
       this.menuState = (this.isMax === true) ? 'open' : 'collapsed';
-      console.log(this.menuState);
     });
   }
 

@@ -86,8 +86,8 @@ export class InstructorsComponent implements OnInit {
     this.userService.getAll().subscribe((users) => {
       this.users = users;
       // users.map(user => {
-      //   this.departmentService.get(user.departmanId).subscribe(department => {
-      //     user.departman = department;
+      //   this.departmentService.get(user.departmentId).subscribe(department => {
+      //     user.department = department;
       //   })
       // })
     });
@@ -109,16 +109,16 @@ export class InstructorsComponent implements OnInit {
   fillDropdownOptions() {
     this.dropdownOptions.roleTypeOptions = roleTypeOptions;
     this.dropdownOptions.titleTypeOptions = titleTypeOptions;
-    this.dropdownOptions.departmanOptions = [];
-    let departmanOptions = [];
-    this.departmentService.getAll().subscribe((departmans) => {
-      departmans.map((departman) => {
-        departmanOptions.push({
-          "name": departman.title,
-          "code": departman.departmanId
+    this.dropdownOptions.departmentOptions = [];
+    let departmentOptions = [];
+    this.departmentService.getAll().subscribe((departments) => {
+      departments.map((department) => {
+        departmentOptions.push({
+          "name": department.title,
+          "code": department.departmentId
         });
       });
-      this.dropdownOptions.departmanOptions = departmanOptions;
+      this.dropdownOptions.departmentOptions = departmentOptions;
     })
   }
 
@@ -127,7 +127,7 @@ export class InstructorsComponent implements OnInit {
     this.newUser = false;
     this.selectedOptions.roleTypeOptions = (this.dropdownOptions.roleTypeOptions as any[]).find((option) => option.code == this.selectedUser.roles);
     this.selectedOptions.titleTypeOptions = (this.dropdownOptions.titleTypeOptions as any[]).find((option) => option.code == this.selectedUser.title);
-    this.selectedOptions.departmanOptions = (this.dropdownOptions.departmanOptions as any[]).find((option) => option.code == this.selectedUser.departmanId);
+    this.selectedOptions.departmentOptions = (this.dropdownOptions.departmentOptions as any[]).find((option) => option.code == this.selectedUser.departmentId);
     this.user = user;
     this.displayDialog = true;
     event.preventDefault();
@@ -148,7 +148,6 @@ export class InstructorsComponent implements OnInit {
 
   close() {
     this.selectedUser = null;
-    console.log(this.selectUser);
   }
 
   showDialogToAdd() {
@@ -178,11 +177,11 @@ export class InstructorsComponent implements OnInit {
         email: this.user.email,
         roles: this.user.roles,
         title: this.user.title,
-        // departmanId: this.user.departmanId
+        // departmentId: this.user.departmentId
       }
       this.userService.add(addUserModel).subscribe((res) => {
-        // this.departmentService.get(this.user.departmanId).subscribe(department => {
-        //   this.user.departman = department;
+        // this.departmentService.get(this.user.departmentId).subscribe(department => {
+        //   this.user.department = department;
         this.user.userId = res.data;
         users.push(this.user);
         this.users = users;
@@ -205,7 +204,7 @@ export class InstructorsComponent implements OnInit {
         email: this.user.email,
         roles: this.user.roles,
         title: this.user.title,
-        // departmanId: this.user.departmanId
+        // departmentId: this.user.departmentId
       }
       let id = this.user.userId;
       this.userService.update(updateUserModel, id).subscribe(() => {
@@ -280,7 +279,6 @@ export class InstructorsComponent implements OnInit {
   deleteLessonForUser(e) {
     for (let i = 0; i < e.items.length; i++) {
       this.instructorLessonService.delete(this.user.userId, e.items[i].lessonId).subscribe((res) => {
-        console.log("Beklenen sonuç:", res);
       });
     }
   }
