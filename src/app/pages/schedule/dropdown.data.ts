@@ -26,3 +26,27 @@ export const gunOptions = [
     { label: "Cuma", value: 5 },
 ];
 
+export const semesterOptions = [
+    { label: "1. Yarıyıl", value: 1 },
+    { label: "2. Yarıyıl", value: 2 },
+    { label: "3. Yarıyıl", value: 3 },
+    { label: "4. Yarıyıl", value: 4 },
+    { label: "5. Yarıyıl", value: 5 },
+    { label: "6. Yarıyıl", value: 6 },
+    { label: "7. Yarıyıl", value: 7 },
+    { label: "8. Yarıyıl", value: 8 },
+];
+
+export const groupOptions = [
+    { label: "Grup A", value: 1 },
+    { label: "Grup B", value: 2 },
+    { label: "Grup C", value: 3 },
+    { label: "Grup D", value: 4 },
+];
+
+export const educationTypeOptions = [
+    { label: "I. Öğr.", value: 1 },
+    { label: "II. Öğr.", value: 2 },
+    { label: "Tümü", value: 3 },
+];
+

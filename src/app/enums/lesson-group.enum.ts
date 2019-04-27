@@ -6,8 +6,8 @@ export enum LessonGroupEnum {
 }
 
 export enum LessonGroupReverseEnum {
-    A = "A",
-    B = "B",
-    C = "C",
-    D = "D"
+    A = "A Grubu",
+    B = "B Grubu",
+    C = "C Grubu",
+    D = "D Grubu"
 }

@@ -13,7 +13,7 @@
     margin-right: 5px;
   }
 
-  &-days{
+  &-days {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -116,23 +116,22 @@
     box-sizing: content-box;
     background: rgb(30, 153, 181);
     min-width: 0; /* or some value */
-    p{
-      margin:0;
-      padding:0;
+    p {
+      margin: 0;
+      padding: 0;
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
   }
   &-loc {
     color: black;
     padding: 1px;
     min-width: 0; /* or some value */
-    p{
-      margin:0;
-      padding:0;
+    p {
+      margin: 0;
+      padding: 0;
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -143,9 +142,29 @@
     color: black;
     padding: 1px;
     min-width: 0; /* or some value */
-    p{
-      margin:0;
-      padding:0;
+    p {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &-gr-lt {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-gr,
+  &-lt {
+    color: black;
+    padding: 1px;
+    min-width: 0; /* or some value */
+    p {
+      margin: 0;
+      padding: 0;
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -177,6 +196,7 @@
   }
 
   &-wrapper {
+    flex: 1;
     margin: 0 10px;
     display: flex;
     flex-direction: row;
@@ -187,6 +207,9 @@
       padding: 3px;
       border: 1px solid rgb(198, 198, 198);
       border-radius: 5px;
+    }
+    p-dropdown {
+      width: 150px;
     }
   }
   &-label {
@@ -249,6 +272,13 @@
   flex-direction: column;
 }
 
-.day-max{
+.day-max {
   width: 100%;
+}
+
+.flCol {
+}
+
+.flRow {
+  flex-direction: row;
 }

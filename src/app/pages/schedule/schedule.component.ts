@@ -1,14 +1,13 @@
-import { gunOptions, saatOptions } from './dropdown.data';
+import { gunOptions, saatOptions, groupOptions, educationTypeOptions, semesterOptions } from './dropdown.data';
 import { Component, OnInit } from '@angular/core';
-import { ScheduleMockService } from 'src/app/mocks/schedule.mock.service';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { ScheduleUnit, ScheduleBlock } from 'src/app/models/schedule.model';
 import { Schedule } from './schedule';
 import { SyllabusService } from 'src/app/services/syllabus.service';
-import { Roles, RolesWord, Titles, TitlesWord } from 'src/app/enums';
+import { Titles, TitlesWord, EducationTypes, EducationTypesTableView } from 'src/app/enums';
+import { LessonGroupEnum, LessonGroupReverseEnum } from 'src/app/enums/lesson-group.enum';
 
-import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'dpa-schedule',
@@ -22,7 +21,7 @@ export class ScheduleComponent implements OnInit {
 
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === "Escape") {
-      if (this.goster != 6) {
+      if (this.goster != 6 && this.displayDialog == false) {
         this.tumunuSec();
       }
     }
@@ -30,6 +29,10 @@ export class ScheduleComponent implements OnInit {
 
   public titles = Titles;
   public titlesWord = TitlesWord;
+  public groupEnum = LessonGroupEnum;
+  public groupEnumReverse = LessonGroupReverseEnum;
+  public edTypeEnum = EducationTypes;
+  public edTypeEnumReverse = EducationTypesTableView;
 
   lessons: ScheduleUnit[] = [];
   schedule: Schedule;
@@ -94,6 +97,9 @@ export class ScheduleComponent implements OnInit {
     this.dropdownOptions.gunOptions = gunOptions;
     this.dropdownOptions.saatOptions = [];
     this.dropdownOptions.derslikOptions = [];
+    this.dropdownOptions.groupOptions = groupOptions;
+    this.dropdownOptions.educationTypeOptions = educationTypeOptions;
+    this.dropdownOptions.semesterOptions = semesterOptions;
   }
 
   getRandomColor() {
@@ -205,7 +211,8 @@ export class ScheduleComponent implements OnInit {
       },
       adi: {
         'font-size': '15px',
-        'background': 'transparent'
+        'background': 'transparent',
+        'padding-left': '20px'
       },
       loc: {
         'padding-left': '20px'
