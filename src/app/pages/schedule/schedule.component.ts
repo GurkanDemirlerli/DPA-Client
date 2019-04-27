@@ -1,9 +1,11 @@
 import { gunOptions, saatOptions } from './dropdown.data';
 import { Component, OnInit } from '@angular/core';
 import { ScheduleMockService } from 'src/app/mocks/schedule.mock.service';
-import { Schedule, ScheduleLesson, ScheduleBlock, ScheduleUnit } from './schedule';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { ScheduleUnit, ScheduleBlock } from 'src/app/models/schedule.model';
+import { Schedule } from './schedule';
+import { SyllabusService } from 'src/app/services/syllabus.service';
 
 
 @Component({
@@ -46,7 +48,10 @@ export class ScheduleComponent implements OnInit {
   };
   //TODO
   //secilebilir gunler ekle
-  constructor(private scheduleService: ScheduleMockService) { }
+  constructor(
+    // private scheduleService: ScheduleMockService,
+    private scheduleService: SyllabusService
+  ) { }
 
   showDialog() {
     this.displayDialog = true;
@@ -147,10 +152,10 @@ export class ScheduleComponent implements OnInit {
 
 
   ngOnInit() {
-    this.scheduleService.get().subscribe((lessons) => {
-      this.lessons = lessons;
+    this.scheduleService.get(1).subscribe((syl) => {
+      this.lessons = syl.unitLessons;
       let schedule = new Schedule();
-      this.schedule = schedule.make(lessons);
+      this.schedule = schedule.make(this.lessons);
       // this.schedule.filtere(this.filtre);
       this.goster = 6;
       this.fillDropdownOptions();
