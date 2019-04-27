@@ -12,21 +12,33 @@ import { ListUserModel } from '../models';
 
 @Injectable({
     providedIn: 'root',
-  })
+})
 export class AuthService {
 
     private domain = server.url + "/";
+    public userToken: TokenModel;
     public user;
 
     constructor(
         private http: HttpClient
-    ) { }
+    ) {
+        const helper = new JwtHelperService();
+        const token = localStorage.getItem('token');
+        const decoded: TokenModel = helper.decodeToken(token);
+        if (decoded) {
+            this.userToken = decoded;
+        }
+
+        this.getMe().subscribe((usr) => {
+            this.user = usr;
+        });
+
+    }
 
     public signIn(user: LoginModel): Observable<any> {
         return this.http.post<any>(this.domain + 'Users/SignIn', user)
             .pipe(
                 tap((res) => {
-                    this.user = res.data.userInfo;
                     this.storeUserData(res.data.token);
                 }),
                 catchError(this.handleError)

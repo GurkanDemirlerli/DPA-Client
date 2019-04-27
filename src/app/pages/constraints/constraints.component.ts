@@ -71,7 +71,7 @@ export class ConstraintsComponent implements OnInit {
       this.constraints = constraints;
       this.canAdd = true;
       constraints.map((cs) => {
-        if (cs.userId === this.authService.user.userId) {
+        if (cs.userId === (Number(this.authService.userToken.sub))) {
           this.canAdd = false;
         }
       })

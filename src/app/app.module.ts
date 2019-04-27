@@ -24,6 +24,7 @@ import { DepartmentLessonService } from './services/department-lesson.service';
 import { ToastrModule } from 'ngx-toastr';
 import { ScheduleMockService } from './mocks/schedule.mock.service';
 import { SyllabusService } from './services/syllabus.service';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { SyllabusService } from './services/syllabus.service';
     ToastrModule.forRoot()
   ],
   providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     SyllabusService,
     ScheduleMockService,
     LocationMockService,

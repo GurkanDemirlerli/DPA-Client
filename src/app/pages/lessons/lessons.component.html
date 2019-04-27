@@ -20,19 +20,19 @@
         <p-dropdown *ngSwitchCase="'departmentCount'" [options]="filters.departments" [style]="{'width':'100%'}"
           (onChange)="dt.filter($event.value, col.hlpr, col.filterMatchMode)"></p-dropdown>
         <input *ngSwitchCase="'userCount'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.hlpr, col.filterMatchMode)" [style]="{'width':'100%'}">
+          (input)="dt.filter($event.target.value, col.hlpr, col.filterMatchMode)" style="width:100%">
         <input *ngSwitchCase="'name'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [style]="{'width':'100%'}">
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
         <input *ngSwitchCase="'akts'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [style]="{'width':'100%'}">
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
         <input *ngSwitchCase="'weeklyHour'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [style]="{'width':'100%'}">
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
         <input *ngSwitchCase="'semesterType'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [style]="{'width':'100%'}">
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
         <input *ngSwitchCase="'lessonCode'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [style]="{'width':'100%'}">
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
         <input *ngSwitchCase="'lessonType'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [style]="{'width':'100%'}">
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
       </th>
     </tr>
   </ng-template>
@@ -60,7 +60,7 @@
     </div>
   </ng-template>
 </p-table>
-<p-dialog header="Ders Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+<p-dialog appendTo="body" header="Ders Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
   [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}">
 
   <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="lesson">
@@ -163,7 +163,7 @@
 </p-dialog>
 
 <p-dialog header="Dersin Verildiği Bölümler" [(visible)]="displayBolumler" [responsive]="true" showEffect="fade"
-  [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
+  [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}" >
 
   <p-pickList [source]="sourceBolumler" [target]="targetBolumler" sourceHeader="Tüm Bölümler"
     targetHeader="Verildiği Bölümler" [responsive]="true" filterBy="title,departmentCode" dragdrop="true"
@@ -184,7 +184,7 @@
 </p-dialog>
 
 <p-dialog header="Dersi Verenler" [(visible)]="displayInstructors" [responsive]="true" showEffect="fade" [modal]="true"
-  [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
+  [responsive]="true" [contentStyle]="{'overflow':'visible'}" >
 
   <p-pickList [source]="sourceInstructors" [target]="targetInstructors" sourceHeader="Tüm Kişiler"
     targetHeader="Dersi Verenler" [responsive]="true" filterBy="name,surname" dragdrop="true"

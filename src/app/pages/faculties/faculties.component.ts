@@ -87,7 +87,7 @@ export class FacultiesComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  save() {
+  save(e) {
     let faculties = [...this.faculties];
     if (this.newFaculty) {
       let addFacultyModel: AddFacultyModel = {

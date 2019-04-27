@@ -8,13 +8,25 @@ import { Schedule } from './schedule';
 import { SyllabusService } from 'src/app/services/syllabus.service';
 import { Roles, RolesWord, Titles, TitlesWord } from 'src/app/enums';
 
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'dpa-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  styleUrls: ['./schedule.component.scss'],
+  host: {
+    '(document:keyup)': 'handleKeyboardEvent($event)'
+  }
 })
 export class ScheduleComponent implements OnInit {
+
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      if (this.goster != 6) {
+        this.tumunuSec();
+      }
+    }
+  }
 
   public titles = Titles;
   public titlesWord = TitlesWord;
@@ -33,6 +45,7 @@ export class ScheduleComponent implements OnInit {
     ins: "",
     loc: "",
     grp: "",
+    semester: "",
   }
 
   displayDialog: boolean = false;
@@ -51,10 +64,9 @@ export class ScheduleComponent implements OnInit {
     wrapper: {},
     ins: {}
   };
-  //TODO
-  //secilebilir gunler ekle
+
+  uzat: boolean = false;
   constructor(
-    // private scheduleService: ScheduleMockService,
     private scheduleService: SyllabusService
   ) { }
 
@@ -94,7 +106,7 @@ export class ScheduleComponent implements OnInit {
     return colors[Math.floor(Math.random() * (3 - 0 + 1)) + 0];
   }
 
-  saatleriFiltrele() {
+  saatleriFiltrele(e) {
     this.dropdownOptions.saatOptions = [];
     this.dropdownOptions.derslikOptions = [];
     let saatler = this.schedule.secilebilirSaatler(this.selected.blockId, this.duzenlemeModeli.gun);
@@ -108,7 +120,17 @@ export class ScheduleComponent implements OnInit {
     this.duzenlemeModeli.derslik = null;
   }
 
-  derslikleriFiltrele() {
+  toggleGenislik() {
+    if (this.uzat) {
+      document.getElementById('body').style.width = "100%";
+      this.uzat = false;
+    } else {
+      document.getElementById('body').style.width = "2500px";
+      this.uzat = true;
+    }
+  }
+
+  derslikleriFiltrele(e) {
     this.dropdownOptions.derslikOptions = [];
     let derslikler = this.schedule.secilebilirDerslikler(this.selected.blockId, this.duzenlemeModeli.gun, this.duzenlemeModeli.saat);
     for (let i = 0; i < derslikler.length; i++) {
@@ -161,7 +183,6 @@ export class ScheduleComponent implements OnInit {
       this.lessons = syl.unitLessons;
       let schedule = new Schedule();
       this.schedule = schedule.make(this.lessons);
-      // this.schedule.filtere(this.filtre);
       this.goster = 6;
       this.fillDropdownOptions();
 
@@ -173,6 +194,37 @@ export class ScheduleComponent implements OnInit {
 
   filtrele() {
     this.schedule.filtrele(this.filtre);
+  }
+
+  gunSec(gunNo: number) {
+    this.goster = gunNo;
+    this.dersStyle = {
+      wrapper: {
+        'font-size': '13px',
+        'font-weight': '600px',
+      },
+      adi: {
+        'font-size': '15px',
+        'background': 'transparent'
+      },
+      loc: {
+        'padding-left': '20px'
+      },
+      ins: {
+        'padding-left': '20px'
+      }
+
+    }
+  }
+
+  tumunuSec() {
+    this.goster = 6;
+    this.dersStyle = {
+      adi: {},
+      loc: {},
+      wrapper: {},
+      ins: {}
+    };
   }
 
   async downloadPDF() {

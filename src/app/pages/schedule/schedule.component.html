@@ -1,137 +1,164 @@
-<div class="filter-forms">
-  <div class="filter-forms-header">
-  </div>
-  <div class="filter-forms-content">
-    <div class="filter-wrapper">
-      <div class="filter-label">
-        Ders Adı :
-      </div>
-      <input type="text" [(ngModel)]="filtre.name" (ngModelChange)="filtrele()">
-    </div>
-    <div class="filter-wrapper">
-      <div class="filter-label">
-        Grup :
-      </div>
-      <input type="text" [(ngModel)]="filtre.grp" (ngModelChange)="filtrele()">
-    </div>
-    <div class="filter-wrapper">
-      <div class="filter-label">
-        Eğitimci :
-      </div>
-      <input type="text" [(ngModel)]="filtre.ins" (ngModelChange)="filtrele()">
-    </div>
-    <div class="filter-wrapper">
-      <div class="filter-label">
-        Derslik :
-      </div>
-      <input type="text" [(ngModel)]="filtre.loc" (ngModelChange)="filtrele()">
-    </div>
-  </div>
-  <button (click)="downloadPDF()"></button>
-</div>
-<div class="schedule-wrapper" id="pdfDoc">
-  <div class="schedule-hours">
-    <div class="schedule-hour">
-      07:00
-    </div>
-    <div class="schedule-hour">
-      08:00
-    </div>
-    <div class="schedule-hour">
-      09:00
-    </div>
-    <div class="schedule-hour">
-      10:00
-    </div>
-    <div class="schedule-hour">
-      11:00
-    </div>
-    <div class="schedule-hour">
-      12:00
-    </div>
-    <div class="schedule-hour">
-      13:00
-    </div>
-    <div class="schedule-hour">
-      14:00
-    </div>
-    <div class="schedule-hour">
-      15:00
-    </div>
-    <div class="schedule-hour">
-      16:00
-    </div>
-    <div class="schedule-hour">
-      17:00
-    </div>
-    <div class="schedule-hour">
-      18:00
-    </div>
-    <div class="schedule-hour">
-      19:00
-    </div>
-    <div class="schedule-hour">
-      20:00
-    </div>
-    <div class="schedule-hour">
-      21:00
-    </div>
-    <div class="schedule-hour">
-      22:00
-    </div>
-    <div class="schedule-hour">
-      23:00
-    </div>
-  </div>
+<div class="schedule">
 
-  <ng-container *ngFor="let day of schedule?.days; let gnid=index">
-    <div class="schedule-day" [attr.id]="'gun' + gnid" *ngIf="goster == gnid || goster == 6">
-      <div class="schedule-day-header">
-        {{gunler[gnid]}}
+  <div class="filter-forms">
+    <div class="filter-forms-header">
+    </div>
+    <div class="filter-forms-content">
+      <div class="filter-wrapper">
+        <div class="filter-label">
+          Yarıyıl :
+        </div>
+        <input type="text" [(ngModel)]="filtre.semester" (ngModelChange)="filtrele()">
       </div>
-      <div class="schedule-day-content">
-        <div class="schedule-column" *ngFor="let column of  day?.columns; let clid=index">
-          <div class="schedule-lesson" *ngFor="let block of  column?.blocks; let i= index"
-            [style.margin-top]="i > 0 ? (block.units[0].starTime - (column.blocks[i-1].units[0].starTime + column.blocks[i-1].units.length)) *40 + 'px' : (block.units[0].starTime -7) *40 + 'px' "
-            [style.height]="(block.units.length*40)+'px'" (click)="selectLesson($event,block)">
-            <div class="ders" [ngStyle]="dersStyle.wrapper">
-              <div class="ders-adi" [ngStyle]="dersStyle.adi">
-                <!-- {{lesson.name }} -->
-                {{ (block.units[0].lesson.name.length>11)? (block.units[0].lesson.name | slice:0:11)+'..':(block.units[0].lesson.name) }}
-              </div>
-              <div class="ders-ins" [ngStyle]="dersStyle.ins">
-                {{titlesWord[titles[block.units[0].user.title]]}}
-                {{ (block.units[0].user.name.length>11)? (block.units[0].user.name | slice:0:11)+'..':(block.units[0].user.name) }}
-              </div>
-              <div class="ders-loc" [ngStyle]="dersStyle.loc">
-                {{ (block.units[0].location.title.length>11)? (block.units[0].location.title | slice:0:11)+'..':(block.units[0].location.title) }}
-              </div>
-              <div class="ders-ins" [ngStyle]="dersStyle.ins">
-                {{ block.units[0].groupType}}
+      <div class="filter-wrapper">
+        <div class="filter-label">
+          Ders Adı :
+        </div>
+        <input type="text" [(ngModel)]="filtre.name" (ngModelChange)="filtrele()">
+      </div>
+      <div class="filter-wrapper">
+        <div class="filter-label">
+          Grup :
+        </div>
+        <input type="text" [(ngModel)]="filtre.grp" (ngModelChange)="filtrele()">
+      </div>
+      <div class="filter-wrapper">
+        <div class="filter-label">
+          Eğitimci :
+        </div>
+        <input type="text" [(ngModel)]="filtre.ins" (ngModelChange)="filtrele()">
+      </div>
+      <div class="filter-wrapper">
+        <div class="filter-label">
+          Derslik :
+        </div>
+        <input type="text" [(ngModel)]="filtre.loc" (ngModelChange)="filtrele()">
+      </div>
+      <button style="margin:5px;" label="TÜMÜNÜ GÖSTER" type="button" pButton icon="fa fa-check" (click)="tumunuSec()"
+        *ngIf="goster!==6"></button>
+
+      <button style="margin:5px;" label="PDF İndir" type="button" pButton icon="fa fa-check" (click)="downloadPDF()">
+      </button>
+      <button style="margin:5px;" label="Toggle" type="button" pButton icon="fa fa-check" (click)="toggleGenislik()">
+      </button>
+    </div>
+  </div>
+  <div class="schedule-wrapper" id="pdfDoc">
+    <div class="schedule-hours">
+      <div class="schedule-hour">
+        07:00
+      </div>
+      <div class="schedule-hour">
+        08:00
+      </div>
+      <div class="schedule-hour">
+        09:00
+      </div>
+      <div class="schedule-hour">
+        10:00
+      </div>
+      <div class="schedule-hour">
+        11:00
+      </div>
+      <div class="schedule-hour">
+        12:00
+      </div>
+      <div class="schedule-hour">
+        13:00
+      </div>
+      <div class="schedule-hour">
+        14:00
+      </div>
+      <div class="schedule-hour">
+        15:00
+      </div>
+      <div class="schedule-hour">
+        16:00
+      </div>
+      <div class="schedule-hour">
+        17:00
+      </div>
+      <div class="schedule-hour">
+        18:00
+      </div>
+      <div class="schedule-hour">
+        19:00
+      </div>
+      <div class="schedule-hour">
+        20:00
+      </div>
+      <div class="schedule-hour">
+        21:00
+      </div>
+      <div class="schedule-hour">
+        22:00
+      </div>
+      <div class="schedule-hour">
+        23:00
+      </div>
+    </div>
+    <div class="schedule-days" [class.day-max]="goster != 6">
+
+      <ng-container *ngFor="let day of schedule?.days; let gnid=index">
+
+        <div class="schedule-day" [attr.id]="'gun' + gnid" *ngIf="goster == gnid || goster == 6"
+          [class.day-max]="goster == gnid">
+
+          <div class="schedule-day-header" (click)="gunSec(gnid)">
+            {{gunler[gnid]}}
+          </div>
+          <div class="schedule-day-content">
+            <div class="schedule-column" *ngFor="let column of  day?.columns; let clid=index">
+              <div class="schedule-lesson" *ngFor="let block of  column?.blocks; let i= index"
+                [style.margin-top]="i > 0 ? (block.units[0].starTime - (column.blocks[i-1].units[0].starTime + column.blocks[i-1].units.length)) *45 + 'px' : (block.units[0].starTime -7) *45 + 'px' "
+                [style.height]="(block.units.length*45)+'px'" (click)="selectLesson($event,block)">
+                <div class="ders" [ngStyle]="dersStyle.wrapper">
+                  <div class="ders-adi" [ngStyle]="dersStyle.adi">
+                    <p>{{block.units[0].lesson.name }}</p>
+                    <!-- {{ (block.units[0].lesson.name.length>13)? (block.units[0].lesson.name | slice:0:13)+'..':(block.units[0].lesson.name) }} -->
+                  </div>
+                  <div class="ders-ins" [ngStyle]="dersStyle.ins">
+                    <p>
+                      {{titlesWord[titles[block.units[0].user.title]]+ ' ' + block.units[0].user.name + ' '+ block.units[0].user.surname }}
+                    </p>
+                    <!-- {{titlesWord[titles[block.units[0].user.title]]}} -->
+                    <!-- {{ (block.units[0].user.name.length>11)? (block.units[0].user.name | slice:0:11)+'..':(block.units[0].user.name) }} -->
+                  </div>
+                  <div class="ders-loc" [ngStyle]="dersStyle.loc">
+                    <p> {{block.units[0].location.title}}</p>
+
+                    <!-- {{ (block.units[0].location.title.length>8)? (block.units[0].location.title | slice:0:8)+'..':(block.units[0].location.title) }} -->
+                  </div>
+                  <div class="ders-ins" [ngStyle]="dersStyle.ins">
+                    {{ block.units[0].groupType}}
+                    <p></p>
+                  </div>
+                </div>
+
               </div>
             </div>
+            <ng-container *ngIf="day.columns.length < 2">
+              <div class="schedule-column" *ngFor="let item of [].constructor(2-day?.columns.length); let i=index">
+              </div>
+            </ng-container>
 
+
+            <div class="schedule-day-grid">
+              <div class="schedule-day-grid-row"
+                *ngFor="let number of [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
+
+              </div>
+            </div>
           </div>
+
+
         </div>
-        <ng-container *ngIf="day.columns.length < 5">
-          <div class="schedule-column" *ngFor="let item of [].constructor(5-day?.columns.length); let i=index">
-          </div>
-        </ng-container>
-
-
-        <div class="schedule-day-grid">
-          <div class="schedule-day-grid-row" *ngFor="let number of [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
-
-          </div>
-        </div>
-      </div>
-
-
+      </ng-container>
     </div>
-  </ng-container>
+
+  </div>
 
 </div>
-
 
 
 <p-dialog [(visible)]="displayDialog" [contentStyle]="{'overflow':'visible'}" [modal]="true" [responsive]="true"
@@ -162,6 +189,15 @@
       </div>
       <div class="ders-detay-item">
         <div class="ders-detay-item-label">
+          Yarıyıl
+        </div>
+        :
+        <div class="ders-detay-item-content">
+          <p>{{selected?.units[0].lesson.semesterType}}</p>
+        </div>
+      </div>
+      <div class="ders-detay-item">
+        <div class="ders-detay-item-label">
           Ders Vakti
         </div>
         :
@@ -184,7 +220,8 @@
         </div>
         :
         <div class="ders-detay-item-content">
-          <p> {{titlesWord[titles[selected?.units[0].user.title]]}} {{selected?.units[0].user.name}} {{selected?.units[0].user.surname}}</p>
+          <p> {{titlesWord[titles[selected?.units[0].user.title]]}} {{selected?.units[0].user.name}}
+            {{selected?.units[0].user.surname}}</p>
         </div>
       </div>
     </div>

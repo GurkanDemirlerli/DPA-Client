@@ -1,4 +1,6 @@
 .schedule {
+  display: block;
+  width: 100%;
   &-wrapper {
     width: 100%;
     display: flex;
@@ -7,8 +9,15 @@
   &-hours {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 45px;
     margin-right: 5px;
+  }
+
+  &-days{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    min-width: 0;
   }
 
   &-hour {
@@ -16,20 +25,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    height: 45px;
     color: gray;
   }
 
   &-day {
-    width: 20%;
     display: flex;
+    width: 20%;
     flex-direction: column;
-    flex: 1;
     margin: 2px;
-    height: 740px;
+    height: 900px;
 
     &-header {
-      height: 40px;
+      height: 45px;
       border: 1px solid rgb(204, 204, 204);
       margin-bottom: 20px;
       display: flex;
@@ -60,14 +68,14 @@
 
       &-row {
         border-bottom: 1px solid rgb(233, 233, 233);
-        height: 40px;
+        height: 45px;
       }
     }
   }
 
   &-column {
     flex: 1;
-    max-width: 20%;
+    max-width: 50%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -81,6 +89,14 @@
 
     text-overflow: ellipsis;
     border-radius: 4px;
+    &:hover .ders-adi {
+      background: rgba(30, 181, 116, 0.666);
+      cursor: pointer;
+    }
+    &:hover {
+      background: rgba(30, 181, 116, 0.666);
+      cursor: pointer;
+    }
     // box-shadow: 0px 1px 3px 1px rgb(202, 202, 202);
   }
 }
@@ -99,15 +115,42 @@
     padding: 1px;
     box-sizing: content-box;
     background: rgb(30, 153, 181);
-    // border-bottom: 1px solid rgb(0, 97, 138);
+    min-width: 0; /* or some value */
+    p{
+      margin:0;
+      padding:0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
   }
   &-loc {
     color: black;
     padding: 1px;
+    min-width: 0; /* or some value */
+    p{
+      margin:0;
+      padding:0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
   &-ins {
     color: black;
     padding: 1px;
+    min-width: 0; /* or some value */
+    p{
+      margin:0;
+      padding:0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
@@ -115,7 +158,7 @@
   &-forms {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    // justify-content: flex-end;
     margin-bottom: 10px;
 
     &-header {
@@ -140,6 +183,7 @@
     justify-content: center;
     align-items: center;
     input {
+      width: 60%;
       padding: 3px;
       border: 1px solid rgb(198, 198, 198);
       border-radius: 5px;
@@ -147,7 +191,7 @@
   }
   &-label {
     margin-right: 10px;
-    font-size: 15px;
+    font-size: 14px;
     color: black;
     font-weight: 600;
   }
@@ -171,10 +215,9 @@
       margin-left: 5px;
       flex: 1;
     }
-    
   }
   &-header {
-    margin:5px;
+    margin: 5px;
     color: black;
     font-weight: 600;
     display: flex;
@@ -190,7 +233,7 @@
     flex-direction: column;
 
     &-header {
-      margin:5px;
+      margin: 5px;
       color: black;
       font-weight: 600;
       display: flex;
@@ -201,7 +244,11 @@
 }
 
 .dialog-wrapper {
-  margin:20px;
+  margin: 20px;
   display: flex;
   flex-direction: column;
+}
+
+.day-max{
+  width: 100%;
 }

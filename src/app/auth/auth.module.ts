@@ -1,3 +1,4 @@
+import { AuthComponent } from './auth.component';
 import { AuthService } from './../services/auth.service';
 import { AuthRoutingModule } from './auth-routing.module';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,7 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
+        AuthComponent,
         LoginComponent,
         RegisterComponent,
         LogoutComponent],
