@@ -23,7 +23,7 @@ export interface AddUserModel {
     email?: string;
     roles?: Roles;
     title?: Title;
-    departmentId?: number;
+    // departmentId?: number;
 }
 
 export interface UpdateUserModel {

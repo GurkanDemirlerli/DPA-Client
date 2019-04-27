@@ -352,3 +352,5 @@ export class Schedule {
     }
 
 }
+
+//TODO Değiştririken 1. öğretim varsa 2. öğretim eklemiyo ayrı ele al
