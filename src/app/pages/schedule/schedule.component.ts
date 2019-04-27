@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import { ScheduleUnit, ScheduleBlock } from 'src/app/models/schedule.model';
 import { Schedule } from './schedule';
 import { SyllabusService } from 'src/app/services/syllabus.service';
+import { Roles, RolesWord, Titles, TitlesWord } from 'src/app/enums';
 
 
 @Component({
@@ -14,6 +15,10 @@ import { SyllabusService } from 'src/app/services/syllabus.service';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
+
+  public titles = Titles;
+  public titlesWord = TitlesWord;
+
   lessons: ScheduleUnit[] = [];
   schedule: Schedule;
   gunler = [

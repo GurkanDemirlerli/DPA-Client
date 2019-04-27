@@ -100,6 +100,7 @@
                 {{ (block.units[0].lesson.name.length>11)? (block.units[0].lesson.name | slice:0:11)+'..':(block.units[0].lesson.name) }}
               </div>
               <div class="ders-ins" [ngStyle]="dersStyle.ins">
+                {{titlesWord[titles[block.units[0].user.title]]}}
                 {{ (block.units[0].user.name.length>11)? (block.units[0].user.name | slice:0:11)+'..':(block.units[0].user.name) }}
               </div>
               <div class="ders-loc" [ngStyle]="dersStyle.loc">
@@ -166,7 +167,7 @@
         :
         <div class="ders-detay-item-content">
           <p>{{selected?.units[0].dayOfTheWeekType}} {{selected?.units[0].starTime}} {{selected?.units.length}} </p>
-        </div>  
+        </div>
       </div>
       <div class="ders-detay-item">
         <div class="ders-detay-item-label">
@@ -179,11 +180,11 @@
       </div>
       <div class="ders-detay-item">
         <div class="ders-detay-item-label">
-          Eğitimciler
+          Eğitimci
         </div>
         :
         <div class="ders-detay-item-content">
-          <p>{{selected?.units[0].user.name}}</p>
+          <p> {{titlesWord[titles[selected?.units[0].user.title]]}} {{selected?.units[0].user.name}} {{selected?.units[0].user.surname}}</p>
         </div>
       </div>
     </div>
