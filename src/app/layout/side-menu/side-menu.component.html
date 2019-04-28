@@ -12,90 +12,80 @@
   </div>
 
 
-  <div class="menu-actions">
-
-    <div class="menu-action" [routerLink]="['/pages/schedule']" routerLinkActive="active">
+  <div class="menu-actions" >
+    <div class="menu-action" *ngIf="user?.roles === roles?.Admin" [routerLink]="['/pages/schedules']" routerLinkActive="active">
       <div class="logo">
-        <fa-icon [icon]="icons.faHome"></fa-icon>
+        <fa-icon [icon]="icons.faCalendarAlt"></fa-icon>
       </div>
       <div class="content">
-        Schedule
+        Çizelgeler
+      </div>
+    </div>
+
+    <div class="menu-action" *ngIf="user?.roles === roles?.User" [routerLink]="['/pages/my-schedules']" routerLinkActive="active">
+      <div class="logo">
+        <fa-icon [icon]="icons.faCalendarAlt"></fa-icon>
+      </div>
+      <div class="content">
+        Ders Programım
       </div>
     </div>
 
     <div *ngIf="user?.roles === roles?.Administrator" class="menu-action" [routerLink]="['/pages/faculties']"
       routerLinkActive="active">
       <div class="logo">
-        <fa-icon [icon]="icons.faHome"></fa-icon>
+        <fa-icon [icon]="icons.faSchool"></fa-icon>
       </div>
       <div class="content">
-        Faculties
+        Fakülteler
       </div>
     </div>
-    <div *ngIf="user?.roles === roles?.Administrator" class="menu-action" [routerLink]="['/pages/departments']" routerLinkActive="active">
+    
+    <div *ngIf="user?.roles === roles?.Administrator" class="menu-action" [routerLink]="['/pages/departments']"
+      routerLinkActive="active">
       <div class="logo">
-        <fa-icon [icon]="icons.faHome"></fa-icon>
+        <fa-icon [icon]="icons.faBuilding"></fa-icon>
       </div>
       <div class="content">
-        Departments
+        Bölümler
       </div>
     </div>
-    <div class="menu-action" [routerLink]="['/pages/lessons']" routerLinkActive="active">
+    <div class="menu-action" *ngIf="user?.roles === roles?.Admin || user?.roles === roles?.Administrator " [routerLink]="['/pages/lessons']" routerLinkActive="active">
       <div class="logo">
-        <fa-icon [icon]="icons.faCalendarAlt"></fa-icon>
+        <fa-icon [icon]="icons.faBookOpen"></fa-icon>
       </div>
       <a class="content">
-        Lessons
+        Dersler
       </a>
     </div>
-    <div *ngIf="user?.roles === roles?.Admin || user?.roles === roles?.User " class="menu-action" [routerLink]="['/pages/constraints']" routerLinkActive="active">
+    <div *ngIf="user?.roles === roles?.Admin || user?.roles === roles?.User " class="menu-action"
+      [routerLink]="['/pages/constraints']" routerLinkActive="active">
       <div class="logo">
-        <fa-icon [icon]="icons.faProjectDiagram"></fa-icon>
+        <fa-icon [icon]="icons.faUserLock"></fa-icon>
       </div>
       <div class="content">
-        Constraints
+        Kısıtlar
       </div>
     </div>
-    <div *ngIf="user?.roles === roles?.Admin" class="menu-action" [routerLink]="['/pages/my-department-instructors']" routerLinkActive="active">
-      <div class="logo">
-        <fa-icon [icon]="icons.faProjectDiagram"></fa-icon>
-      </div>
-      <div class="content">
-        Bölüm Üyeleri
-      </div>
-    </div>
-    <div *ngIf="user?.roles === roles?.Admin" class="menu-action" [routerLink]="['/pages/my-department-lessons']" routerLinkActive="active">
-      <div class="logo">
-        <fa-icon [icon]="icons.faProjectDiagram"></fa-icon>
-      </div>
-      <div class="content">
-        Bölüm Dersleri
-      </div>
-    </div>
-    <div class="menu-action" [routerLink]="['/pages/instructors']" routerLinkActive="active">
-      <div class="logo">
-        <fa-icon [icon]="icons.faUndoAlt"></fa-icon>
-      </div>
-      <a class="content">
-        Instructors
-      </a>
-    </div>
-    <div *ngIf="user?.roles === roles?.Administrator" class="menu-action" [routerLink]="['/pages/locations']" routerLinkActive="active">
-      <div class="logo">
-        <fa-icon [icon]="icons.faUndoAlt"></fa-icon>
-      </div>
-      <a class="content">
-        Locations
-      </a>
-    </div>
-    <div class="menu-action" [routerLink]="['/pages/reports']" routerLinkActive="active">
+
+    <div class="menu-action" *ngIf="user?.roles === roles?.Admin || user?.roles === roles?.Administrator " [routerLink]="['/pages/instructors']" routerLinkActive="active">
       <div class="logo">
         <fa-icon [icon]="icons.faUsers"></fa-icon>
       </div>
       <a class="content">
-        Reports
+        Kullanıcılar
       </a>
     </div>
+    <div *ngIf="user?.roles === roles?.Administrator" class="menu-action" [routerLink]="['/pages/locations']"
+      routerLinkActive="active">
+      <div class="logo">
+        <fa-icon [icon]="icons.faMapMarkedAlt"></fa-icon>
+      </div>
+      <a class="content">
+        Derslikler
+      </a>
+    </div>
+
 
   </div>
 </div>

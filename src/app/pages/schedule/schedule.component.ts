@@ -7,6 +7,8 @@ import { Schedule } from './schedule';
 import { SyllabusService } from 'src/app/services/syllabus.service';
 import { Titles, TitlesWord, EducationTypes, EducationTypesTableView } from 'src/app/enums';
 import { LessonGroupEnum, LessonGroupReverseEnum } from 'src/app/enums/lesson-group.enum';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SyllabusModel } from 'src/app/models/syllabus.model';
 
 
 @Component({
@@ -35,6 +37,7 @@ export class ScheduleComponent implements OnInit {
   public edTypeEnumReverse = EducationTypesTableView;
 
   lessons: ScheduleUnit[] = [];
+  syllabus: SyllabusModel;
   schedule: Schedule;
   gunler = [
     "Pazartesi",
@@ -70,8 +73,33 @@ export class ScheduleComponent implements OnInit {
 
   uzat: boolean = false;
   constructor(
-    private scheduleService: SyllabusService
+    private scheduleService: SyllabusService,
+    private route: Router,
+    private dataRoute: ActivatedRoute
   ) { }
+
+
+
+  ngOnInit() {
+    this.syllabus = this.scheduleService.selected;
+    this.lessons = this.syllabus.unitLessons;
+    let schedule = new Schedule();
+    this.schedule = schedule.make(this.lessons);
+    this.goster = 6;
+    this.fillDropdownOptions();
+
+    // this.scheduleService.get(1).subscribe((syl) => {
+    //   this.lessons = syl.unitLessons;
+    //   let schedule = new Schedule();
+    //   this.schedule = schedule.make(this.lessons);
+    //   this.goster = 6;
+    //   this.fillDropdownOptions();
+
+
+    // }, (err) => {
+    //   console.log(err);
+    // });
+  }
 
   showDialog() {
     this.displayDialog = true;
@@ -184,19 +212,6 @@ export class ScheduleComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-    this.scheduleService.get(1).subscribe((syl) => {
-      this.lessons = syl.unitLessons;
-      let schedule = new Schedule();
-      this.schedule = schedule.make(this.lessons);
-      this.goster = 6;
-      this.fillDropdownOptions();
-
-
-    }, (err) => {
-      console.log(err);
-    });
-  }
 
   filtrele() {
     this.schedule.filtrele(this.filtre);

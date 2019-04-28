@@ -1,0 +1,61 @@
+<div class="wrpr-br">
+  <p-breadcrumb [model]="brItems" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
+</div>
+<br>
+<p-table #dt [columns]="cols" [value]="items" selectionMode="single" [(selection)]="selectedSyl"
+  (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    Bölüm Ders Programları
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+    <tr>
+      <!-- <th *ngFor="let col of columns" [ngSwitch]="col.field">
+        <p-dropdown *ngSwitchCase="'departmentCount'" [options]="filters.departments" [style]="{'width':'100%'}"
+          (onChange)="dt.filter($event.value, col.hlpr, col.filterMatchMode)"></p-dropdown>
+        <input *ngSwitchCase="'userCount'" pInputText type="text"
+          (input)="dt.filter($event.target.value, col.hlpr, col.filterMatchMode)" style="width:100%">
+        <input *ngSwitchCase="'name'" pInputText type="text"
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+        <input *ngSwitchCase="'akts'" pInputText type="text"
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+        <input *ngSwitchCase="'weeklyHour'" pInputText type="text"
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+        <input *ngSwitchCase="'semesterType'" pInputText type="text"
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+        <input *ngSwitchCase="'lessonCode'" pInputText type="text"
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+        <input *ngSwitchCase="'lessonType'" pInputText type="text"
+          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+      </th> -->
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <!-- <ng-container *ngIf="col.field === 'lessonType';else second">
+          {{ lessonTypesTableView[lessonTypes[rowData[col.field]]] }}
+        </ng-container>
+        <ng-template #second>
+          <ng-container *ngIf="col.field === 'semesterType';else third">
+            {{rowData[col.field]}}
+          </ng-container>
+        </ng-template>
+        <ng-template #third> -->
+          {{rowData[col.field]}}
+        <!-- </ng-template> -->
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+    </div>
+  </ng-template>
+</p-table>

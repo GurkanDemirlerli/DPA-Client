@@ -14,23 +14,15 @@ import { SyllabusModel } from '../models/syllabus.model';
 export class SyllabusService {
     private domain = server.url + "/";
 
+    public selected: SyllabusModel;
+
     constructor(
         private http: HttpClient
     ) { }
 
-    // public getMock(id: number): Observable<LocationModel> {
-    //     const headers = ServicesHelpers.createAuthenticationHeader();
-    //     return this.http.get<LocationModel>(this.domain + `Location/${id}`, headers)
-    //         .pipe(
-    //             tap(() => {
-    //             }),
-    //             catchError(this.handleError)
-    //         );
-    // }
-
-    public get(departmentId: number): Observable<SyllabusModel> {
+    public getForDepartment(departmentId: number): Observable<SyllabusModel[]> {
         const headers = ServicesHelpers.createAuthenticationHeader();
-        return this.http.get<SyllabusModel>(this.domain + `Syllabus/${departmentId}`, headers)
+        return this.http.get<SyllabusModel[]>(this.domain + `Syllabus/${departmentId}`, headers)
             .pipe(
                 tap(() => {
                 }),

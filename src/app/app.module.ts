@@ -25,6 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ScheduleMockService } from './mocks/schedule.mock.service';
 import { SyllabusService } from './services/syllabus.service';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DepartmentInstructorService } from './services/department-instructor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +55,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     DepartmentLessonService,
     LessonService,
     DepartmentService,
+    DepartmentInstructorService,
     AuthGuard,
     RoleGuard,
     AuthNotAllowed

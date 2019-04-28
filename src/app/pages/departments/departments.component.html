@@ -39,52 +39,42 @@
     </div>
   </ng-template>
 </p-table>
-<p-dialog header="Bölüm Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-  [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}">
-  <div class="ui-g ui-fluid" *ngIf="item">
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="departmentCode">Bölüm Kodu</label>
+<form [formGroup]="mform" (ngSubmit)="save(mform.value)">
+  <p-dialog header="Bölüm Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+    [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}">
+    <div class="ui-g ui-fluid" *ngIf="item">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="departmentCode">Bölüm Kodu</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="departmentCode" formControlName="departmentCode" [(ngModel)]="item.departmentCode" />
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="departmentCode" [(ngModel)]="item.departmentCode" />
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="title">Bölüm Adı</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="title" formControlName="title" [(ngModel)]="item.title" />
+        </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="title">Bölüm Adı</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="title" [(ngModel)]="item.title" />
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="facultyId">Fakülte</label>
-      </div>
-      <div class="ui-g-8">
-        <p-dropdown [options]="dropdownOptions.facultyOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
-          filter="true" optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.facultyOptions"
-          (onChange)="item.facultyId = $event.value.code"></p-dropdown>
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="userId">Bölüm Başkanı</label>
-      </div>
-      <div class="ui-g-8">
-        <p-dropdown [options]="dropdownOptions.userOptions" [style]="{'width': '100%'}" placeholder="Seçiniz"
-          filter="true" optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.userOptions"
-          (onChange)="item.userId = $event.value.code"></p-dropdown>
-
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="facultyId">Fakülte</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.facultyOptions" formControlName="facultyId"  [style]="{'width': '100%'}" placeholder="Seçiniz"
+            filter="true" optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.facultyOptions"
+            (onChange)="item.facultyId = $event.value.value"></p-dropdown>
+        </div>
       </div>
     </div>
-
-  </div>
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
-    </div>
-  </p-footer>
-</p-dialog>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+        <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+</form>

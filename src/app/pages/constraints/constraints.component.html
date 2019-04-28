@@ -37,96 +37,93 @@
 </p-table>
 
 
-<p-dialog header="Kısıt Oluştur" [(visible)]="displayDialog" [modal]="true" [responsive]="true" [width]="350"
-  [minWidth]="200" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
-  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="constraint">
-    <div class="ui-grid-row">
-      <div class="form-group ui-grid-col-12">
-        <b class="first">Kısıt Adı</b>
-        <input type="text" pInputText placeholder="Kısıt Adını Giriniz" [(ngModel)]="constraint.title">
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="form-group ui-grid-col-12">
-        <b>Haftalık Saat</b>
-        <div class="ui-grid-row">
-          <p-dropdown [options]="dropdownOptions.weeklyHourOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
-            optionLabel="name" [showClear]="true" [(ngModel)]="selectedOptions.weeklyHourOptions"
-            (onChange)="constraint.weeklyHour = $event.value.code"></p-dropdown>
+<form [formGroup]="mform" (ngSubmit)="save(mform.value)">
+  <p-dialog header="Kısıt Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+    [contentStyle]="{'overflow':'visible'}" [style]="{width: '400px'}">
+    <div class="ui-g ui-fluid" *ngIf="constraint">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="title">Kısıt Adı</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="title" formControlName="title" [(ngModel)]="constraint.title" />
         </div>
       </div>
-    </div>
-    <!-- <div class="ui-grid-row">
-      <div class="form-group ui-grid-col-12">
-        <b>Öğretim Türü</b>
-        <p-selectButton [options]="types" [(ngModel)]="selectedTypes"></p-selectButton>
-      </div>
-    </div> -->
-    <div class="ui-grid-row">
-      <div class="form-group ui-grid-col-12">
-        <b>Öğrenim Türü</b>
-        <div class="ui-grid-row">
-          <p-dropdown [options]="dropdownOptions.educationTypeOptions" [style]="{'width': '145px'}"
-            placeholder="Seçiniz" optionLabel="name" [showClear]="true"
-            [(ngModel)]="selectedOptions.educationTypeOptions"
-            (onChange)="constraint.educationType = $event.value.code"></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="form-group ui-grid-col-12">
-        <b>Başlangıç Saati</b>
-        <div class="ui-grid-row">
-          <p-dropdown [options]="dropdownOptions.saatOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
-            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.startTimeOptions"
-            (onChange)="constraint.startTime = $event.value"></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="form-group ui-grid-col-12">
-        <b>Bitiş Saati</b>
-        <div class="ui-grid-row">
-          <p-dropdown [options]="dropdownOptions.saatOptions" [style]="{'width': '145px'}" placeholder="Seçiniz"
-            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.endTimeOptions"
-            (onChange)="constraint.endTime = $event.value"></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="form-group ui-grid-col-12">
-        <b>Açıklama</b>
-        <textarea [(ngModel)]="constraint.description" rows="2" cols="30" placeholder="Açıklama"
-          pInputTextarea></textarea>
-      </div>
-    </div>
 
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-10">
-        <b> Haftada 1 gün boş olsun.</b>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="weeklyHour">Haftalık Saat</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.weeklyHourOptions" formControlName="weeklyHour"
+            [style]="{'width': '100%'}" placeholder="Seçiniz" filter="true" optionLabel="label" [showClear]="true"
+            [(ngModel)]="selectedOptions.weeklyHourOptions" (onChange)="constraint.weeklyHour = $event.value.value">
+          </p-dropdown>
+        </div>
       </div>
-      <div class="ui-grid-col-2">
-        <p-inputSwitch [(ngModel)]="checkboxes.isFreeDay" (onChange)="constraint.isFreeDay = checkboxes.isFreeDay">
-        </p-inputSwitch>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="educationType">Öğrenim Türü</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.educationTypeOptions" formControlName="educationType"
+            [style]="{'width': '100%'}" placeholder="Seçiniz" filter="true" optionLabel="label" [showClear]="true"
+            [(ngModel)]="selectedOptions.educationTypeOptions" (onChange)="constraint.educationType = $event.value.value">
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="startTime">Başlangıç Saati</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.saatOptions" formControlName="startTime" [style]="{'width': '100%'}"
+            placeholder="Seçiniz" filter="true" optionLabel="label" [showClear]="true"
+            [(ngModel)]="selectedOptions.startTimeOptions" (onChange)="constraint.startTime = $event.value.value"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="endTime">Bitiş Saati</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown [options]="dropdownOptions.saatOptions" formControlName="endTime" [style]="{'width': '100%'}"
+            placeholder="Seçiniz" filter="true" optionLabel="label" [showClear]="true"
+            [(ngModel)]="selectedOptions.endTimeOptions" (onChange)="constraint.endTime = $event.value.value"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="description">Açıklama</label>
+        </div>
+        <div class="ui-g-8">
+          <input rows="2" cols="30" placeholder="Açıklama" pInputTextarea id="description" formControlName="description"
+            [(ngModel)]="constraint.description" />
+        </div>
+      </div>
+
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="isFreeDay">Bir Gün Boş Olsun</label>
+        </div>
+        <div class="ui-g-8">
+          <p-inputSwitch [(ngModel)]="checkboxes.isFreeDay" formControlName="isFreeDay" (onChange)="constraint.isFreeDay = checkboxes.isFreeDay">
+          </p-inputSwitch>
+
+        </div>
       </div>
     </div>
-
-    <!-- <div class="ui-grid-row">
-      <div class="ui-grid-col-10">
-        <b>IsActive</b>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+        <button type="button" pButton icon="fa fa-close" (click)="inspect()" label="inspect"></button>
+        <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
       </div>
-      <div class="ui-grid-col-2">
-        <p-inputSwitch [(ngModel)]="checkboxes.isActive" (onChange)="constraint.isActive = checkboxes.isActive">
-        </p-inputSwitch>
-      </div>
-    </div> -->
-  </div>
-
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
-      <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"
-        class="ui-button-secondary"></button>
-    </div>
-  </p-footer>
-</p-dialog>
+    </p-footer>
+  </p-dialog>
+</form>

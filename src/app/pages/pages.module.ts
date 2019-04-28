@@ -28,6 +28,9 @@ import { LocationsComponent } from './locations/locations.component';
 import { PickListModule } from 'primeng/picklist';
 import { MyDepartmentInstructorsComponent } from './my-department-instructors/my-department-instructors.component';
 import { MyDepartmentLessonsComponent } from './my-department-lessons/my-department-lessons.component';
+import { ScheduleListComponent } from './schedule-list/schedule-list.component';
+import { MySchedulesComponent } from './my-schedules/my-schedules.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -41,9 +44,12 @@ import { MyDepartmentLessonsComponent } from './my-department-lessons/my-departm
         DepartmentsComponent,
         LocationsComponent,
         MyDepartmentInstructorsComponent,
-        MyDepartmentLessonsComponent
+        MyDepartmentLessonsComponent,
+        ScheduleListComponent,
+        MySchedulesComponent
     ],
     imports: [
+        RouterModule,
         InputTextareaModule,
         InputSwitchModule,
         SelectButtonModule,

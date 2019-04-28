@@ -1,3 +1,4 @@
+import { DepartmentModel } from 'src/app/models/department.model';
 import { Roles, Titles } from '../enums';
 
 export interface ListUserModel {
@@ -6,5 +7,7 @@ export interface ListUserModel {
     name?: string;
     surname?: string;
     email?: string;
-    title?: Titles
+    title?: Titles;
+    departments?: DepartmentModel[];
+    departmentsParsed?: string;
 }

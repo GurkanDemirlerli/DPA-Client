@@ -32,6 +32,7 @@ import {
   lessonTypeOptions,
   aktsOptions
 } from './dropdown.data';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -40,6 +41,15 @@ import {
   styleUrls: ['./lessons.component.scss']
 })
 export class LessonsComponent implements OnInit {
+
+  mform = new FormGroup({
+    name: new FormControl('', Validators.required),
+    lessonCode: new FormControl('', Validators.required),
+    akts: new FormControl('', Validators.required),
+    weeklyHour: new FormControl('', Validators.required),
+    lessonType: new FormControl('', Validators.required),
+    semesterType: new FormControl('', Validators.required),
+  });
 
   public educationTypesTableView = EducationTypesTableView;
   public educationTypes = EducationTypes;
@@ -168,7 +178,7 @@ export class LessonsComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  save() {
+  save(e) {
     let lessons = [...this.lessons];
     if (this.newLesson) {
       let addLessonModel: AddLessonModel = {
@@ -232,8 +242,9 @@ export class LessonsComponent implements OnInit {
       this.toastr.success('Ders Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
-    }, () => {
       this.toastr.error("Ders silinirken bir hata oluştu", "Sunucu Hatası");
+
+    }, () => {
 
     });
   }
@@ -241,10 +252,10 @@ export class LessonsComponent implements OnInit {
   onRowSelect(event) {
     this.newLesson = false;
     this.lesson = this.clone(event.data);
-    this.selectedOptions.aktsOptions = (this.dropdownOptions.aktsOptions as any[]).find((option) => option.code == this.lesson.akts);
-    this.selectedOptions.lessonTypeOptions = (this.dropdownOptions.lessonTypeOptions as any[]).find((option) => option.code == this.lesson.lessonType);
-    this.selectedOptions.semesterTypeOptions = (this.dropdownOptions.semesterTypeOptions as any[]).find((option) => option.code == this.lesson.semesterType);
-    this.selectedOptions.weeklyHourOptions = (this.dropdownOptions.weeklyHourOptions as any[]).find((option) => option.code == this.lesson.weeklyHour);
+    this.selectedOptions.aktsOptions = (this.dropdownOptions.aktsOptions as any[]).find((option) => option.value == this.lesson.akts);
+    this.selectedOptions.lessonTypeOptions = (this.dropdownOptions.lessonTypeOptions as any[]).find((option) => option.value == this.lesson.lessonType);
+    this.selectedOptions.semesterTypeOptions = (this.dropdownOptions.semesterTypeOptions as any[]).find((option) => option.value == this.lesson.semesterType);
+    this.selectedOptions.weeklyHourOptions = (this.dropdownOptions.weeklyHourOptions as any[]).find((option) => option.value == this.lesson.weeklyHour);
     this.displayDialog = true;
   }
 

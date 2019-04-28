@@ -121,19 +121,15 @@
                 <div class="ders" [ngStyle]="dersStyle.wrapper">
                   <div class="ders-adi" [ngStyle]="dersStyle.adi">
                     <p>{{block.units[0].lesson.name }}</p>
-                    <!-- {{ (block.units[0].lesson.name.length>13)? (block.units[0].lesson.name | slice:0:13)+'..':(block.units[0].lesson.name) }} -->
                   </div>
                   <div class="ders-ins" [ngStyle]="dersStyle.ins">
                     <p>
                       {{titlesWord[titles[block.units[0].user.title]]+ ' ' + block.units[0].user.name + ' '+ block.units[0].user.surname }}
                     </p>
-                    <!-- {{titlesWord[titles[block.units[0].user.title]]}} -->
-                    <!-- {{ (block.units[0].user.name.length>11)? (block.units[0].user.name | slice:0:11)+'..':(block.units[0].user.name) }} -->
                   </div>
                   <div class="ders-loc" [ngStyle]="dersStyle.loc">
                     <p> {{block.units[0].location.title}}</p>
 
-                    <!-- {{ (block.units[0].location.title.length>8)? (block.units[0].location.title | slice:0:8)+'..':(block.units[0].location.title) }} -->
                   </div>
                   <div class="ders-gr-lt" [class.flRow]="goster != 6">
                     <div class="ders-gr" [ngStyle]="dersStyle.ins">

@@ -2,7 +2,6 @@
   <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
 </div>
 <br>
-<!-- <div class="wrpr"> -->
 <p-table [columns]="cols" [value]="faculties" selectionMode="single" [(selection)]="selectedFaculty"
   (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
   <ng-template pTemplate="caption">
@@ -31,7 +30,6 @@
     </div>
   </ng-template>
 </p-table>
-<!-- </div> -->
 <form [formGroup]="mform" (ngSubmit)="save(mform.value)">
   <p-dialog header="Fakülte Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
     [style]="{width: '400px'}">

@@ -2,11 +2,12 @@
 export interface SyllabusModel {
     syllabusId: number;
     year: number;
-    semesterType: number;
+    // semesterType: number;
     periodType: number;
     educationType: number;
     weeklyHour: number,
     unitLessons: SyllUnitLessonModel[];
+    isActive: boolean;
 }
 
 export interface SyllUnitLessonModel {

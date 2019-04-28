@@ -3,7 +3,7 @@ import { DepartmentModel } from 'src/app/models/department.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../services/menu.service';
-import { faAddressBook, faFeather, faAdjust, faHome, faProjectDiagram, faCalendarAlt, faUndoAlt, faUsers, faQuestion, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faUserLock,faBuilding,faSchool, faMapMarkedAlt, faBookOpen, faAddressBook, faFeather, faAdjust, faHome, faProjectDiagram, faCalendarAlt, faUndoAlt, faUsers, faQuestion, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ListUserModel } from 'src/app/models';
 import { Roles } from 'src/app/enums';
@@ -43,6 +43,11 @@ export class SideMenuComponent implements OnInit {
   public roles = Roles;
 
   icons = {
+    faUserLock,
+    faBuilding,
+    faSchool,
+    faMapMarkedAlt,
+    faBookOpen,
     faHome,
     faProjectDiagram,
     faCalendarAlt,
@@ -58,16 +63,9 @@ export class SideMenuComponent implements OnInit {
   constructor(private menuService: MenuService, private authService: AuthService, private departmentService: DepartmentService) { }
 
   ngOnInit() {
-    this.authService.getMe().subscribe((user) => {
-      this.user = user;
-      if (user.roles == Roles.Admin) {
-        this.departmentService.getMyDepartment().subscribe((department) => {
-          this.department = department;
-        });
-      }
-    }, (err) => {
 
-    });
+    this.user = this.authService.userInfo;
+    console.log("INF", this.authService.userInfo);
 
     this.menuService.isMax$.subscribe((menuState) => {
       this.isMax = menuState;

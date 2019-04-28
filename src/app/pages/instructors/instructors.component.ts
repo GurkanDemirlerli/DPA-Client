@@ -1,3 +1,4 @@
+import { DepartmentInstructorService } from './../../services/department-instructor.service';
 import { InstructorLessonService } from './../../services/instructor-lesson.service';
 import { DepartmentService } from './../../services/department.service';
 import { AuthService } from 'src/app/services';
@@ -26,6 +27,7 @@ import {
   titleTypeOptions
 } from './dropdown.data';
 import { LessonService } from 'src/app/services/lesson.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -35,12 +37,23 @@ import { LessonService } from 'src/app/services/lesson.service';
 })
 export class InstructorsComponent implements OnInit {
 
+
+  mform = new FormGroup({
+    login: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    surname: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    roles: new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
+  });
+
   public roles = Roles;
   public rolesWord = RolesWord;
   public titles = Titles;
   public titlesWord = TitlesWord;
 
-  users: ListUserModel[];
+  users: ListUserModel[] = [];
 
   user: any = {};
 
@@ -75,6 +88,7 @@ export class InstructorsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private departmentService: DepartmentService,
+    private departmentInstructorService: DepartmentInstructorService,
     private lessonService: LessonService,
     private instructorLessonService: InstructorLessonService,
     private userService: AuthService,
@@ -82,21 +96,29 @@ export class InstructorsComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  dad(e) {
+    console.log(e);
+  }
   ngOnInit() {
     this.userService.getAll().subscribe((users) => {
-      this.users = users;
-      // users.map(user => {
-      //   this.departmentService.get(user.departmentId).subscribe(department => {
-      //     user.department = department;
-      //   })
-      // })
+      users.map((us) => {
+        this.departmentInstructorService.getDepartmentsForUserId(us.userId).subscribe((departments) => {
+          us.departments = [];
+          us.departments = departments;
+          us.departmentsParsed = "";
+          departments.map((dp) => {
+            us.departmentsParsed = us.departmentsParsed + dp.title;
+          })
+          this.users.push(us);
+        })
+      })
     });
 
-    this.sortOptions = [
-      { label: 'Newest First', value: '!year' },
-      { label: 'Oldest First', value: 'year' },
-      { label: 'Brand', value: 'brand' }
-    ];
+    // this.sortOptions = [
+    //   { label: 'Newest First', value: '!year' },
+    //   { label: 'Oldest First', value: 'year' },
+    //   { label: 'Brand', value: 'brand' }
+    // ];
 
     this.items = [
       { label: 'Adil Çizelgeleme Sistemi' },
@@ -114,22 +136,35 @@ export class InstructorsComponent implements OnInit {
     this.departmentService.getAll().subscribe((departments) => {
       departments.map((department) => {
         departmentOptions.push({
-          "name": department.title,
-          "code": department.departmentId
+          "label": department.title,
+          "value": department.departmentId
         });
       });
       this.dropdownOptions.departmentOptions = departmentOptions;
-    })
+      this.dropdownOptions.bolumFilter = departmentOptions;
+      // this.dropdownOptions.bolumFilter.push({
+      //   "label": "Tüm Bölümler",
+      //   "value": null
+      // });
+    });
   }
 
   selectUser(event: Event, user: ListUserModel) {
     this.selectedUser = user;
     this.newUser = false;
-    this.selectedOptions.roleTypeOptions = (this.dropdownOptions.roleTypeOptions as any[]).find((option) => option.code == this.selectedUser.roles);
-    this.selectedOptions.titleTypeOptions = (this.dropdownOptions.titleTypeOptions as any[]).find((option) => option.code == this.selectedUser.title);
-    this.selectedOptions.departmentOptions = (this.dropdownOptions.departmentOptions as any[]).find((option) => option.code == this.selectedUser.departmentId);
+    this.selectedOptions.roleTypeOptions = (this.dropdownOptions.roleTypeOptions as any[]).find((option) => option.value == this.selectedUser.roles);
+    this.selectedOptions.titleTypeOptions = (this.dropdownOptions.titleTypeOptions as any[]).find((option) => option.value == this.selectedUser.title);
+    this.selectedOptions.departmentOptions = (this.dropdownOptions.departmentOptions as any[]).find((option) => option.value == this.selectedUser.departmentId);
     this.user = user;
     this.displayDialog = true;
+
+    this.mform = new FormGroup({
+      name: new FormControl('', Validators.required),
+      surname: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      roles: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required),
+    });
     event.preventDefault();
   }
 
@@ -151,7 +186,18 @@ export class InstructorsComponent implements OnInit {
   }
 
   showDialogToAdd() {
+    this.mform = new FormGroup({
+      login: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      surname: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      roles: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required),
+    });
+
     this.selectedUser = null;
+
     this.newUser = true;
     this.selectedOptions = {};
     this.user = {};
@@ -232,8 +278,9 @@ export class InstructorsComponent implements OnInit {
       this.toastr.success('Kullanıcı Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
-    }, () => {
       this.toastr.error("Kullanıcı silinirken bir hata oluştu", "Sunucu Hatası");
+
+    }, () => {
 
     });
   }

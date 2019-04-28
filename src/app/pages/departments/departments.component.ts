@@ -12,6 +12,7 @@ import {
   UpdateDepartmentModel,
   DepartmentModel
 } from 'src/app/models';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 
 
@@ -21,6 +22,13 @@ import {
   styleUrls: ['./departments.component.scss']
 })
 export class DepartmentsComponent implements OnInit {
+
+  mform = new FormGroup({
+    departmentCode: new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
+    facultyId: new FormControl('', Validators.required),
+  });
+
   faculty: FacultyModel;
 
   displayDialog: boolean;
@@ -93,16 +101,16 @@ export class DepartmentsComponent implements OnInit {
     this.facultyService.getAll().subscribe((faculties) => {
       faculties.map((faculty) => {
         facultyOptions.push({
-          "name": faculty.title,
-          "code": faculty.facultyId
+          "label": faculty.title,
+          "value": faculty.facultyId
         });
       });
       this.dropdownOptions.facultyOptions = facultyOptions;
       this.authService.getAll().subscribe((users) => {
         users.map((user) => {
           userOptions.push({
-            "name": user.name + " " + user.surname,
-            "code": user.userId
+            "label": user.name + " " + user.surname,
+            "value": user.userId
           });
         });
         this.dropdownOptions.userOptions = userOptions;
@@ -144,7 +152,7 @@ export class DepartmentsComponent implements OnInit {
         title: this.item.title,
         departmentCode: this.item.departmentCode,
         facultyId: this.item.facultyId,
-        userId: this.item.userId
+        // userId: this.item.userId
       }
       let id = this.item.departmentId;
       this.departmentService.update(updateDepartmentModel, id).subscribe(() => {
@@ -172,8 +180,8 @@ export class DepartmentsComponent implements OnInit {
       this.toastr.success('Bölüm Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
-    }, () => {
       this.toastr.error("Bölüm silinirken bir hata oluştu", "Sunucu Hatası");
+    }, () => {
 
     });
   }
@@ -181,8 +189,8 @@ export class DepartmentsComponent implements OnInit {
   onRowSelect(event) {
     this.newItem = false;
     this.item = this.clone(event.data);
-    this.selectedOptions.facultyOptions = (this.dropdownOptions.facultyOptions as any[]).find((option) => option.code == this.selectedItem.facultyId);
-    this.selectedOptions.userOptions = (this.dropdownOptions.userOptions as any[]).find((option) => option.code == this.selectedItem.userId);
+    this.selectedOptions.facultyOptions = (this.dropdownOptions.facultyOptions as any[]).find((option) => option.value == this.selectedItem.facultyId);
+    this.selectedOptions.userOptions = (this.dropdownOptions.userOptions as any[]).find((option) => option.value == this.selectedItem.userId);
     this.displayDialog = true;
   }
 

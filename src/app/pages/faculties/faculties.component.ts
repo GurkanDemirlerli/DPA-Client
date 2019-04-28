@@ -137,8 +137,8 @@ export class FacultiesComponent implements OnInit {
       this.toastr.success('Fakülte Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
-    }, () => {
       this.toastr.error("Fakülte silinirken bir hata oluştu", "Sunucu Hatası");
+    }, () => {
     });
   }
 

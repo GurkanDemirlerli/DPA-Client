@@ -17,7 +17,7 @@ export class AuthService {
 
     private domain = server.url + "/";
     public userToken: TokenModel;
-    public user;
+    public userInfo: ListUserModel;
 
     constructor(
         private http: HttpClient
@@ -29,17 +29,16 @@ export class AuthService {
             this.userToken = decoded;
         }
 
-        this.getMe().subscribe((usr) => {
-            this.user = usr;
-        });
-
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        this.userInfo = userInfo;
     }
 
     public signIn(user: LoginModel): Observable<any> {
         return this.http.post<any>(this.domain + 'Users/SignIn', user)
             .pipe(
                 tap((res) => {
-                    this.storeUserData(res.data.token);
+                    this.storeUserData(res.data.token,res.data.userInfo);
+                    this.userInfo = res.data.userInfo;
                 }),
                 catchError(this.handleError)
             );
@@ -64,9 +63,8 @@ export class AuthService {
         const helper = new JwtHelperService();
         const token = localStorage.getItem('token');
         const decoded: TokenModel = helper.decodeToken(token);
-        let endPoint: string = 'Users/instructor';
+        let endPoint: string = 'Users';
         if (decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "Administrator") {
-            endPoint = 'Users/headOfDepartmentt';
         }
         return this.http.post<any>(this.domain + endPoint, model, headers)
             .pipe(
@@ -121,22 +119,23 @@ export class AuthService {
             );
     }
 
-    public getMe(): Observable<ListUserModel> {
-        const helper = new JwtHelperService();
-        const token = localStorage.getItem('token');
-        const decoded: TokenModel = helper.decodeToken(token);
-        if (decoded) {
-            return this.get(Number(decoded.sub));
-        }
-        else {
-            return throwError("Invalid token");
-        }
-    }
+    // public getMe(): Observable<ListUserModel> {
+    //     const helper = new JwtHelperService();
+    //     const token = localStorage.getItem('token');
+    //     const decoded: TokenModel = helper.decodeToken(token);
+    //     if (decoded) {
+    //         return this.get(Number(decoded.sub));
+    //     }
+    //     else {
+    //         return throwError("Invalid token");
+    //     }
+    // }
 
 
 
-    private storeUserData(token: string) {
+    private storeUserData(token: string, userInfo) {
         localStorage.setItem('token', token);
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
     }
 
     private handleError(err) {

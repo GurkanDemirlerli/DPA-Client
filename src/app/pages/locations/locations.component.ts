@@ -13,6 +13,7 @@ import {
 
 import {
 } from 'src/app/enums';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -25,6 +26,11 @@ import {
 
 
 export class LocationsComponent implements OnInit {
+
+  mform = new FormGroup({
+    title: new FormControl('', Validators.required),
+    facultyId: new FormControl('', Validators.required),
+  });
 
 
 
@@ -90,7 +96,17 @@ export class LocationsComponent implements OnInit {
 
 
   fillDropdownOptions() {
-
+    this.dropdownOptions.facultyOptions = [];
+    let facultyOptions = [];
+    this.facultyService.getAll().subscribe((faculties) => {
+      faculties.map((faculty) => {
+        facultyOptions.push({
+          "label": faculty.title,
+          "value": faculty.facultyId
+        });
+      });
+      this.dropdownOptions.facultyOptions = facultyOptions;
+    });
   }
 
   showDialogToAdd() {
@@ -151,8 +167,8 @@ export class LocationsComponent implements OnInit {
       this.toastr.success('Derslik Başarıyla Silindi', 'Başarılı');
     }, (err) => {
       console.log(err);
-    }, () => {
       this.toastr.error("Derslik silinirken bir hata oluştu", "Sunucu Hatası");
+    }, () => {
 
     });
   }
@@ -160,6 +176,7 @@ export class LocationsComponent implements OnInit {
   onRowSelect(event) {
     this.newItem = false;
     this.item = this.clone(event.data);
+    this.selectedOptions.facultyOptions = (this.dropdownOptions.facultyOptions as any[]).find((option) => option.value == this.selectedItem.facultyId);
     this.displayDialog = true;
   }
 
