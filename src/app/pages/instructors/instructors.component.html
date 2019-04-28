@@ -150,6 +150,7 @@
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
         <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
         <button type="button" pButton (click)="dersler()" label="Dersler"></button>
+        <button type="button" pButton (click)="bolumler()" label="Bölümler"></button>
         <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
       </div>
     </p-footer>
@@ -157,14 +158,26 @@
 </form>
 
 
+<p-dialog header="Eğitmenin Ders Verdiği Bölümler" [(visible)]="displayBolumler" [responsive]="true" showEffect="fade"
+  [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}">
 
+  <p-pickList [source]="sourceBolumler" [target]="targetBolumler" sourceHeader="Tüm Bölümler"
+    targetHeader="Verildiği Bölümler" [responsive]="true" filterBy="title,departmentCode" dragdrop="true"
+    sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addDepartmentForUser($event)"
+    (onMoveToSource)="deleteDepartmentForUser($event)">
+    <ng-template let-bolum pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div style="font-size:14px;margin:15px 5px 0 0">{{bolum.title}} - {{bolum.departmentCode}} </div>
+      </div>
+    </ng-template>
+  </p-pickList>
 
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
 
-
-
-
-
-
+    </div>
+  </p-footer>
+</p-dialog>
 
 
 <p-dialog header="Verdiği Dersler" [(visible)]="displayDersler" [responsive]="true" showEffect="fade" [modal]="true"

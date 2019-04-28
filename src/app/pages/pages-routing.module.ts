@@ -27,6 +27,10 @@ const routes: Routes = [
                 component: ScheduleComponent
             },
             {
+                path: 'schedule/:departmentId',
+                component: ScheduleComponent
+            },
+            {
                 path: 'schedules',
                 component: ScheduleListComponent
             },

@@ -12,6 +12,7 @@ export class ScheduleBlock {
 }
 
 export class ScheduleUnit {
+    educationType?: number;
     unitLessonId: number;
     starTime: number;
     endTime: number;

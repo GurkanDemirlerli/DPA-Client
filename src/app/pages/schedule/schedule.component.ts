@@ -9,7 +9,8 @@ import { Titles, TitlesWord, EducationTypes, EducationTypesTableView } from 'src
 import { LessonGroupEnum, LessonGroupReverseEnum } from 'src/app/enums/lesson-group.enum';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SyllabusModel } from 'src/app/models/syllabus.model';
-
+import { switchMap } from 'rxjs/operators';
+import { DepartmentService } from 'src/app/services/department.service';
 
 @Component({
   selector: 'dpa-schedule',
@@ -75,30 +76,71 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private scheduleService: SyllabusService,
     private route: Router,
-    private dataRoute: ActivatedRoute
+    private dataRoute: ActivatedRoute,
+    private departmentService: DepartmentService
   ) { }
 
 
 
   ngOnInit() {
-    this.syllabus = this.scheduleService.selected;
-    this.lessons = this.syllabus.unitLessons;
-    let schedule = new Schedule();
-    this.schedule = schedule.make(this.lessons);
-    this.goster = 6;
-    this.fillDropdownOptions();
+    if (this.dataRoute.snapshot.params['departmentId']) {
+      console.log('XXXXXXXXXXXXx');
+      let birinciler = [];
+      let ikinciler = [];
+      const dpId = this.dataRoute.snapshot.params['departmentId'];
+      //TODO aşağıyı daha güzel hale getir
+      this.scheduleService.getActiveFirstForDepartment(dpId).subscribe((syl1) => {
+        birinciler = syl1.unitLessons;
+        birinciler.map((br) => {
+          br.educationType = syl1.educationType;
+        })
+        this.scheduleService.getActiveSecondForDepartment(dpId).subscribe((syl2) => {
+          ikinciler = syl2.unitLessons;
+          ikinciler.map((ik) => {
+            ik.educationType = syl2.educationType;
+          })
+          this.lessons = [...birinciler, ...ikinciler];
+          console.log(this.lessons);
+          let schedule = new Schedule();
+          this.schedule = schedule.make(this.lessons);
+          this.goster = 6;
+          this.fillDropdownOptions();
+        }, (err) => {
+          this.lessons = [...birinciler, ...ikinciler];
+          console.log(this.lessons);
+          let schedule = new Schedule();
+          this.schedule = schedule.make(this.lessons);
+          this.goster = 6;
+          this.fillDropdownOptions();
+        });
+      }, (err) => {
+        this.scheduleService.getActiveSecondForDepartment(dpId).subscribe((syl2) => {
+          ikinciler = syl2.unitLessons;
+          this.lessons = [...birinciler, ...ikinciler];
+          console.log(this.lessons);
+          let schedule = new Schedule();
+          this.schedule = schedule.make(this.lessons);
+          this.goster = 6;
+          this.fillDropdownOptions();
+        }, (err) => {
+          this.lessons = [...birinciler, ...ikinciler];
+          console.log(this.lessons);
+          let schedule = new Schedule();
+          this.schedule = schedule.make(this.lessons);
+          this.goster = 6;
+          this.fillDropdownOptions();
+        });
+      });
+    } else {
+      this.syllabus = this.scheduleService.selected;
+      this.lessons = this.syllabus.unitLessons;
+      let schedule = new Schedule();
+      this.schedule = schedule.make(this.lessons);
+      this.goster = 6;
+      this.fillDropdownOptions();
+    }
 
-    // this.scheduleService.get(1).subscribe((syl) => {
-    //   this.lessons = syl.unitLessons;
-    //   let schedule = new Schedule();
-    //   this.schedule = schedule.make(this.lessons);
-    //   this.goster = 6;
-    //   this.fillDropdownOptions();
 
-
-    // }, (err) => {
-    //   console.log(err);
-    // });
   }
 
   showDialog() {

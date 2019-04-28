@@ -1,3 +1,4 @@
+import { AddDepartmentInstructorModel } from './../../models/add-department-instructor.model';
 import { DepartmentInstructorService } from './../../services/department-instructor.service';
 import { InstructorLessonService } from './../../services/instructor-lesson.service';
 import { DepartmentService } from './../../services/department.service';
@@ -13,7 +14,8 @@ import {
   UpdateUserModel,
   ListUserModel,
   LessonModel,
-  AddUserLessonModel
+  AddUserLessonModel,
+  DepartmentModel
 } from 'src/app/models';
 
 import {
@@ -63,7 +65,6 @@ export class InstructorsComponent implements OnInit {
 
   displayDialog: boolean;
 
-  displayDersler: boolean;
 
   displayRol: boolean;
 
@@ -81,9 +82,13 @@ export class InstructorsComponent implements OnInit {
 
   selectedOptions: any = {};
 
+  displayDersler: boolean;
   sourceDers: LessonModel[] = [];
-
   targetDers: LessonModel[] = [];
+
+  displayBolumler: boolean;
+  targetBolumler: DepartmentModel[] = [];
+  sourceBolumler: DepartmentModel[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -114,12 +119,6 @@ export class InstructorsComponent implements OnInit {
       })
     });
 
-    // this.sortOptions = [
-    //   { label: 'Newest First', value: '!year' },
-    //   { label: 'Oldest First', value: 'year' },
-    //   { label: 'Brand', value: 'brand' }
-    // ];
-
     this.items = [
       { label: 'Adil Çizelgeleme Sistemi' },
       { label: 'Kullanıcılar' },
@@ -142,10 +141,7 @@ export class InstructorsComponent implements OnInit {
       });
       this.dropdownOptions.departmentOptions = departmentOptions;
       this.dropdownOptions.bolumFilter = departmentOptions;
-      // this.dropdownOptions.bolumFilter.push({
-      //   "label": "Tüm Bölümler",
-      //   "value": null
-      // });
+
     });
   }
 
@@ -223,18 +219,14 @@ export class InstructorsComponent implements OnInit {
         email: this.user.email,
         roles: this.user.roles,
         title: this.user.title,
-        // departmentId: this.user.departmentId
       }
       this.userService.add(addUserModel).subscribe((res) => {
-        // this.departmentService.get(this.user.departmentId).subscribe(department => {
-        //   this.user.department = department;
         this.user.userId = res.data;
         users.push(this.user);
         this.users = users;
         this.user = null;
         this.displayDialog = false;
         this.toastr.success('Kullanıcı Başarıyla Eklendi', 'Başarılı');
-        // })
       }, (err) => {
         console.log(err);
         this.toastr.error("Kullanıcı eklenirken bir hata oluştu", "Sunucu Hatası");
@@ -243,14 +235,11 @@ export class InstructorsComponent implements OnInit {
       });
     } else {
       let updateUserModel: UpdateUserModel = {
-        // login: this.user.name,
-        // password: this.user.password,
         name: this.user.name,
         surname: this.user.surname,
         email: this.user.email,
         roles: this.user.roles,
         title: this.user.title,
-        // departmentId: this.user.departmentId
       }
       let id = this.user.userId;
       this.userService.update(updateUserModel, id).subscribe(() => {
@@ -304,7 +293,26 @@ export class InstructorsComponent implements OnInit {
         this.sourceDers = sourceDers;
       });
     });
+  }
 
+  bolumler() {
+    this.displayBolumler = true;
+    let targetBolumler: DepartmentModel[] = [];
+    let sourceBolumler: DepartmentModel[] = [];
+
+    this.departmentInstructorService.getDepartmentsForUserId(this.selectedUser.userId).subscribe((departments1) => {
+      targetBolumler = departments1;
+      this.departmentService.getAll().subscribe((departments2) => {
+        departments2.map((ls) => {
+          let tempA = targetBolumler.filter((opt) => opt.departmentId == ls.departmentId);
+          if (tempA.length < 1) {
+            sourceBolumler.push(ls);
+          }
+        });
+        this.targetBolumler = targetBolumler;
+        this.sourceBolumler = sourceBolumler;
+      });
+    });
   }
 
   rol() {
@@ -326,6 +334,33 @@ export class InstructorsComponent implements OnInit {
   deleteLessonForUser(e) {
     for (let i = 0; i < e.items.length; i++) {
       this.instructorLessonService.delete(this.user.userId, e.items[i].lessonId).subscribe((res) => {
+      });
+    }
+  }
+
+
+  addDepartmentForUser(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      let addModel: AddDepartmentInstructorModel = {
+        departmentId: e.items[i].departmentId,
+        userId: this.user.userId
+      };
+      this.departmentInstructorService.add(addModel).subscribe((res) => {
+        this.toastr.success('Kullanıcı Başarıyla Bölüm Atandı.', 'Başarılı');
+      }, (err) => {
+        console.log(err);
+        this.toastr.error("Kullanıcıya bölüm atanırken bir hata oluştu", "Sunucu Hatası");
+      });
+    }
+  }
+
+  deleteDepartmentForUser(e) {
+    for (let i = 0; i < e.items.length; i++) {
+      this.departmentInstructorService.delete(e.items[i].departmentId, this.user.userId.lessonId).subscribe((res) => {
+        this.toastr.success('Kullanıcı Başarıyla Bölümden silindi.', 'Başarılı');
+      }, (err) => {
+        console.log(err);
+        this.toastr.error("Kullanıcıya bölümden silinirken bir hata oluştu", "Sunucu Hatası");
       });
     }
   }

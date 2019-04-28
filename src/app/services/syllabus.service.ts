@@ -30,6 +30,26 @@ export class SyllabusService {
             );
     }
 
+    public getActiveFirstForDepartment(departmentId: number): Observable<SyllabusModel> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.get<SyllabusModel>(this.domain + `Syllabus/${departmentId}/firstActiveSyllabus`, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+    public getActiveSecondForDepartment(departmentId: number): Observable<SyllabusModel> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.get<SyllabusModel>(this.domain + `Syllabus/${departmentId}/secondActiveSyllabus`, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
+
     private handleError(err) {
         const errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
         console.error(errorMessage);

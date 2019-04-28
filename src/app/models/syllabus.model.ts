@@ -11,6 +11,7 @@ export interface SyllabusModel {
 }
 
 export interface SyllUnitLessonModel {
+    educationType?:number;
     unitLessonId: number;
     starTime: number;
     endTime: number;

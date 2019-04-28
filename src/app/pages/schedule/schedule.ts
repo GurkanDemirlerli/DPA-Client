@@ -31,7 +31,7 @@ export class Schedule {
 
             for (let j = 0; j < derslereGoreAyrilmis.length; j++) {
                 if (derslereGoreAyrilmis[j].units.length > 0) {
-                    if (derslereGoreAyrilmis[j].units[0].lesson.lessonId === element.lesson.lessonId && derslereGoreAyrilmis[j].units[0].groupType === element.groupType && derslereGoreAyrilmis[j].units[0].dayOfTheWeekType === element.dayOfTheWeekType) {
+                    if (derslereGoreAyrilmis[j].units[0].lesson.lessonId === element.lesson.lessonId && derslereGoreAyrilmis[j].units[0].groupType === element.groupType && derslereGoreAyrilmis[j].units[0].dayOfTheWeekType === element.dayOfTheWeekType && derslereGoreAyrilmis[j].units[0].educationType === element.educationType) {
                         derslereGoreAyrilmis[j].units.push(element);
                         yeniDersBulundu = false;
                         break;
@@ -155,7 +155,7 @@ export class Schedule {
         let secilebilirler = [1, 2, 3, 4, 5];
 
         others.map((opt) => {
-            if (opt.units[0].lesson.lessonId === ders.units[0].lesson.lessonId && opt.units[0].groupType === ders.units[0].groupType) {
+            if (opt.units[0].lesson.lessonId === ders.units[0].lesson.lessonId && opt.units[0].groupType === ders.units[0].groupType && opt.units[0].educationType === ders.units[0].educationType) {
                 secilebilirler = secilebilirler.filter((gun) => {
                     if (gun === opt.units[0].dayOfTheWeekType) {
                         return false;
