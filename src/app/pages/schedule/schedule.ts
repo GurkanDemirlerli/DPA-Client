@@ -125,7 +125,7 @@ export class Schedule {
     public filtrele(filtre: any) {
         let ismeGoreFiltrelenmis = this.filtresizBL.filter((opt) => opt.units[0].lesson.name.toLocaleLowerCase().includes(filtre.name.toLocaleLowerCase()));
         ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => opt.units[0].location.title.toLocaleLowerCase().includes(filtre.loc.toLocaleLowerCase()));
-        ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => (opt.units[0].user.name + opt.units[0].user.surname).toLocaleLowerCase().includes(filtre.ins.toLocaleLowerCase()));
+        ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => (opt.units[0].user.name + ' ' + opt.units[0].user.surname).toLocaleLowerCase().includes(filtre.ins.toLocaleLowerCase()));
         if (filtre.grp) {
             ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => opt.units[0].groupType === Number(filtre.grp));
         }
@@ -279,5 +279,3 @@ export class Schedule {
     }
 
 }
-
-//TODO Değiştririken 1. öğretim varsa 2. öğretim eklemiyo ayrı ele al

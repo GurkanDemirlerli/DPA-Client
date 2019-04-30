@@ -7,9 +7,9 @@
   padding: 20px;
 }
 
-::ng-deep body .ui-table .ui-table-tbody > tr:nth-child(even){
-    background-color: #ffffff;
-    border:0;
+::ng-deep body .ui-table .ui-table-tbody > tr:nth-child(even) {
+  background-color: #ffffff;
+  border: 0;
 }
 
 // ::ng-deep body .ui-table .ui-table-summary{
@@ -26,4 +26,3 @@
 //     background-color: #ffffff;
 //     border:0;
 // }
-

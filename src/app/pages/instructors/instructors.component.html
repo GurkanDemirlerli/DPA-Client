@@ -1,202 +1,222 @@
-<div class="wrpr-br">
-  <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
-</div>
+<ng-container *ngIf="loading === true; else second">
+  <div class="prgrs">
+    <p-progressSpinner [style]="{width: '200px', height: '200px'}" strokeWidth="2" animationDuration="3s">
+    </p-progressSpinner>
+  </div>
 
-<br>
+</ng-container>
+<ng-template #second>
+  <div class="wrpr-br">
+    <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
+  </div>
 
-<p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both"
-  filterBy="departmentsParsed,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
-  <p-header>
-    <div class="ui-helper-clearfix">
-      <div class="ui-g">
-        <div class="ui-g-6 ui-md-3">
-          <div style="position:relative">
-            <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-          </div>
-        </div>
+  <br>
 
-        <div class="ui-g-12 ui-md-6 filter-container" align="center">
-          <div style="position:relative">
-            <input type="search" pInputText placeholder="Ara" (keyup)="dv.filter($event.target.value)"
-              style="height: 35px;min-width: 280px; margin-right: 5px;">
-
-            <p-dropdown [options]="dropdownOptions.bolumFilter" [showClear]="true" optionLabel="label" placeholder="Bölüm Seçiniz"
-              [(ngModel)]="sortKey" (onChange)="$event.value?.label != undefined ? dv.filter($event.value.label) : dv.filter('')"
-              [style]="{'min-width':'280px','height':'35px', 'margin-top':'-4px'}"></p-dropdown>
-          </div>
-        </div>
-
-        <div class="ui-g-6 ui-md-3" style="text-align:right">
-          <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-        </div>
-      </div>
-    </div>
-  </p-header>
-  <ng-template let-user pTemplate="listItem">
-    <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-      <div class="ui-g-12 ui-md-3" style="text-align:center">
-        <img src="assets/profilepicture.png" width="120">
-      </div>
-      <div class="ui-g-12 ui-md-8 user-details">
+  <p-dataView #dv [value]="users" [paginator]="true" [rows]="20" paginatorPosition="both"
+    filterBy="departmentsParsed,name,surname" [sortField]="sortField" [sortOrder]="sortOrder">
+    <p-header>
+      <div class="ui-helper-clearfix">
         <div class="ui-g">
-          <div class="ui-g-2 ui-sm-6">Ad: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{user.name  + ' ' + user.surname | titlecase}}</b></div>
+          <div class="ui-g-6 ui-md-3">
+            <div style="position:relative">
+              <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+            </div>
+          </div>
 
-          <div class="ui-g-2 ui-sm-6">Email: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
+          <div class="ui-g-12 ui-md-6 filter-container" align="center">
+            <div style="position:relative">
+              <input type="search" pInputText placeholder="Ara" (keyup)="dv.filter($event.target.value)"
+                style="height: 35px;min-width: 280px; margin-right: 5px;">
 
-          <div class="ui-g-2 ui-sm-6">Ünvan: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{titlesWord[titles[user.title]]}}</b></div>
+              <p-dropdown [options]="dropdownOptions.bolumFilter" [showClear]="true" optionLabel="label"
+                placeholder="Bölüm Seçiniz" [(ngModel)]="sortKey"
+                (onChange)="$event.value?.label != undefined ? dv.filter($event.value.label) : dv.filter('')"
+                [style]="{'min-width':'280px','height':'35px', 'margin-top':'-4px'}"></p-dropdown>
+            </div>
+          </div>
 
-          <div class="ui-g-2 ui-sm-6">Rol: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{roles[user.roles] }}</b></div>
+          <div class="ui-g-6 ui-md-3" style="text-align:right">
+            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          </div>
+        </div>
+      </div>
+    </p-header>
+    <ng-template let-user pTemplate="listItem">
+      <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+        <div class="ui-g-12 ui-md-3" style="text-align:center">
+          <img src="assets/profilepicture.png" width="120">
+        </div>
+        <div class="ui-g-12 ui-md-8 user-details">
+          <div class="ui-g">
+            <div class="ui-g-2 ui-sm-6">Ad: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{user.name  + ' ' + user.surname | titlecase}}</b></div>
 
-          <div class="ui-g-2 ui-sm-6">Bölümler: </div>
-          <div class="ui-g-10 ui-sm-6"><b>{{user.departmentsParsed}}</b></div>
+            <div class="ui-g-2 ui-sm-6">Email: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
 
+            <div class="ui-g-2 ui-sm-6">Ünvan: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{titlesWord[titles[user.title]]}}</b></div>
+
+            <div class="ui-g-2 ui-sm-6">Rol: </div>
+            <div class="ui-g-10 ui-sm-6"><b>{{roles[user.roles] }}</b></div>
+
+            <div class="ui-g-2 ui-sm-6">Bölümler: </div>
+            <div class="ui-g-10 ui-sm-6">
+              <ng-container *ngIf="user.departmentsParsed === undefined;else other;">
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                  <p-progressSpinner [style]="{width: '15px', height: '15px'}" strokeWidth="3"></p-progressSpinner>
+                </div>
+              </ng-container>
+              <ng-template #other>
+                <b>{{user.departmentsParsed}}</b>
+              </ng-template>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-1 search-icon">
+          <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"></button>
         </div>
       </div>
-      <div class="ui-g-12 ui-md-1 search-icon">
-        <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"></button>
+    </ng-template>
+    <ng-template let-user pTemplate="gridItem">
+      <div style="padding:.5em" class="ui-g-12 ui-md-3">
+        <p-panel [header]="user.department?.title" [style]="{'text-align':'center'}">
+          <img src="assets/profilepicture.png" width="60">
+          <div class="user-detail">{{titlesWord[titles[user.title]] + ' ' +user.name  + ' ' + user.surname | titlecase}}
+          </div>
+          <hr class="ui-widget-content" style="border-top:0">
+          <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"
+            style="margin-top:0"></button>
+        </p-panel>
       </div>
-    </div>
-  </ng-template>
-  <ng-template let-user pTemplate="gridItem">
-    <div style="padding:.5em" class="ui-g-12 ui-md-3">
-      <p-panel [header]="user.department?.title" [style]="{'text-align':'center'}">
-        <img src="assets/profilepicture.png" width="60">
-        <div class="user-detail">{{titlesWord[titles[user.title]] + ' ' +user.name  + ' ' + user.surname | titlecase}}
-        </div>
-        <hr class="ui-widget-content" style="border-top:0">
-        <button pButton type="button" icon="pi pi-search" (click)="selectUser($event, user)"
-          style="margin-top:0"></button>
-      </p-panel>
-    </div>
-  </ng-template>
-</p-dataView>
+    </ng-template>
+  </p-dataView>
 
 
-<form [formGroup]="mform" (ngSubmit)="save(mform.value)">
-  <p-dialog header="Kullanıcı Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-    [contentStyle]="{'overflow':'visible'}" [style]="{width: '450px'}">
+  <form [formGroup]="mform" (ngSubmit)="save(mform.value)">
+    <p-dialog header="Kullanıcı Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+      [contentStyle]="{'overflow':'visible'}" [style]="{width: '450px'}">
 
-    <div class="ui-g ui-fluid" *ngIf="user">
-      <div class="ui-g-12" style="text-align:center">
-        <img src="assets/profilepicture.png" width="120">
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="name">Ad</label>
+      <div class="ui-g ui-fluid" *ngIf="user">
+        <div class="ui-g-12" style="text-align:center">
+          <img src="assets/profilepicture.png" width="120">
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="name" formControlName="name" [(ngModel)]="user.name" />
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="name">Ad</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="name" formControlName="name" [(ngModel)]="user.name" />
+          </div>
         </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="surname">Soyad</label>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="surname">Soyad</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="surname" formControlName="surname" [(ngModel)]="user.surname" />
+          </div>
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="surname" formControlName="surname" [(ngModel)]="user.surname" />
+        <div class="ui-g-12" *ngIf="!selectedUser">
+          <div class="ui-g-4">
+            <label for="login">Giriş Adı</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="login" formControlName="login" [(ngModel)]="user.login" />
+          </div>
         </div>
-      </div>
-      <div class="ui-g-12" *ngIf="!selectedUser">
-        <div class="ui-g-4">
-          <label for="login">Giriş Adı</label>
+        <div class="ui-g-12" *ngIf="!selectedUser">
+          <div class="ui-g-4">
+            <label for="password">Şifre</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="password" formControlName="password" [(ngModel)]="user.password" />
+          </div>
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="login" formControlName="login" [(ngModel)]="user.login" />
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="email">Email</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="email" formControlName="email" [(ngModel)]="user.email" />
+          </div>
         </div>
-      </div>
-      <div class="ui-g-12" *ngIf="!selectedUser">
-        <div class="ui-g-4">
-          <label for="password">Şifre</label>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="roles">Rol</label>
+          </div>
+          <div class="ui-g-8">
+            <p-dropdown [options]="dropdownOptions.roleTypeOptions" formControlName="roles" [style]="{'width': '100%'}"
+              placeholder="Seçiniz" optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.roleTypeOptions"
+              (onChange)="user.roles = $event.value.value"></p-dropdown>
+          </div>
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="password" formControlName="password" [(ngModel)]="user.password" />
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="title">Ünvan</label>
+          </div>
+          <div class="ui-g-8">
+            <p-dropdown [options]="dropdownOptions.titleTypeOptions" formControlName="title" [style]="{'width': '100%'}"
+              placeholder="Seçiniz" optionLabel="label" [showClear]="true"
+              [(ngModel)]="selectedOptions.titleTypeOptions" (onChange)="user.title = $event.value.value"></p-dropdown>
+          </div>
         </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="email">Email</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="email" formControlName="email" [(ngModel)]="user.email" />
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="roles">Rol</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown [options]="dropdownOptions.roleTypeOptions" formControlName="roles" [style]="{'width': '100%'}"
-            placeholder="Seçiniz" optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.roleTypeOptions"
-            (onChange)="user.roles = $event.value.value"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="title">Ünvan</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown [options]="dropdownOptions.titleTypeOptions" formControlName="title" [style]="{'width': '100%'}"
-            placeholder="Seçiniz" optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.titleTypeOptions"
-            (onChange)="user.title = $event.value.value"></p-dropdown>
-        </div>
-      </div>
 
-    </div>
+      </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+          <button type="button" pButton (click)="dersler()" label="Dersler"></button>
+          <button type="button" pButton (click)="bolumler()" label="Bölümler"></button>
+          <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+  </form>
+
+
+  <p-dialog header="Eğitmenin Ders Verdiği Bölümler" [(visible)]="displayBolumler" [responsive]="true" showEffect="fade"
+    [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}">
+
+    <p-pickList [source]="sourceBolumler" [target]="targetBolumler" sourceHeader="Tüm Bölümler"
+      targetHeader="Verildiği Bölümler" [responsive]="true" filterBy="title,departmentCode" dragdrop="true"
+      sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addDepartmentForUser($event)"
+      (onMoveToSource)="deleteDepartmentForUser($event)">
+      <ng-template let-bolum pTemplate="item">
+        <div class="ui-helper-clearfix">
+          <div style="font-size:14px;margin:15px 5px 0 0">{{bolum.title}} - {{bolum.departmentCode}} </div>
+        </div>
+      </ng-template>
+    </p-pickList>
+
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-        <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-        <button type="button" pButton (click)="dersler()" label="Dersler"></button>
-        <button type="button" pButton (click)="bolumler()" label="Bölümler"></button>
-        <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
+
       </div>
     </p-footer>
   </p-dialog>
-</form>
 
 
-<p-dialog header="Eğitmenin Ders Verdiği Bölümler" [(visible)]="displayBolumler" [responsive]="true" showEffect="fade"
-  [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}">
+  <p-dialog header="Verdiği Dersler" [(visible)]="displayDersler" [responsive]="true" showEffect="fade" [modal]="true"
+    [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
 
-  <p-pickList [source]="sourceBolumler" [target]="targetBolumler" sourceHeader="Tüm Bölümler"
-    targetHeader="Verildiği Bölümler" [responsive]="true" filterBy="title,departmentCode" dragdrop="true"
-    sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addDepartmentForUser($event)"
-    (onMoveToSource)="deleteDepartmentForUser($event)">
-    <ng-template let-bolum pTemplate="item">
-      <div class="ui-helper-clearfix">
-        <div style="font-size:14px;margin:15px 5px 0 0">{{bolum.title}} - {{bolum.departmentCode}} </div>
+    <p-pickList [source]="sourceDers" [target]="targetDers" sourceHeader="Tüm Dersler" targetHeader="Verdiği Dersler"
+      [responsive]="true" filterBy="name,lessonCode" dragdrop="true" sourceFilterPlaceholder="Ara"
+      targetFilterPlaceholder="Ara" (onMoveToTarget)="addLessonForUser($event)"
+      (onMoveToSource)="deleteLessonForUser($event)">
+      <ng-template let-ders pTemplate="item">
+        <div class="ui-helper-clearfix">
+          <div style="font-size:14px;margin:15px 5px 0 0">{{ders.name}} - {{ders.lessonCode}} </div>
+        </div>
+      </ng-template>
+    </p-pickList>
+
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+
       </div>
-    </ng-template>
-  </p-pickList>
-
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-
-    </div>
-  </p-footer>
-</p-dialog>
-
-
-<p-dialog header="Verdiği Dersler" [(visible)]="displayDersler" [responsive]="true" showEffect="fade" [modal]="true"
-  [responsive]="true" [contentStyle]="{'overflow':'visible'}" (onAfterHide)="close()">
-
-  <p-pickList [source]="sourceDers" [target]="targetDers" sourceHeader="Tüm Dersler" targetHeader="Verdiği Dersler"
-    [responsive]="true" filterBy="name,lessonCode" dragdrop="true" sourceFilterPlaceholder="Ara"
-    targetFilterPlaceholder="Ara" (onMoveToTarget)="addLessonForUser($event)"
-    (onMoveToSource)="deleteLessonForUser($event)">
-    <ng-template let-ders pTemplate="item">
-      <div class="ui-helper-clearfix">
-        <div style="font-size:14px;margin:15px 5px 0 0">{{ders.name}} - {{ders.lessonCode}} </div>
-      </div>
-    </ng-template>
-  </p-pickList>
-
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-
-    </div>
-  </p-footer>
-</p-dialog>
+    </p-footer>
+  </p-dialog>
+</ng-template>

@@ -1,3 +1,12 @@
+<ng-container *ngIf="loading === true; else second">
+    <div class="prgrs">
+      <p-progressSpinner [style]="{width: '200px', height: '200px'}" strokeWidth="2" 
+        animationDuration="3s">
+      </p-progressSpinner>
+    </div>
+  
+  </ng-container>
+  <ng-template #second>
 <div class="wrpr-br">
   <p-breadcrumb [model]="brItems" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
 </div>
@@ -78,3 +87,4 @@
     </p-footer>
   </p-dialog>
 </form>
+  </ng-template>

@@ -48,3 +48,11 @@ export class ScheduleLocation {
     locationId: number;
     title: string;
 }
+
+
+export class AddSyllabusModel {
+    facultyId?: number;
+    departmentId?: number;
+    periodType?: number;
+    educationType?: number;
+}

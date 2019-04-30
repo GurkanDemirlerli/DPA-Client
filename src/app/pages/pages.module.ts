@@ -31,7 +31,7 @@ import { MyDepartmentLessonsComponent } from './my-department-lessons/my-departm
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { MySchedulesComponent } from './my-schedules/my-schedules.component';
 import { RouterModule } from '@angular/router';
-
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -67,8 +67,8 @@ import { RouterModule } from '@angular/router';
         ButtonModule,
         BreadcrumbModule,
         PickListModule,
-        ReactiveFormsModule
-
+        ReactiveFormsModule,
+        ProgressSpinnerModule,
     ],
     exports: [],
     providers: [],

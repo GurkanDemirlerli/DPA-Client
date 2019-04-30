@@ -87,6 +87,10 @@ export class LessonsComponent implements OnInit {
     departments: []
   };
 
+  loading: boolean = true;
+
+  toplamSaat: number = 0;
+
   constructor(
     private departmentService: DepartmentService,
     private departmentLessonService: DepartmentLessonService,
@@ -127,7 +131,17 @@ export class LessonsComponent implements OnInit {
           });
         });
       });
-
+      this.loading = false;
+      setTimeout(() => {
+        this.lessons.map((ls) => {
+          ls.departments.map((dp) => {
+            if (dp.departmentId === 1) {
+              this.toplamSaat += ls.lessonGroups.length * ls.weeklyHour;
+            }
+          })
+        });
+        console.log("Bilgisayar Müh. Toplam Saat", this.toplamSaat);
+      }, 10000);
       this.cols = [
         { field: 'lessonCode', header: 'Kodu' },
         { field: 'name', header: 'Adı' },
@@ -137,7 +151,7 @@ export class LessonsComponent implements OnInit {
         { field: 'lessonType', header: 'Ders Tipi' },
         { field: 'semesterType', header: 'Dönem' },
         { field: 'departmentCount', header: 'Bölümler', hlpr: 'departmentsParsed' },
-        { field: 'userCount', header: 'Dersi Verenler', hlpr:'usersParsed' },
+        { field: 'userCount', header: 'Dersi Verenler', hlpr: 'usersParsed' },
       ];
 
       this.items = [

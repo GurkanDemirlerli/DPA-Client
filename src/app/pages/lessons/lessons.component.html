@@ -1,203 +1,242 @@
 <!-- TODO COKLU GRUP EKLEME EKLE -->
 
-<div class="wrpr-br">
-  <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
-</div>
 
-<br>
-<p-table #dt [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
-  (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
-  <ng-template pTemplate="caption">
-    Sakarya Üniversitesi Dersleri
-  </ng-template>
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
-      </th>
-    </tr>
-    <tr>
-      <th *ngFor="let col of columns" [ngSwitch]="col.field">
-        <p-dropdown *ngSwitchCase="'departmentCount'" [options]="filters.departments" [style]="{'width':'100%'}"
-          (onChange)="dt.filter($event.value, col.hlpr, col.filterMatchMode)"></p-dropdown>
-        <input *ngSwitchCase="'userCount'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.hlpr, col.filterMatchMode)" style="width:100%">
-        <input *ngSwitchCase="'name'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
-        <input *ngSwitchCase="'akts'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
-        <input *ngSwitchCase="'weeklyHour'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
-        <input *ngSwitchCase="'semesterType'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
-        <input *ngSwitchCase="'lessonCode'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
-        <input *ngSwitchCase="'lessonType'" pInputText type="text"
-          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr [pSelectableRow]="rowData">
-      <td *ngFor="let col of columns">
-        <ng-container *ngIf="col.field === 'lessonType';else second">
-          {{ lessonTypesTableView[lessonTypes[rowData[col.field]]] }}
-        </ng-container>
-        <ng-template #second>
-          <ng-container *ngIf="col.field === 'semesterType';else third">
-            {{rowData[col.field]}}
+
+<ng-container *ngIf="loading === true; else second">
+  <div class="prgrs">
+    <p-progressSpinner [style]="{width: '200px', height: '200px'}" strokeWidth="2" animationDuration="3s">
+    </p-progressSpinner>
+  </div>
+
+</ng-container>
+<ng-template #second>
+  <div class="wrpr-br">
+    <p-breadcrumb [model]="items" [style]="{border:0, background:'transparent'}"></p-breadcrumb>
+  </div>
+
+  <br>
+
+  <p-table #dt [columns]="cols" [value]="lessons" selectionMode="single" [(selection)]="selectedLesson"
+    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+    <ng-template pTemplate="caption">
+      Sakarya Üniversitesi Dersleri
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          <p-dropdown *ngSwitchCase="'departmentCount'" [options]="filters.departments" [style]="{'width':'100%'}"
+            (onChange)="dt.filter($event.value, col.hlpr, col.filterMatchMode)"></p-dropdown>
+          <input *ngSwitchCase="'userCount'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.hlpr, col.filterMatchMode)" style="width:100%">
+          <input *ngSwitchCase="'name'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+          <input *ngSwitchCase="'akts'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+          <input *ngSwitchCase="'weeklyHour'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+          <input *ngSwitchCase="'semesterType'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+          <input *ngSwitchCase="'lessonCode'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+          <input *ngSwitchCase="'lessonType'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field === 'lessonType';else second">
+            {{ lessonTypesTableView[lessonTypes[rowData[col.field]]] }}
           </ng-container>
-        </ng-template>
-        <ng-template #third>
-          {{rowData[col.field]}}
-        </ng-template>
-      </td>
-    </tr>
-  </ng-template>
+          <ng-template #second>
+            <ng-container *ngIf="col.field === 'semesterType';else third">
+              {{rowData[col.field]}}
+            </ng-container>
+          </ng-template>
+          <ng-template #third>
+            <ng-container *ngIf="col.field === 'userCount';else fourth">
+              <ng-container *ngIf="rowData[col.field] === undefined;else other;">
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                  <p-progressSpinner [style]="{width: '15px', height: '15px'}" strokeWidth="3"></p-progressSpinner>
+                </div>
+              </ng-container>
+              <ng-template #other>
+                {{rowData[col.field]}}
+              </ng-template>
+            </ng-container>
+          </ng-template>
+          <ng-template #fourth>
+            <ng-container *ngIf="col.field === 'departmentCount';else fifth">
+              <ng-container *ngIf="rowData[col.field] === undefined;else other;">
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                  <p-progressSpinner [style]="{width: '15px', height: '15px'}" strokeWidth="3"></p-progressSpinner>
+                </div>
+              </ng-container>
+              <ng-template #other>
+                {{rowData[col.field]}}
+              </ng-template>
+            </ng-container>
+          </ng-template>
+          <ng-template #fifth>
+            {{rowData[col.field]}}
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
 
-  <ng-template pTemplate="summary" let-rowData>
-    <div style="text-align:left">
-      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-    </div>
-  </ng-template>
-</p-table>
+    <ng-template pTemplate="summary" let-rowData>
+      <div style="text-align:left">
+        <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+      </div>
+    </ng-template>
+  </p-table>
 
-<form [formGroup]="mform" (ngSubmit)="save(mform.value)">
-  <p-dialog header="Bölüm Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-    [contentStyle]="{'overflow':'visible'}" [style]="{width: '450px'}">
+  <form [formGroup]="mform" (ngSubmit)="save(mform.value)">
+    <p-dialog header="Bölüm Detay" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+      [contentStyle]="{'overflow':'visible'}" [style]="{width: '450px'}">
 
-    <div class="ui-g ui-fluid" *ngIf="lesson">
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="lessonCode">Ders Kodu</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="lessonCode"  formControlName="lessonCode" [(ngModel)]="lesson.lessonCode" />
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="name">Ders Adı</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="name" [(ngModel)]="lesson.name" formControlName="name" />
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="akts">AKTS</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown [options]="dropdownOptions.aktsOptions" formControlName="akts" [style]="{'width': '100%'}" placeholder="Seçiniz"
-            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.aktsOptions"
-            (onChange)="lesson.akts = $event.value.value"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="weeklyHour">Haftalık Saat</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown [options]="dropdownOptions.weeklyHourOptions" formControlName="weeklyHour" [style]="{'width': '100%'}" placeholder="Seçiniz"
-            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.weeklyHourOptions"
-            (onChange)="lesson.weeklyHour = $event.value.value"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="lessonType">Ders Tipi</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown [options]="dropdownOptions.lessonTypeOptions" formControlName="lessonType"  [style]="{'width': '100%'}" placeholder="Seçiniz"
-            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.lessonTypeOptions"
-            (onChange)="lesson.lessonType = $event.value.value"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="semesterType">Yarıyıl</label>
-        </div>
-        <div class="ui-g-8">
-          <p-dropdown [options]="dropdownOptions.semesterTypeOptions" formControlName="semesterType" [style]="{'width': '100%'}" placeholder="Seçiniz"
-            optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.semesterTypeOptions"
-            (onChange)="lesson.semesterType = $event.value.value"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="semesterType">Bölümler</label>
-        </div>
-        <div class="ui-g-8">
-          <div *ngFor="let dp of lesson.departments">
-            <label for="semesterType">{{dp.title}}</label>
+      <div class="ui-g ui-fluid" *ngIf="lesson">
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="lessonCode">Ders Kodu</label>
           </div>
-
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="semesterType">Eğitimciler</label>
-        </div>
-        <div class="ui-g-8">
-          <div *ngFor="let us of lesson.users">
-            <label for="semesterType">{{us.name + ' ' + us.surname}}</label>
+          <div class="ui-g-8">
+            <input pInputText id="lessonCode" formControlName="lessonCode" [(ngModel)]="lesson.lessonCode" />
           </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="name">Ders Adı</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="name" [(ngModel)]="lesson.name" formControlName="name" />
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="akts">AKTS</label>
+          </div>
+          <div class="ui-g-8">
+            <p-dropdown [options]="dropdownOptions.aktsOptions" formControlName="akts" [style]="{'width': '100%'}"
+              placeholder="Seçiniz" optionLabel="label" [showClear]="true" [(ngModel)]="selectedOptions.aktsOptions"
+              (onChange)="lesson.akts = $event.value.value"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="weeklyHour">Haftalık Saat</label>
+          </div>
+          <div class="ui-g-8">
+            <p-dropdown [options]="dropdownOptions.weeklyHourOptions" formControlName="weeklyHour"
+              [style]="{'width': '100%'}" placeholder="Seçiniz" optionLabel="label" [showClear]="true"
+              [(ngModel)]="selectedOptions.weeklyHourOptions" (onChange)="lesson.weeklyHour = $event.value.value">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="lessonType">Ders Tipi</label>
+          </div>
+          <div class="ui-g-8">
+            <p-dropdown [options]="dropdownOptions.lessonTypeOptions" formControlName="lessonType"
+              [style]="{'width': '100%'}" placeholder="Seçiniz" optionLabel="label" [showClear]="true"
+              [(ngModel)]="selectedOptions.lessonTypeOptions" (onChange)="lesson.lessonType = $event.value.value">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="semesterType">Yarıyıl</label>
+          </div>
+          <div class="ui-g-8">
+            <p-dropdown [options]="dropdownOptions.semesterTypeOptions" formControlName="semesterType"
+              [style]="{'width': '100%'}" placeholder="Seçiniz" optionLabel="label" [showClear]="true"
+              [(ngModel)]="selectedOptions.semesterTypeOptions" (onChange)="lesson.semesterType = $event.value.value">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="semesterType">Bölümler</label>
+          </div>
+          <div class="ui-g-8">
+            <div *ngFor="let dp of lesson.departments">
+              <label for="semesterType">{{dp.title}}</label>
+            </div>
 
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="semesterType">Eğitimciler</label>
+          </div>
+          <div class="ui-g-8">
+            <div *ngFor="let us of lesson.users">
+              <label for="semesterType">{{us.name + ' ' + us.surname}}</label>
+            </div>
+
+          </div>
         </div>
       </div>
-    </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton (click)="bolumler()" label="Bölümler"></button>
+          <button type="button" pButton (click)="dersiVerenler()" label="Dersi Verenler"></button>
+          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+          <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+  </form>
+
+
+
+  <p-dialog header="Dersin Verildiği Bölümler" [(visible)]="displayBolumler" [responsive]="true" showEffect="fade"
+    [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}">
+
+    <p-pickList [source]="sourceBolumler" [target]="targetBolumler" sourceHeader="Tüm Bölümler"
+      targetHeader="Verildiği Bölümler" [responsive]="true" filterBy="title,departmentCode" dragdrop="true"
+      sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addDepartmentForLesson($event)"
+      (onMoveToSource)="deleteDepartmentForLesson($event)">
+      <ng-template let-bolum pTemplate="item">
+        <div class="ui-helper-clearfix">
+          <div style="font-size:14px;margin:15px 5px 0 0">{{bolum.title}} - {{bolum.departmentCode}} </div>
+        </div>
+      </ng-template>
+    </p-pickList>
+
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-        <button type="button" pButton (click)="bolumler()" label="Bölümler"></button>
-        <button type="button" pButton (click)="dersiVerenler()" label="Dersi Verenler"></button>
-        <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-        <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
+
       </div>
     </p-footer>
   </p-dialog>
-</form>
 
+  <p-dialog header="Dersi Verenler" [(visible)]="displayInstructors" [responsive]="true" showEffect="fade"
+    [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}">
 
+    <p-pickList [source]="sourceInstructors" [target]="targetInstructors" sourceHeader="Tüm Kişiler"
+      targetHeader="Dersi Verenler" [responsive]="true" filterBy="name,surname" dragdrop="true"
+      sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addUserForLesson($event)"
+      (onMoveToSource)="deleteUserForLesson($event)">
+      <ng-template let-user pTemplate="item">
+        <div class="ui-helper-clearfix">
+          <div style="font-size:14px;margin:15px 5px 0 0">{{user.name}} - {{user.surname}} </div>
+        </div>
+      </ng-template>
+    </p-pickList>
 
-<p-dialog header="Dersin Verildiği Bölümler" [(visible)]="displayBolumler" [responsive]="true" showEffect="fade"
-  [modal]="true" [responsive]="true" [contentStyle]="{'overflow':'visible'}">
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
 
-  <p-pickList [source]="sourceBolumler" [target]="targetBolumler" sourceHeader="Tüm Bölümler"
-    targetHeader="Verildiği Bölümler" [responsive]="true" filterBy="title,departmentCode" dragdrop="true"
-    sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addDepartmentForLesson($event)"
-    (onMoveToSource)="deleteDepartmentForLesson($event)">
-    <ng-template let-bolum pTemplate="item">
-      <div class="ui-helper-clearfix">
-        <div style="font-size:14px;margin:15px 5px 0 0">{{bolum.title}} - {{bolum.departmentCode}} </div>
       </div>
-    </ng-template>
-  </p-pickList>
-
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-
-    </div>
-  </p-footer>
-</p-dialog>
-
-<p-dialog header="Dersi Verenler" [(visible)]="displayInstructors" [responsive]="true" showEffect="fade" [modal]="true"
-  [responsive]="true" [contentStyle]="{'overflow':'visible'}">
-
-  <p-pickList [source]="sourceInstructors" [target]="targetInstructors" sourceHeader="Tüm Kişiler"
-    targetHeader="Dersi Verenler" [responsive]="true" filterBy="name,surname" dragdrop="true"
-    sourceFilterPlaceholder="Ara" targetFilterPlaceholder="Ara" (onMoveToTarget)="addUserForLesson($event)"
-    (onMoveToSource)="deleteUserForLesson($event)">
-    <ng-template let-user pTemplate="item">
-      <div class="ui-helper-clearfix">
-        <div style="font-size:14px;margin:15px 5px 0 0">{{user.name}} - {{user.surname}} </div>
-      </div>
-    </ng-template>
-  </p-pickList>
-
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-
-    </div>
-  </p-footer>
-</p-dialog>
+    </p-footer>
+  </p-dialog>
+</ng-template>

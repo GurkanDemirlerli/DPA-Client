@@ -43,6 +43,26 @@ export class DepartmentService {
             );
     }
 
+    public setFirstSchedule(departmentId: number, scheduleId): Observable<void> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.put<void>(this.domain + `Department/${departmentId}/firstActiveSyllabus/${scheduleId}`, {}, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
+
+    public setSecondSchedule(departmentId: number, scheduleId): Observable<void> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.put<void>(this.domain + `Department/${departmentId}/secondActiveSyllabus/${scheduleId}`, {}, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
+
     public update(model: UpdateDepartmentModel, id: number): Observable<void> {
         const helper = new JwtHelperService();
         const token = localStorage.getItem('token');

@@ -37,6 +37,19 @@ export const semesterOptions = [
     { label: "8. Yarıyıl", value: 8 },
 ];
 
+export const semesterOptionsBahar = [
+    { label: "2. Yarıyıl", value: 2 },
+    { label: "4. Yarıyıl", value: 4 },
+    { label: "6. Yarıyıl", value: 6 },
+    { label: "8. Yarıyıl", value: 8 },
+];
+export const semesterOptionsGuz = [
+    { label: "1. Yarıyıl", value: 1 },
+    { label: "3. Yarıyıl", value: 3 },
+    { label: "5. Yarıyıl", value: 5 },
+    { label: "7. Yarıyıl", value: 7 },
+];
+
 export const groupOptions = [
     { label: "Grup A", value: 1 },
     { label: "Grup B", value: 2 },

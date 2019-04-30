@@ -22,12 +22,12 @@
       </div>
     </div>
 
-    <div class="menu-action" *ngIf="user?.roles === roles?.User" [routerLink]="['/pages/my-schedules']" routerLinkActive="active">
+    <div class="menu-action" *ngIf="user?.roles === roles?.User || user?.roles === roles?.Administrator" [routerLink]="['/pages/my-schedules']" routerLinkActive="active">
       <div class="logo">
         <fa-icon [icon]="icons.faCalendarAlt"></fa-icon>
       </div>
       <div class="content">
-        Ders Programım
+        Ders Programı
       </div>
     </div>
 

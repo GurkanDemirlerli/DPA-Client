@@ -71,6 +71,16 @@ export class LocationService {
             );
     }
 
+    public getForFaculty(facultyId: number): Observable<LocationModel[]> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.get<LocationModel[]>(this.domain + `Location/${facultyId}/locations`, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
+
     private handleError(err) {
         const errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
         console.error(errorMessage);

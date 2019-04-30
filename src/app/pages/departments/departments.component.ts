@@ -52,7 +52,7 @@ export class DepartmentsComponent implements OnInit {
   filters: { faculties: SelectItem[] } = {
     faculties: []
   };
-
+  loading: boolean = true;
   constructor(
     private facultyService: FacultyService,
     private departmentService: DepartmentService,
@@ -75,6 +75,7 @@ export class DepartmentsComponent implements OnInit {
             value: faculty.facultyId
           });
         });
+        this.loading = false;
       });
     })
 
@@ -126,7 +127,7 @@ export class DepartmentsComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  save() {
+  save(e) {
     let departments = [...this.items];
     if (this.newItem) {
       let addDepartmentModel: AddDepartmentModel = {

@@ -1,3 +1,4 @@
+import { AddSyllabusModel } from './../models/schedule.model';
 import { Injectable } from '@angular/core';
 import { server } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -14,11 +15,24 @@ import { SyllabusModel } from '../models/syllabus.model';
 export class SyllabusService {
     private domain = server.url + "/";
 
-    public selected: SyllabusModel;
+    // public selected: SyllabusModel[];
+
+    public selectedFirst:SyllabusModel;
+    public selectedSecond:SyllabusModel;
 
     constructor(
         private http: HttpClient
     ) { }
+
+    public add(model: AddSyllabusModel): Observable<SyllabusModel> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.post<SyllabusModel>(this.domain + 'Syllabus', model, headers)
+            .pipe(
+                tap(() => {
+                }),
+                catchError(this.handleError)
+            );
+    }
 
     public getForDepartment(departmentId: number): Observable<SyllabusModel[]> {
         const headers = ServicesHelpers.createAuthenticationHeader();

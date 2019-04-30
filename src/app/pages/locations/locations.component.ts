@@ -56,6 +56,7 @@ export class LocationsComponent implements OnInit {
   filters: { faculties: SelectItem[] } = {
     faculties: []
   };
+  loading: boolean = true;
 
 
   constructor(
@@ -67,6 +68,14 @@ export class LocationsComponent implements OnInit {
   ngOnInit() {
     this.locationService.getAll().subscribe((items) => {
       this.items = items;
+
+      this.items.map((lc) => {
+        this.facultyService.get(lc.facultyId).subscribe((fc) => {
+          lc.faculty = fc;
+          lc.facultyName = fc.title;
+        });
+      });
+
       this.facultyService.getAll().subscribe((faculties) => {
         this.filters.faculties.push({
           label: "Tümü",
@@ -79,11 +88,13 @@ export class LocationsComponent implements OnInit {
           });
         });
       });
+
+      this.loading = false;
     });
 
     this.cols = [
       { field: 'title', header: 'Derslik' },
-      { field: 'facultyId', header: 'Fakülte' },
+      { field: 'facultyId', header: 'Fakülte', hlpr: "facultyName" },
     ];
 
     this.brItems = [
@@ -116,7 +127,7 @@ export class LocationsComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  save() {
+  save(e) {
     let items = [...this.items];
     if (this.newItem) {
       let addModel: AddLocationModel = {

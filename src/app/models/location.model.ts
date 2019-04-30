@@ -5,6 +5,7 @@ export interface LocationModel {
     title?: string;
     facultyId?: number;
     faculty?: FacultyModel;
+    facultyName?: string;
 }
 
 export interface AddLocationModel {

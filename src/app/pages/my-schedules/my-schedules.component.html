@@ -1,14 +1,23 @@
-<div class="dps">
-  <h2 style="margin-left: 15px;">Ders Programlarım</h2>
-  <hr style="margin-left: 15px;">
-  <div class="ui-g-12 ui-md-6 ui-lg-3" *ngFor="let department of departments">
-    <div class="department" (click)="goToSchedule(department.departmentId)">
-      <div class="department-title">{{department.title}}</div>
+<ng-container *ngIf="loading === true; else second">
+  <div class="prgrs">
+    <p-progressSpinner [style]="{width: '200px', height: '200px'}" strokeWidth="2" animationDuration="3s">
+    </p-progressSpinner>
+  </div>
+
+</ng-container>
+<ng-template #second>
+  <div class="dps">
+    <h2 style="margin-left: 15px;">Ders Programları</h2>
+    <hr style="margin-left: 15px;">
+    <div class="ui-g-12 ui-md-6 ui-lg-3" *ngFor="let department of departments">
+      <div class="department" (click)="goToSchedule(department.departmentId)">
+        <div class="department-title">{{department.title}}</div>
+      </div>
+    </div>
+    <div *ngIf="departments.length < 1">
+      <p style="margin-left: 15px;">
+        Herhangi Bir Ders Programınız Bulunmamaktadır
+      </p>
     </div>
   </div>
-  <div *ngIf="departments.length < 1">
-    <p style="margin-left: 15px;">
-      Herhangi Bir Ders Programınız Bulunmamaktadır
-    </p>
-  </div>
-</div>
+</ng-template>

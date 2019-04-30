@@ -1,3 +1,8 @@
+import { LocationService } from './../../services/location.service';
+import { DepartmentInstructorService } from './../../services/department-instructor.service';
+import { DepartmentLessonService } from './../../services/department-lesson.service';
+import { UpdateUnitLessonModel } from './../../models/update-unit-lesson.model';
+import { UnitLessonService } from './../../services/unit-lesson.service';
 import { gunOptions, saatOptions, groupOptions, educationTypeOptions, semesterOptions } from './dropdown.data';
 import { Component, OnInit } from '@angular/core';
 import * as jsPDF from 'jspdf';
@@ -5,12 +10,16 @@ import html2canvas from 'html2canvas';
 import { ScheduleUnit, ScheduleBlock } from 'src/app/models/schedule.model';
 import { Schedule } from './schedule';
 import { SyllabusService } from 'src/app/services/syllabus.service';
-import { Titles, TitlesWord, EducationTypes, EducationTypesTableView } from 'src/app/enums';
+import { Titles, TitlesWord, EducationTypes, EducationTypesTableView, Roles } from 'src/app/enums';
 import { LessonGroupEnum, LessonGroupReverseEnum } from 'src/app/enums/lesson-group.enum';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SyllabusModel } from 'src/app/models/syllabus.model';
 import { switchMap } from 'rxjs/operators';
 import { DepartmentService } from 'src/app/services/department.service';
+import { SemesterEnum, SemesterReverseEnum } from 'src/app/enums/semester.enum';
+import { DayOfTheWeekEnum, DayOfTheWeekReverseEnum } from 'src/app/enums/day-of-the-week.enum';
+import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'dpa-schedule',
@@ -30,15 +39,22 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
+  public roles = Roles;
+
   public titles = Titles;
   public titlesWord = TitlesWord;
   public groupEnum = LessonGroupEnum;
   public groupEnumReverse = LessonGroupReverseEnum;
   public edTypeEnum = EducationTypes;
   public edTypeEnumReverse = EducationTypesTableView;
+  public smEnum = SemesterEnum;
+  public smEnumReverse = SemesterReverseEnum;
+  public dayEnum = DayOfTheWeekEnum;
+  public dayEnumReverse = DayOfTheWeekReverseEnum;
 
   lessons: ScheduleUnit[] = [];
-  syllabus: SyllabusModel;
+  syllFirst: SyllabusModel;
+  syllSecond: SyllabusModel;
   schedule: Schedule;
   gunler = [
     "Pazartesi",
@@ -73,21 +89,33 @@ export class ScheduleComponent implements OnInit {
   };
 
   uzat: boolean = false;
+
+  loading = true;
+
+  downPdf = false;
   constructor(
     private scheduleService: SyllabusService,
     private route: Router,
     private dataRoute: ActivatedRoute,
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    public authService: AuthService,
+    private unitLessonService: UnitLessonService,
+    private toastr: ToastrService,
+    private departmentLessonService: DepartmentLessonService,
+    private departmentInstructorService: DepartmentInstructorService,
+    private locationService: LocationService
   ) { }
 
 
 
   ngOnInit() {
     if (this.dataRoute.snapshot.params['departmentId']) {
-      console.log('XXXXXXXXXXXXx');
+
       let birinciler = [];
       let ikinciler = [];
       const dpId = this.dataRoute.snapshot.params['departmentId'];
+      this.fillFilters(dpId);
+
       //TODO aşağıyı daha güzel hale getir
       this.scheduleService.getActiveFirstForDepartment(dpId).subscribe((syl1) => {
         birinciler = syl1.unitLessons;
@@ -100,16 +128,16 @@ export class ScheduleComponent implements OnInit {
             ik.educationType = syl2.educationType;
           })
           this.lessons = [...birinciler, ...ikinciler];
-          console.log(this.lessons);
           let schedule = new Schedule();
           this.schedule = schedule.make(this.lessons);
+          this.loading = false;
           this.goster = 6;
           this.fillDropdownOptions();
         }, (err) => {
           this.lessons = [...birinciler, ...ikinciler];
-          console.log(this.lessons);
           let schedule = new Schedule();
           this.schedule = schedule.make(this.lessons);
+          this.loading = false;
           this.goster = 6;
           this.fillDropdownOptions();
         });
@@ -117,25 +145,53 @@ export class ScheduleComponent implements OnInit {
         this.scheduleService.getActiveSecondForDepartment(dpId).subscribe((syl2) => {
           ikinciler = syl2.unitLessons;
           this.lessons = [...birinciler, ...ikinciler];
-          console.log(this.lessons);
           let schedule = new Schedule();
           this.schedule = schedule.make(this.lessons);
+          this.loading = false;
           this.goster = 6;
           this.fillDropdownOptions();
         }, (err) => {
           this.lessons = [...birinciler, ...ikinciler];
-          console.log(this.lessons);
           let schedule = new Schedule();
           this.schedule = schedule.make(this.lessons);
+          this.loading = false;
           this.goster = 6;
           this.fillDropdownOptions();
         });
       });
     } else {
-      this.syllabus = this.scheduleService.selected;
-      this.lessons = this.syllabus.unitLessons;
+      let dpId: number;
+      this.departmentInstructorService.getDepartmentsForUserId(this.authService.userInfo.userId).subscribe((department) => {
+        dpId = department[0].departmentId;
+        this.fillFilters(dpId);
+      });
+      this.syllFirst = this.scheduleService.selectedFirst;
+      this.syllSecond = this.scheduleService.selectedSecond;
+      if (this.syllFirst != null && this.syllSecond != null) {
+        this.syllFirst.unitLessons.map((un) => {
+          un.educationType = this.syllFirst.educationType;
+        });
+        this.syllSecond.unitLessons.map((un) => {
+          un.educationType = this.syllSecond.educationType;
+        });
+        this.lessons = [...this.syllFirst.unitLessons, ...this.syllSecond.unitLessons];
+      } else if (this.syllFirst == null) {
+        this.syllSecond.unitLessons.map((un) => {
+          un.educationType = this.syllSecond.educationType;
+        });
+        this.lessons = [...this.syllSecond.unitLessons];
+      } else if (this.syllSecond == null) {
+        this.syllFirst.unitLessons.map((un) => {
+          un.educationType = this.syllFirst.educationType;
+        });
+        this.lessons = [...this.syllFirst.unitLessons];
+      } else {
+        //TODO hata ver
+      }
       let schedule = new Schedule();
       this.schedule = schedule.make(this.lessons);
+      this.loading = false;
+      this.loading = false;
       this.goster = 6;
       this.fillDropdownOptions();
     }
@@ -145,6 +201,40 @@ export class ScheduleComponent implements OnInit {
 
   showDialog() {
     this.displayDialog = true;
+  }
+
+  fillFilters(dpId: number) {
+    this.departmentLessonService.getLessonsByDepartmentId(dpId).subscribe((lss) => {
+      this.dropdownOptions.lessonOptions = [];
+      lss.map((ls) => {
+        this.dropdownOptions.lessonOptions.push({
+          label: ls.name,
+          value: ls.name
+        });
+      });
+    });
+
+    this.departmentInstructorService.getUsersByDepartmentId(dpId).subscribe((uss) => {
+      this.dropdownOptions.userOptions = [];
+      uss.map((us) => {
+        this.dropdownOptions.userOptions.push({
+          label: us.name + ' ' + us.surname,
+          value: us.name + ' ' + us.surname
+        });
+      });
+    });
+
+    this.departmentService.get(dpId).subscribe((dp) => {
+      this.locationService.getForFaculty(dp.facultyId).subscribe((locs) => {
+        this.dropdownOptions.locationOptions = [];
+        locs.map((loc) => {
+          this.dropdownOptions.locationOptions.push({
+            label: loc.title,
+            value: loc.title
+          });
+        });
+      });
+    });
   }
 
   selectLesson(event: Event, block: ScheduleBlock) {
@@ -234,7 +324,22 @@ export class ScheduleComponent implements OnInit {
         un.starTime = this.duzenlemeModeli.saat + stOffst;
         un.endTime = un.starTime + 1;
         un.location = this.duzenlemeModeli.derslik;
+        stOffst++;
+        let model: UpdateUnitLessonModel = {
+          unitLessonId: un.unitLessonId,
+          locationId: un.location.locationId,
+          starTime: un.starTime,
+          endTime: un.endTime,
+          dayOfTheWeekType: un.dayOfTheWeekType,
+        }
+        this.unitLessonService.update(model).subscribe(() => {
+          this.toastr.success('Program Güncellendi', 'Başarılı');
+        }, (err) => {
+          this.toastr.error("Program Güncellenemedi", "Sunucu Hatası");
+        });
       });
+
+      console.log('Unitler', ders.units);
       others.push(ders);
       let lessons = [];
 
@@ -254,8 +359,12 @@ export class ScheduleComponent implements OnInit {
   }
 
 
-
   filtrele() {
+    Object.keys(this.filtre).forEach((key, index) => {
+      if (this.filtre[key] === null) {
+        this.filtre[key] = "";
+      }
+    });
     this.schedule.filtrele(this.filtre);
   }
 
@@ -299,7 +408,8 @@ export class ScheduleComponent implements OnInit {
       },
       adi: {
         'font-size': '15px',
-        'background': 'transparent'
+        'background': 'transparent',
+        'padding-left': '20px'
       },
       loc: {
         'padding-left': '20px'
@@ -309,26 +419,36 @@ export class ScheduleComponent implements OnInit {
       }
 
     }
+    this.downPdf = true;
     document.getElementById('body').style.width = "7000px";
-    const pdf = new jsPDF('l', 'px', [1920, 1080]);
+    this.toastr.info('PDF oluşturuluyor', 'Lütfen Bekleyiniz');
+    setTimeout(async () => {
+      const pdf = new jsPDF('l', 'px', [1920, 1080]);
+      const saatler = document.getElementById('saatler');
+      let saatCanvas = await html2canvas(saatler);
+      for (let i = 0; i < 5; i++) {
+        const data = document.getElementById('gun' + i);
+        let canvas = await html2canvas(data);
+        const contentDataURL = canvas.toDataURL('image.png');
+        const imgWidth = 1150;
+        const imgHeight = 700;
+        if (i != 0) pdf.addPage(1920, 1080);
+        pdf.addImage(saatCanvas, 'PNG', 100, 85, 35, 664);
+        pdf.addImage(contentDataURL, 'PNG', 150, 50, imgWidth, imgHeight);
+      }
+      pdf.save('schedule.pdf');
+      document.getElementById('body').style.width = "100%";
 
-    for (let i = 0; i < 5; i++) {
-      const data = document.getElementById('gun' + i);
-      let canvas = await html2canvas(data);
-      const contentDataURL = canvas.toDataURL('image.png');
-      const imgWidth = 1350;
-      const imgHeight = 700;
-      if (i != 0) pdf.addPage(1920, 1080);
-      pdf.addImage(contentDataURL, 'PNG', 100 / 2, 50, imgWidth, imgHeight);
-    }
-    pdf.save('schedule.pdf');
-    document.getElementById('body').style.width = "100%";
-    this.dersStyle = {
-      adi: {},
-      loc: {},
-      wrapper: {},
-      ins: {}
-    };
+      this.dersStyle = {
+        adi: {},
+        loc: {},
+        wrapper: {},
+        ins: {}
+      };
+      this.downPdf = false;
+      this.toastr.success('PDF oluşturuldu', 'Başarılı');
+    }, 3000);
+
 
   }
 

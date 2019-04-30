@@ -6,6 +6,8 @@ export interface DepartmentModel {
     facultyId?: number;
     faculty?: FacultyModel;
     userId?: number;
+    firstActiveSyllabusId?: number;
+    secondActiveSyllabusId?: number;
 }
 
 export interface AddDepartmentModel {

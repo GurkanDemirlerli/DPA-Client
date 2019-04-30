@@ -51,7 +51,7 @@ export class FacultiesComponent implements OnInit {
   cols: any[];
 
   items: MenuItem[];
-
+  loading: boolean = true;
   constructor(
     private facultyService: FacultyService,
     private router: Router,
@@ -61,13 +61,9 @@ export class FacultiesComponent implements OnInit {
 
   ngOnInit() {
 
-    //   this.mform = this.fb.group({
-    //     'facultyCode': new FormControl('', Validators.required),
-    //     'title': new FormControl('', Validators.required),
-    // });
-
     this.facultyService.getAll().subscribe((faculties) => {
       this.faculties = faculties;
+      this.loading = false;
     })
 
     this.cols = [

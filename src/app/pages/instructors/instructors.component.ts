@@ -89,7 +89,7 @@ export class InstructorsComponent implements OnInit {
   displayBolumler: boolean;
   targetBolumler: DepartmentModel[] = [];
   sourceBolumler: DepartmentModel[] = [];
-
+  loading: boolean = true;
   constructor(
     private route: ActivatedRoute,
     private departmentService: DepartmentService,
@@ -115,8 +115,9 @@ export class InstructorsComponent implements OnInit {
             us.departmentsParsed = us.departmentsParsed + dp.title;
           })
           this.users.push(us);
-        })
-      })
+        });
+      });
+      this.loading = false;
     });
 
     this.items = [
@@ -208,7 +209,7 @@ export class InstructorsComponent implements OnInit {
     return user;
   }
 
-  save() {
+  save(e) {
     let users = [...this.users];
     if (this.newUser) {
       let addUserModel: AddUserModel = {

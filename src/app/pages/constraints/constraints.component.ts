@@ -55,7 +55,7 @@ export class ConstraintsComponent implements OnInit {
 
   newConstraint: boolean;
 
-  constraints: ConstraintModel[]=[];
+  constraints: ConstraintModel[] = [];
 
   cols: any[];
 
@@ -72,6 +72,8 @@ export class ConstraintsComponent implements OnInit {
     isActive: false
   };
 
+  loading: boolean = true;
+
   constructor(
     private constraintService: ConstraintService,
     private authService: AuthService,
@@ -80,7 +82,6 @@ export class ConstraintsComponent implements OnInit {
 
   ngOnInit() {
     this.constraintService.getAll().subscribe((constraints) => {
-      // this.constraints = constraints;
       this.canAdd = true;
       constraints.map((cs) => {
         if (cs.userId === this.authService.userInfo.userId) {
@@ -93,8 +94,9 @@ export class ConstraintsComponent implements OnInit {
         } else {
           this.constraints.push(cs);
         }
-      })
-    })
+      });
+      this.loading = false;
+    });
 
     this.cols = [
       { field: 'title', header: 'Kısıt Adı' },
@@ -133,7 +135,7 @@ export class ConstraintsComponent implements OnInit {
   }
 
 
-  save() {
+  save(e) {
 
     let constraints = [...this.constraints];
     if (this.newConstraint) {

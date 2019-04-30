@@ -6,6 +6,7 @@ import { DepartmentInstructorService } from 'src/app/services/department-instruc
 import { DepartmentService } from 'src/app/services/department.service';
 import { Router } from '@angular/router';
 import { SyllabusModel } from 'src/app/models/syllabus.model';
+import { Roles } from 'src/app/enums';
 
 @Component({
   selector: 'dpa-my-schedules',
@@ -17,16 +18,27 @@ export class MySchedulesComponent implements OnInit {
   secondActive: SyllabusModel;
   departments: DepartmentModel[] = [];
 
+  loading = true;
   constructor(
     private authService: AuthService,
     private departmentInstructorService: DepartmentInstructorService,
+    private departmentService: DepartmentService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.departmentInstructorService.getDepartmentsForUserId(this.authService.userInfo.userId).subscribe((dps) => {
-      this.departments = dps;
-    });
+    if (this.authService.userInfo.roles === Roles.Administrator) {
+      this.departmentService.getAll().subscribe((dps) => {
+        this.departments = dps;
+        this.loading = false;
+      });
+    } else {
+      this.departmentInstructorService.getDepartmentsForUserId(this.authService.userInfo.userId).subscribe((dps) => {
+        this.departments = dps;
+        this.loading = false;
+      });
+    }
+
   }
 
   goToSchedule(departmentId: number) {

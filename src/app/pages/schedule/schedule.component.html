@@ -1,283 +1,298 @@
-<div class="schedule">
-
-  <div class="filter-forms">
-    <div class="filter-forms-header">
-    </div>
-    <div class="filter-forms-content">
-      <div class="filter-wrapper">
-        <!-- <div class="filter-label">
-          Yarıyıl :
-        </div> -->
-        <!-- <input type="text" [(ngModel)]="filtre.semester" (ngModelChange)="filtrele()"> -->
-        <p-dropdown [style]="{'width': '100%'}" [showClear]="true" [(ngModel)]="filtre.semester"
-          [options]="dropdownOptions.semesterOptions" placeholder="Yarıyıl Seçiniz" (onChange)="filtrele()">
-        </p-dropdown>
-      </div>
-      <div class="filter-wrapper">
-        <!-- <div class="filter-label">
-            Grup :
-          </div> -->
-        <!-- <input type="text" [(ngModel)]="filtre.grp" (ngModelChange)="filtrele()"> -->
-        <p-dropdown [style]="{'width': '100%'}" [showClear]="true" [(ngModel)]="filtre.grp"
-          [options]="dropdownOptions.groupOptions" placeholder="Grup Seçiniz" (onChange)="filtrele()">
-        </p-dropdown>
-      </div>
-      <div class="filter-wrapper">
-        <div class="filter-label">
-          Ders Adı :
-        </div>
-        <input type="text" [(ngModel)]="filtre.name" (ngModelChange)="filtrele()">
-      </div>
-      <div class="filter-wrapper">
-        <div class="filter-label">
-          Eğitimci :
-        </div>
-        <input type="text" [(ngModel)]="filtre.ins" (ngModelChange)="filtrele()">
-      </div>
-      <div class="filter-wrapper">
-        <div class="filter-label">
-          Derslik :
-        </div>
-        <input type="text" [(ngModel)]="filtre.loc" (ngModelChange)="filtrele()">
-      </div>
-      <button style="margin:5px;" label="TÜMÜNÜ GÖSTER" type="button" pButton icon="fa fa-check" (click)="tumunuSec()"
-        *ngIf="goster!==6"></button>
-
-      <button style="margin:5px;" label="PDF İndir" type="button" pButton icon="fa fa-check" (click)="downloadPDF()">
-      </button>
-      <button style="margin:5px;" label="Toggle" type="button" pButton icon="fa fa-check" (click)="toggleGenislik()">
-      </button>
-    </div>
+<ng-container *ngIf="loading === true; else second">
+  <div class="prgrs">
+    <p-progressSpinner [style]="{width: '200px', height: '200px'}" strokeWidth="2" animationDuration="3s">
+    </p-progressSpinner>
   </div>
-  <div class="schedule-wrapper" id="pdfDoc">
-    <div class="schedule-hours">
-      <div class="schedule-hour">
-        07:00
+
+</ng-container>
+<ng-template #second>
+  <div class="schedule">
+
+    <div class="filter-forms">
+      <div class="filter-forms-header">
       </div>
-      <div class="schedule-hour">
-        08:00
-      </div>
-      <div class="schedule-hour">
-        09:00
-      </div>
-      <div class="schedule-hour">
-        10:00
-      </div>
-      <div class="schedule-hour">
-        11:00
-      </div>
-      <div class="schedule-hour">
-        12:00
-      </div>
-      <div class="schedule-hour">
-        13:00
-      </div>
-      <div class="schedule-hour">
-        14:00
-      </div>
-      <div class="schedule-hour">
-        15:00
-      </div>
-      <div class="schedule-hour">
-        16:00
-      </div>
-      <div class="schedule-hour">
-        17:00
-      </div>
-      <div class="schedule-hour">
-        18:00
-      </div>
-      <div class="schedule-hour">
-        19:00
-      </div>
-      <div class="schedule-hour">
-        20:00
-      </div>
-      <div class="schedule-hour">
-        21:00
-      </div>
-      <div class="schedule-hour">
-        22:00
-      </div>
-      <div class="schedule-hour">
-        23:00
+      <div class="filter-forms-content">
+        <div class="filter-wrapper" style="margin-left: 48px">
+          <p-dropdown [style]="{'width': '100%'}" [showClear]="true" [(ngModel)]="filtre.semester"
+            [options]="dropdownOptions.semesterOptions" placeholder="Yarıyıl Seçiniz" (onChange)="filtrele()">
+          </p-dropdown>
+        </div>
+        <div class="filter-wrapper">
+
+          <p-dropdown [style]="{'width': '100%'}" [showClear]="true" [(ngModel)]="filtre.grp"
+            [options]="dropdownOptions.groupOptions" placeholder="Grup Seçiniz" (onChange)="filtrele()">
+          </p-dropdown>
+        </div>
+        <div class="filter-wrapper">
+
+          <p-dropdown [options]="dropdownOptions.lessonOptions" [style]="{'width': '100%'}" [(ngModel)]="filtre.name"
+            placeholder="Ders Seçiniz" filter="true" [showClear]="true" (onChange)="filtrele()"></p-dropdown>
+        </div>
+        <div class="filter-wrapper">
+
+          <p-dropdown [options]="dropdownOptions.userOptions" [style]="{'width': '100%'}" [(ngModel)]="filtre.ins"
+            placeholder="Eğitmen Seçiniz" filter="true" [showClear]="true" (onChange)="filtrele()"></p-dropdown>
+        </div>
+        <div class="filter-wrapper">
+
+          <p-dropdown [options]="dropdownOptions.locationOptions" [style]="{'width': '100%'}" [(ngModel)]="filtre.loc"
+            placeholder="Derslik Seçiniz" filter="true" [showClear]="true" (onChange)="filtrele()"></p-dropdown>
+        </div>
+        <button style="margin:5px;" label="TÜMÜNÜ GÖSTER" type="button" pButton icon="fa fa-compress"
+          (click)="tumunuSec()" *ngIf="goster!==6"></button>
+
+        <button style="margin:5px;" label="PDF İndir" type="button" pButton icon="fa fa-download"
+          (click)="downloadPDF()">
+        </button>
+        <button style="margin:5px;" label="Genişlet" type="button" pButton icon="fa fa-text-width"
+          (click)="toggleGenislik()">
+        </button>
       </div>
     </div>
-    <div class="schedule-days" [class.day-max]="goster != 6">
+    <div class="schedule-wrapper" id="pdfDoc">
+      <div class="schedule-hours" id="saatler">
+        <div class="schedule-hour">
+          07:00
+        </div>
+        <div class="schedule-hour">
+          08:00
+        </div>
+        <div class="schedule-hour">
+          09:00
+        </div>
+        <div class="schedule-hour">
+          10:00
+        </div>
+        <div class="schedule-hour">
+          11:00
+        </div>
+        <div class="schedule-hour">
+          12:00
+        </div>
+        <div class="schedule-hour">
+          13:00
+        </div>
+        <div class="schedule-hour">
+          14:00
+        </div>
+        <div class="schedule-hour">
+          15:00
+        </div>
+        <div class="schedule-hour">
+          16:00
+        </div>
+        <div class="schedule-hour">
+          17:00
+        </div>
+        <div class="schedule-hour">
+          18:00
+        </div>
+        <div class="schedule-hour">
+          19:00
+        </div>
+        <div class="schedule-hour">
+          20:00
+        </div>
+        <div class="schedule-hour">
+          21:00
+        </div>
+        <div class="schedule-hour">
+          22:00
+        </div>
+        <div class="schedule-hour">
+          23:00
+        </div>
+      </div>
+      <div class="schedule-days" [class.day-max]="goster != 6 ">
 
-      <ng-container *ngFor="let day of schedule?.days; let gnid=index">
+        <ng-container *ngFor="let day of schedule?.days; let gnid=index">
 
-        <div class="schedule-day" [attr.id]="'gun' + gnid" *ngIf="goster == gnid || goster == 6"
-          [class.day-max]="goster == gnid">
+          <div class="schedule-day" [attr.id]="'gun' + gnid" *ngIf="goster == gnid || goster == 6"
+            [class.day-max]="goster == gnid || downPdf==true">
 
-          <div class="schedule-day-header" (click)="gunSec(gnid)">
-            {{gunler[gnid]}}
-          </div>
-          <div class="schedule-day-content">
-            <div class="schedule-column" *ngFor="let column of  day?.columns; let clid=index">
-              <div class="schedule-lesson" *ngFor="let block of  column?.blocks; let i= index"
-                [style.margin-top]="i > 0 ? (block.units[0].starTime - (column.blocks[i-1].units[0].starTime + column.blocks[i-1].units.length)) *45 + 'px' : (block.units[0].starTime -7) *45 + 'px' "
-                [style.height]="(block.units.length*45)+'px'" (click)="selectLesson($event,block)">
-                <div class="ders" [ngStyle]="dersStyle.wrapper">
-                  <div class="ders-adi" [ngStyle]="dersStyle.adi">
-                    <p>{{block.units[0].lesson.name }}</p>
-                  </div>
-                  <div class="ders-ins" [ngStyle]="dersStyle.ins">
-                    <p>
-                      {{titlesWord[titles[block.units[0].user.title]]+ ' ' + block.units[0].user.name + ' '+ block.units[0].user.surname }}
-                    </p>
-                  </div>
-                  <div class="ders-loc" [ngStyle]="dersStyle.loc">
-                    <p> {{block.units[0].location.title}}</p>
-
-                  </div>
-                  <div class="ders-gr-lt" [class.flRow]="goster != 6">
-                    <div class="ders-gr" [ngStyle]="dersStyle.ins">
+            <div class="schedule-day-header" (click)="gunSec(gnid)">
+              {{gunler[gnid]}}
+            </div>
+            <div class="schedule-day-content">
+              <div class="schedule-column" *ngFor="let column of  day?.columns; let clid=index">
+                <div class="schedule-lesson" *ngFor="let block of  column?.blocks; let i= index"
+                  [style.margin-top]="i > 0 ? (block.units[0].starTime - (column.blocks[i-1].units[0].starTime + column.blocks[i-1].units.length)) *45 + 'px' : (block.units[0].starTime -7) *45 + 'px' "
+                  [style.height]="(block.units.length*45)+'px'" (click)="selectLesson($event,block)">
+                  <div class="ders" [ngStyle]="dersStyle.wrapper">
+                    <div class="ders-adi" [ngStyle]="dersStyle.adi">
+                      <p>{{block.units[0].lesson.name }}</p>
+                    </div>
+                    <div class="ders-ins" [ngStyle]="dersStyle.ins">
                       <p>
-                        {{ groupEnumReverse[groupEnum[block.units[0].groupType]] }}
+                        {{titlesWord[titles[block.units[0].user.title]]+ ' ' + block.units[0].user.name + ' '+ block.units[0].user.surname }}
                       </p>
                     </div>
-                    <div class="ders-lt" [ngStyle]="dersStyle.ins">
-                      <p>
-                        {{ edTypeEnumReverse[edTypeEnum[block.units[0].lesson.lessonType]] }}
-                      </p>
+                    <div class="ders-loc" [ngStyle]="dersStyle.loc">
+                      <p> {{block.units[0].location.title}}</p>
+
                     </div>
+                    <div class="ders-gr-lt" [class.flRow]="goster != 6 || downPdf==true">
+                      <div class="ders-gr" [ngStyle]="dersStyle.ins">
+                        <p>
+                          {{ groupEnumReverse[groupEnum[block.units[0].groupType]] }}
+                        </p>
+                      </div>
+                      <div class="ders-lt" [ngStyle]="dersStyle.ins">
+                        <p>
+                          {{ edTypeEnumReverse[edTypeEnum[block.units[0].educationType]] }}
+                        </p>
+                      </div>
+                    </div>
+
                   </div>
 
                 </div>
+              </div>
+              <ng-container *ngIf="day.columns.length < 2">
+                <div class="schedule-column" *ngFor="let item of [].constructor(2-day?.columns.length); let i=index">
+                </div>
+              </ng-container>
 
+
+              <div class="schedule-day-grid">
+                <div class="schedule-day-grid-row"
+                  *ngFor="let number of [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
+
+                </div>
               </div>
             </div>
-            <ng-container *ngIf="day.columns.length < 2">
-              <div class="schedule-column" *ngFor="let item of [].constructor(2-day?.columns.length); let i=index">
-              </div>
-            </ng-container>
 
 
-            <div class="schedule-day-grid">
-              <div class="schedule-day-grid-row"
-                *ngFor="let number of [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]">
-
-              </div>
-            </div>
           </div>
+        </ng-container>
+      </div>
 
-
-        </div>
-      </ng-container>
     </div>
 
   </div>
 
-</div>
+
+  <p-dialog [(visible)]="displayDialog" [contentStyle]="{'overflow':'visible'}" [modal]="true" [responsive]="true"
+    [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+    <div class="dialog-wrapper">
+
+      <div class="ders-detay">
+        <div class="ders-detay-header">
+          DERS BİLGİLERİ
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Ders Adı
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p>{{selected?.units[0].lesson.name}}</p>
+          </div>
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Grup
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p>{{ groupEnumReverse[groupEnum[selected?.units[0].groupType]] }}</p>
+          </div>
+        </div>
+
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Yarıyıl
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p>{{ smEnumReverse[smEnum[selected?.units[0].lesson.semesterType]] }}</p>
+          </div>
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Ders Vakti
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p>
+              {{ dayEnumReverse[dayEnum[selected?.units[0].dayOfTheWeekType]] }}
+              {{selected?.units[0].starTime + ':00 - '}}
+              {{(selected?.units[0].starTime+selected?.units.length) + ':00'}}
+            </p>
+          </div>
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Derslik
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p>{{selected?.units[0].location.title}}</p>
+          </div>
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Eğitmen
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p> {{titlesWord[titles[selected?.units[0].user.title]]}} {{selected?.units[0].user.name}}
+              {{selected?.units[0].user.surname}}</p>
+          </div>
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Öğrenim Türü
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p>{{ edTypeEnumReverse[edTypeEnum[selected?.units[0].educationType]] }}</p>
+          </div>
+        </div>
+      </div>
 
 
-<p-dialog [(visible)]="displayDialog" [contentStyle]="{'overflow':'visible'}" [modal]="true" [responsive]="true"
-  [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
-  <div class="dialog-wrapper">
+      <div class="options" *ngIf="authService.userInfo.roles === roles.Admin">
+        <div class="options-header">
+          DÜZENLE
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Gün
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.gun"
+              [options]="dropdownOptions.gunOptions" placeholder="Seçiniz" (onChange)="saatleriFiltrele($event)">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Saat
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.saat"
+              [options]="dropdownOptions.saatOptions" placeholder="Seçiniz" (onChange)="derslikleriFiltrele($event)">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ders-detay-item">
+          <div class="ders-detay-item-label">
+            Derslik
+          </div>
+          :
+          <div class="ders-detay-item-content">
+            <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.derslik"
+              [options]="dropdownOptions.derslikOptions" placeholder="Seçiniz">
+            </p-dropdown>
+          </div>
+        </div>
 
-    <div class="ders-detay">
-      <div class="ders-detay-header">
-        DERS BİLGİLERİ
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Ders Adı
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p>{{selected?.units[0].lesson.name}}</p>
-        </div>
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Grup
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p>{{selected?.units[0].groupType}}</p>
-        </div>
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Yarıyıl
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p>{{selected?.units[0].lesson.semesterType}}</p>
-        </div>
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Ders Vakti
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p>{{selected?.units[0].dayOfTheWeekType}} {{selected?.units[0].starTime}} {{selected?.units.length}} </p>
-        </div>
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Derslik
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p>{{selected?.units[0].location.title}}</p>
-        </div>
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Eğitmen
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p> {{titlesWord[titles[selected?.units[0].user.title]]}} {{selected?.units[0].user.name}}
-            {{selected?.units[0].user.surname}}</p>
-        </div>
+        <button type="button" pButton icon="fa fa-check" (click)="saveSchedule()" label="Kaydet"></button>
       </div>
     </div>
 
-
-    <div class="options">
-      <div class="options-header">
-        DÜZENLE
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Gün
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.gun"
-            [options]="dropdownOptions.gunOptions" placeholder="Seçiniz" (onChange)="saatleriFiltrele($event)">
-          </p-dropdown>
-        </div>
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Saat
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.saat"
-            [options]="dropdownOptions.saatOptions" placeholder="Seçiniz" (onChange)="derslikleriFiltrele($event)">
-          </p-dropdown>
-        </div>
-      </div>
-      <div class="ders-detay-item">
-        <div class="ders-detay-item-label">
-          Derslik
-        </div>
-        :
-        <div class="ders-detay-item-content">
-          <p-dropdown [style]="{'width': '100%'}" [(ngModel)]="duzenlemeModeli.derslik"
-            [options]="dropdownOptions.derslikOptions" placeholder="Seçiniz">
-          </p-dropdown>
-        </div>
-      </div>
-
-      <button type="button" pButton icon="fa fa-check" (click)="saveSchedule()" label="Kaydet"></button>
-    </div>
-  </div>
-
-</p-dialog>
+  </p-dialog>
+</ng-template>
