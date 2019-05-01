@@ -1,3 +1,4 @@
+import { ListUserModel } from './list-user.model';
 import { FacultyModel } from './faculty.model';
 export interface DepartmentModel {
     departmentId?: number;
@@ -8,6 +9,9 @@ export interface DepartmentModel {
     userId?: number;
     firstActiveSyllabusId?: number;
     secondActiveSyllabusId?: number;
+    facultyName?: string;
+    head?: ListUserModel;
+    headName?: string;
 }
 
 export interface AddDepartmentModel {

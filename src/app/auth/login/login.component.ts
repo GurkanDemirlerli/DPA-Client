@@ -3,6 +3,7 @@ import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { Roles } from 'src/app/enums';
 
 @Component({
   selector: 'dpa-login',
@@ -52,7 +53,13 @@ export class LoginComponent implements OnInit {
       password: this.password.value,
     }).subscribe((resp) => {
       if (resp.success) {
-        this.router.navigate(['/pages']);
+        if (this.authService.userInfo.roles === Roles.Administrator || this.authService.userInfo.roles === Roles.User) {
+          this.router.navigate(['/pages/my-schedules']);
+        } else if (this.authService.userInfo.roles === Roles.Admin) {
+          this.router.navigate(['/pages/schedules']);
+        }else{
+          this.router.navigate(['/pages']);
+        }
       } else {
         this.loginForm.setErrors({
           invalidLogin: true

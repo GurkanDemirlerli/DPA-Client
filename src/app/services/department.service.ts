@@ -1,3 +1,4 @@
+import { ListUserModel } from './../models/list-user.model';
 import { Injectable } from '@angular/core';
 import { server } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -42,6 +43,18 @@ export class DepartmentService {
                 catchError(this.handleError)
             );
     }
+
+    public getUsers(departmentId: number): Observable<ListUserModel[]> {
+        const headers = ServicesHelpers.createAuthenticationHeader();
+        return this.http.get<ListUserModel[]>(this.domain + `Department/${departmentId}/user`, headers)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                }),
+                catchError(this.handleError)
+            );
+    }
+
 
     public setFirstSchedule(departmentId: number, scheduleId): Observable<void> {
         const headers = ServicesHelpers.createAuthenticationHeader();

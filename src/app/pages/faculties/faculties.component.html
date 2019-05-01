@@ -35,7 +35,7 @@
 
   <ng-template pTemplate="summary" let-rowData>
     <div style="text-align:left">
-      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Ekle"></button>
     </div>
   </ng-template>
 </p-table>
@@ -63,9 +63,8 @@
     </div>
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-        <button type="button" pButton (click)="goToDepartments()" label="Bölümler"></button>
-        <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-        <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
+        <button type="button" pButton icon="fa fa-close" class="ui-button-secondary" (click)="delete()" label="Sil"></button>
+        <button pButton type="submit" icon="fa fa-check" label="Kaydet" [disabled]="!mform.valid"></button>
       </div>
     </p-footer>
   </p-dialog>

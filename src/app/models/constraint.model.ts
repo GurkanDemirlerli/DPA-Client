@@ -9,8 +9,9 @@ export interface ConstraintModel {
     weeklyHour?: WeeklyHours;
     educationType?: EducationTypes;
     userId?: number;
-    startTime?:number;
-    endTime?:number;
+    startTime?: number;
+    endTime?: number;
+    userName?: string;
 }
 
 export interface AddConstraintModel {
@@ -22,7 +23,7 @@ export interface AddConstraintModel {
     educationType: EducationTypes;
     userId: number;
     startTime: number;//TODO enum yap
-    endTime:number;//TODO enum yap
+    endTime: number;//TODO enum yap
 }
 
 export interface UpdateConstraintModel {
@@ -33,6 +34,6 @@ export interface UpdateConstraintModel {
     weeklyHour: WeeklyHours;
     educationType: EducationTypes;
     userId: number;
-    startTime:number;
-    endTime:number;
+    startTime: number;
+    endTime: number;
 }

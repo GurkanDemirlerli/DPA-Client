@@ -33,6 +33,7 @@ import {
   aktsOptions
 } from './dropdown.data';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LessonGroupEnum, LessonGroupReverseEnum } from 'src/app/enums/lesson-group.enum';
 
 
 @Component({
@@ -55,6 +56,10 @@ export class LessonsComponent implements OnInit {
   public educationTypes = EducationTypes;
   public lessonTypes = LessonTypes;
   public lessonTypesTableView = LessonTypesTableView;
+
+  public grpEnum = LessonGroupEnum;
+  public grpEnumReverse = LessonGroupReverseEnum;
+  
 
   cols: any[];
 
@@ -124,7 +129,7 @@ export class LessonsComponent implements OnInit {
             ls.usersParsed = "";
             ls.userCount = 0;
             ins.map((ins) => {
-              ls.usersParsed = ls.usersParsed + ins.name + " " + ins.surname + " , ";
+              ls.usersParsed = " " + ls.usersParsed + ins.name + " " + ins.surname + " ";
               ls.userCount++;
             });
             ls.userCount = ls.userCount + " Kişi";

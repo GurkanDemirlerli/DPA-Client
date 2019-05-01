@@ -67,8 +67,8 @@ export class FacultiesComponent implements OnInit {
     })
 
     this.cols = [
-      { field: 'facultyCode', header: 'Code', width: '20%' },
-      { field: 'title', header: 'Title', width: '80%' }
+      { field: 'facultyCode', header: 'Fakülte Kodu', width: '20%' },
+      { field: 'title', header: 'Fakülte Adı', width: '80%' }
     ];
 
     this.items = [

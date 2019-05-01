@@ -95,6 +95,13 @@ export class ConstraintsComponent implements OnInit {
           this.constraints.push(cs);
         }
       });
+
+      this.constraints.map((cs) => {
+        this.authService.get(cs.userId).subscribe((us) => {
+          cs.userName = us.name + ' ' + us.surname
+        });
+      });
+
       this.loading = false;
     });
 
@@ -107,7 +114,7 @@ export class ConstraintsComponent implements OnInit {
       { field: 'educationType', header: 'Öğrenim Türü' },
       { field: 'startTime', header: 'Başlangıç saati' },
       { field: 'endTime', header: 'Bitiş saati' },
-      { field: 'userId', header: 'Oluşturan' },
+      { field: 'userId', header: 'Oluşturan', hlpr: "userName" },
     ];
 
     this.items = [

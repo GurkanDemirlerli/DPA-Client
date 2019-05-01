@@ -13,7 +13,7 @@
   <p-table #dt [columns]="cols" [value]="items" selectionMode="single" [(selection)]="selectedSyl"
     (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
-      Bölüm Ders Programları
+      {{department.title}} Ders Programları
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -54,10 +54,13 @@
               {{ educationReverseEnum[educationEnum[rowData[col.field]]] }}
             </ng-container>
           </ng-template>
-          <ng-template #second>
-            <ng-container *ngIf="col.header === 'Aktiflestir';else fourth">
-              <button type="button" pButton icon="fa fa-check"
-                (click)="makeActive(rowData[col.field],rowData[col.hlpr])" label="Aktif Et"
+          <ng-template #third>
+            <ng-container *ngIf="col.header === 'Aktiflik';else fourth">
+              <button class="ui-button-raised ui-button-success" type="button" pButton icon="fa fa-thumbs-up"
+                *ngIf="rowData[col.hlpr2]" (click)="makeActive(rowData[col.hlpr3],rowData[col.hlpr])" label="Aktif"
+                [disabled]="rowData[col.hlpr2]"></button>
+              <button type="button" class="ui-button-raised ui-button-secondary" pButton icon="fa fa-check"
+                *ngIf="!rowData[col.hlpr2]" (click)="makeActive(rowData[col.hlpr3],rowData[col.hlpr])" label="Aktif Et"
                 [disabled]="rowData[col.hlpr2]"></button>
             </ng-container>
           </ng-template>

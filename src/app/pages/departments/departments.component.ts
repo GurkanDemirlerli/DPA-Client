@@ -13,6 +13,7 @@ import {
   DepartmentModel
 } from 'src/app/models';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Roles } from 'src/app/enums';
 
 
 
@@ -64,6 +65,27 @@ export class DepartmentsComponent implements OnInit {
   ngOnInit() {
     this.departmentService.getAll().subscribe((departments) => {
       this.items = departments;
+
+      this.items.map((dp) => {
+        this.facultyService.get(dp.facultyId).subscribe((fc) => {
+          dp.faculty = fc;
+          dp.facultyName = fc.title;
+        });
+      });
+
+      this.items.map((dp) => {
+        this.departmentService.getUsers(dp.departmentId).subscribe((uss) => {
+          if (!uss[0].name === null) {
+            uss.map((us) => {
+              if (us.roles === Roles.Admin) {
+                dp.head = us;
+                dp.headName = us.name + ' ' + us.surname;
+              }
+            });
+          }
+        });
+      });
+
       this.facultyService.getAll().subscribe((faculties) => {
         this.filters.faculties.push({
           label: "Tümü",
@@ -82,8 +104,8 @@ export class DepartmentsComponent implements OnInit {
     this.cols = [
       { field: 'departmentCode', header: 'Kodu' },
       { field: 'title', header: 'Adı' },
-      { field: 'facultyId', header: 'Fakülte' },
-      { field: 'userId', header: "Bölüm Başkanı" }
+      { field: 'facultyId', header: 'Fakülte', hlpr: "facultyName" },
+      { field: 'userId', header: "Bölüm Başkanı", hlpr: "headName" }
     ];
 
     this.brItems = [

@@ -88,8 +88,8 @@ export class ScheduleListComponent implements OnInit {
       { field: 'periodType', header: 'Dönem' },
       { field: 'educationType', header: 'Öğrenim Türü' },
       { field: 'weeklyHour', header: 'Haftalık Saat' },
-      { field: 'isActive', header: 'Aktiflik' },
-      { field: 'syllabusId', header: 'Aktiflestir', hlpr: 'educationType', hlpr2: 'isActive' },
+      // { field: 'isActive', header: 'Aktiflik' },
+      { field: 'isActive', header: 'Aktiflik', hlpr: 'educationType', hlpr2: 'isActive', hlpr3: 'syllabusId' },
     ];
 
     this.brItems = [

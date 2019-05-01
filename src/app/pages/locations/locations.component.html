@@ -86,10 +86,8 @@
       </div>
       <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
-          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"
-            class="ui-button-secondary"></button>
-
+            <button pButton type="submit" icon="fa fa-check" label="Kaydet" [disabled]="!mform.valid"></button>
+            <button type="button" pButton icon="fa fa-close" class="ui-button-secondary" (click)="delete()" label="Sil"></button>
         </div>
       </p-footer>
     </p-dialog>

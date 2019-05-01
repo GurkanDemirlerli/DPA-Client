@@ -33,7 +33,7 @@
           <p-dropdown *ngSwitchCase="'departmentCount'" [options]="filters.departments" [style]="{'width':'100%'}"
             (onChange)="dt.filter($event.value, col.hlpr, col.filterMatchMode)"></p-dropdown>
           <input *ngSwitchCase="'userCount'" pInputText type="text"
-            (input)="dt.filter($event.target.value, col.hlpr, col.filterMatchMode)" style="width:100%">
+            (input)="dt.filter($event.target.value, col.hlpr,'contains')" style="width:100%">
           <input *ngSwitchCase="'name'" pInputText type="text"
             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" style="width:100%">
           <input *ngSwitchCase="'akts'" pInputText type="text"
@@ -184,13 +184,26 @@
 
           </div>
         </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="lessonGroups">Gruplar </label>
+          </div>
+          <div class="ui-g-8">
+            <div *ngFor="let grp of lesson.lessonGroups">
+              <label for="lessonGroups"> {{ grpEnumReverse[grpEnum[grp.groupType]] }}</label>
+            </div>
+
+          </div>
+        </div>
+
       </div>
       <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
           <button type="button" pButton (click)="bolumler()" label="Bölümler"></button>
           <button type="button" pButton (click)="dersiVerenler()" label="Dersi Verenler"></button>
-          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-          <button pButton type="submit" label="Save" [disabled]="!mform.valid"></button>
+          <button type="button" pButton icon="fa fa-close" class="ui-button-secondary" (click)="delete()"
+            label="Sil"></button>
+          <button pButton type="submit" icon="fa fa-check" label="Kaydet" [disabled]="!mform.valid"></button>
         </div>
       </p-footer>
     </p-dialog>
