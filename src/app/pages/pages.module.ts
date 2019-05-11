@@ -32,6 +32,7 @@ import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { MySchedulesComponent } from './my-schedules/my-schedules.component';
 import { RouterModule } from '@angular/router';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {MultiSelectModule} from 'primeng/multiselect';
 @NgModule({
     declarations: [
         ScheduleComponent,
@@ -49,6 +50,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
         MySchedulesComponent
     ],
     imports: [
+        MultiSelectModule,
         RouterModule,
         InputTextareaModule,
         InputSwitchModule,

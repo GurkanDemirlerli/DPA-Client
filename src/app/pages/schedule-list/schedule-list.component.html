@@ -103,16 +103,6 @@
                 (onChange)="newItem.periodType = $event.value.value"></p-dropdown>
             </div>
           </div>
-          <div class="ui-g-12">
-            <div class="ui-g-4">
-              <label for="educationType">Öğrenim Türü</label>
-            </div>
-            <div class="ui-g-8">
-              <p-dropdown [options]="dropdownOptions.educationTypeOptions" formControlName="educationType"
-                [style]="{'width': '100%'}" placeholder="Seçiniz" filter="true" optionLabel="label" [showClear]="true"
-                (onChange)="newItem.educationType = $event.value.value"></p-dropdown>
-            </div>
-          </div>
         </div>
         <p-footer>
           <div class="ui-dialog-buttonpane ui-helper-clearfix">

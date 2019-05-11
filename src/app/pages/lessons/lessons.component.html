@@ -162,6 +162,16 @@
             </p-dropdown>
           </div>
         </div>
+
+        <div class="ui-g-12" *ngIf="newLesson">
+          <div class="ui-g-4">
+            <label for="lessonGroups">Gruplar</label>
+          </div>
+          <div class="ui-g-8">
+            <p-multiSelect [options]="dropdownOptions.grpOptions" formControlName="lessonGroupTypes" [(ngModel)]="selectedGroups" [panelStyle]="{minWidth:'12em'}" placeholder="Seçiniz"></p-multiSelect>
+          </div>
+        </div>
+
         <div class="ui-g-12">
           <div class="ui-g-4">
             <label for="semesterType">Bölümler</label>
@@ -184,7 +194,8 @@
 
           </div>
         </div>
-        <div class="ui-g-12">
+        
+        <div class="ui-g-12" *ngIf="!newLesson">
           <div class="ui-g-4">
             <label for="lessonGroups">Gruplar </label>
           </div>

@@ -18,7 +18,7 @@ export class Schedule {
         for (let i = 1; i <= this.gunSayisi; i++) {
             this.days.push(this.gunOlustur(i));
         }
-
+        console.log(this.filtresizBL);
         return this;
     }
 
@@ -124,6 +124,9 @@ export class Schedule {
 
     public filtrele(filtre: any) {
         let ismeGoreFiltrelenmis = this.filtresizBL.filter((opt) => opt.units[0].lesson.name.toLocaleLowerCase().includes(filtre.name.toLocaleLowerCase()));
+        if (filtre.loc != "")
+        ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => opt.units[0].location.title.toLocaleLowerCase() === (filtre.loc.toLocaleLowerCase()));
+        else
         ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => opt.units[0].location.title.toLocaleLowerCase().includes(filtre.loc.toLocaleLowerCase()));
         ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => (opt.units[0].user.name + ' ' + opt.units[0].user.surname).toLocaleLowerCase().includes(filtre.ins.toLocaleLowerCase()));
         if (filtre.grp) {
@@ -132,6 +135,10 @@ export class Schedule {
         if (filtre.semester) {
             ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => opt.units[0].lesson.semesterType === Number(filtre.semester));
 
+        }
+        if (filtre.edType) {
+            if (filtre.edType !==3)
+            ismeGoreFiltrelenmis = ismeGoreFiltrelenmis.filter((opt) => opt.units[0].educationType === Number(filtre.edType));
         }
 
         this.rawBlock = ismeGoreFiltrelenmis;
@@ -191,6 +198,20 @@ export class Schedule {
 
         for (let i = 0; i < oGunVerilenDersler.length; i++) {
             let drs = oGunVerilenDersler[i];
+            for (let j = drs.units[0].starTime; j < (drs.units.length + drs.units[0].starTime); j++) {
+                saatler = saatler.filter((saat) => {
+                    return (saat !== j)
+                });
+            }
+        }
+
+
+        let cakisanGruplar = gunDersleri.filter((opt) => {
+            return opt.units[0].lesson.semesterType === ders.units[0].lesson.semesterType && opt.units[0].groupType === ders.units[0].groupType;
+        });
+
+        for (let i = 0; i < cakisanGruplar.length; i++) {
+            let drs = cakisanGruplar[i];
             for (let j = drs.units[0].starTime; j < (drs.units.length + drs.units[0].starTime); j++) {
                 saatler = saatler.filter((saat) => {
                     return (saat !== j)

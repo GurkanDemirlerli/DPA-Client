@@ -6,6 +6,12 @@
 
 </ng-container>
 <ng-template #second>
+  <ng-container *ngIf="aktifVarmi === false; else third">
+    <h2>Aktif bir ders programı bulunmamaktadır.</h2>
+  </ng-container>
+  
+</ng-template>
+<ng-template #third>
   <div class="schedule">
 
     <div class="filter-forms">
@@ -15,6 +21,12 @@
         <div class="filter-wrapper" style="margin-left: 48px">
           <p-dropdown [style]="{'width': '100%'}" [showClear]="true" [(ngModel)]="filtre.semester"
             [options]="dropdownOptions.semesterOptions" placeholder="Yarıyıl Seçiniz" (onChange)="filtrele()">
+          </p-dropdown>
+        </div>
+        <div class="filter-wrapper">
+
+          <p-dropdown [style]="{'width': '100%'}" [showClear]="true" [(ngModel)]="filtre.edType"
+            [options]="dropdownOptions.educationTypeOptions" placeholder="Öğrenim Türü" (onChange)="filtrele()">
           </p-dropdown>
         </div>
         <div class="filter-wrapper">

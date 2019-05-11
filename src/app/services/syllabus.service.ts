@@ -14,6 +14,7 @@ import { SyllabusModel } from '../models/syllabus.model';
 @Injectable()
 export class SyllabusService {
     private domain = server.url + "/";
+    // private domain = "http://localhost:49971/";
 
     // public selected: SyllabusModel[];
 

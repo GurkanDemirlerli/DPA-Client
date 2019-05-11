@@ -23,8 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ScheduleListComponent implements OnInit {
 
   mform = new FormGroup({
-    periodType: new FormControl('', Validators.required),
-    educationType: new FormControl('', Validators.required),
+    periodType: new FormControl('', Validators.required)
   });
 
   public periodEnum = PeriodEnum;
@@ -86,9 +85,7 @@ export class ScheduleListComponent implements OnInit {
       { field: 'syllabusId', header: 'ID' },
       { field: 'year', header: 'Yıl' },
       { field: 'periodType', header: 'Dönem' },
-      { field: 'educationType', header: 'Öğrenim Türü' },
       { field: 'weeklyHour', header: 'Haftalık Saat' },
-      // { field: 'isActive', header: 'Aktiflik' },
       { field: 'isActive', header: 'Aktiflik', hlpr: 'educationType', hlpr2: 'isActive', hlpr3: 'syllabusId' },
     ];
 
@@ -171,6 +168,7 @@ export class ScheduleListComponent implements OnInit {
   save() {
     this.newItem.departmentId = this.department.departmentId;
     this.newItem.facultyId = this.department.facultyId;
+    this.newItem.educationType = 1;
     this.syllabusService.add(this.newItem).subscribe((syl) => {
 
       this.items.push(syl);

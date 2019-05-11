@@ -5,9 +5,14 @@ export const lessonTypeOptions = [
 ];
 
 export const semesterTypeOptions = [
-    { label: "Güz", value: 1 },
-    { label: "Bahar", value: 2 },
-    { label: "Tümü", value: 3 },
+    { label: "1. Yarıyıl", value: 1 },
+    { label: "2. Yarıyıl", value: 2 },
+    { label: "3. Yarıyıl", value: 3 },
+    { label: "4. Yarıyıl", value: 4 },
+    { label: "5. Yarıyıl", value: 5 },
+    { label: "6. Yarıyıl", value: 6 },
+    { label: "7. Yarıyıl", value: 7 },
+    { label: "8. Yarıyıl", value: 8 },
 ];
 
 
@@ -41,4 +46,11 @@ export const weeklyHourOptions = [
     { label: "13", value: 13 },
     { label: "14", value: 14 },
     { label: "15", value: 15 },
+];
+
+export const grpOptions =[
+    { label: "A", value: 1 },
+    { label: "B", value: 2 },
+    { label: "C", value: 3 },
+    { label: "D", value: 4 },
 ];

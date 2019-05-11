@@ -30,7 +30,8 @@ import {
   weeklyHourOptions,
   semesterTypeOptions,
   lessonTypeOptions,
-  aktsOptions
+  aktsOptions,
+  grpOptions
 } from './dropdown.data';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LessonGroupEnum, LessonGroupReverseEnum } from 'src/app/enums/lesson-group.enum';
@@ -50,6 +51,7 @@ export class LessonsComponent implements OnInit {
     weeklyHour: new FormControl('', Validators.required),
     lessonType: new FormControl('', Validators.required),
     semesterType: new FormControl('', Validators.required),
+    lessonGroupTypes: new FormControl(''),
   });
 
   public educationTypesTableView = EducationTypesTableView;
@@ -95,6 +97,8 @@ export class LessonsComponent implements OnInit {
   loading: boolean = true;
 
   toplamSaat: number = 0;
+
+  selectedGroups:number[] =[];
 
   constructor(
     private departmentService: DepartmentService,
@@ -187,6 +191,7 @@ export class LessonsComponent implements OnInit {
     this.dropdownOptions.semesterTypeOptions = semesterTypeOptions;
     this.dropdownOptions.aktsOptions = aktsOptions;
     this.dropdownOptions.weeklyHourOptions = weeklyHourOptions;
+    this.dropdownOptions.grpOptions = grpOptions;
   }
 
 
@@ -198,6 +203,7 @@ export class LessonsComponent implements OnInit {
   }
 
   save(e) {
+    console.log(this.selectedGroups);
     let lessons = [...this.lessons];
     if (this.newLesson) {
       let addLessonModel: AddLessonModel = {
@@ -207,10 +213,9 @@ export class LessonsComponent implements OnInit {
         weeklyHour: this.lesson.weeklyHour,
         lessonType: this.lesson.lessonType,
         semesterType: this.lesson.semesterType,
+        lessonGroupTypes: this.selectedGroups
       }
       //TODO grup ekleme yap
-      addLessonModel.lessonGroupTypes = [1];
-
       this.lessonService.add(addLessonModel).subscribe((res) => {
         this.lesson.lessonId = res.data;
         lessons.push(this.lesson);
@@ -313,7 +318,9 @@ export class LessonsComponent implements OnInit {
         lessonId: this.lesson.lessonId
       };
       this.departmentLessonService.add(addModel).subscribe((res) => {
-
+        this.toastr.success('Ders Başarıyla Bölüme Atandı.', 'Başarılı');
+      },(err)=>{
+        this.toastr.error("Ders atanırken bir hata oluştu", "Sunucu Hatası");
       });
     }
   }
@@ -321,6 +328,9 @@ export class LessonsComponent implements OnInit {
   deleteDepartmentForLesson(e) {
     for (let i = 0; i < e.items.length; i++) {
       this.departmentLessonService.delete(e.items[i].departmentId, this.lesson.lessonId).subscribe((res) => {
+        this.toastr.success('Ders Başarıyla Bölümden silindi.', 'Başarılı');
+      },(err)=>{
+        this.toastr.error("Ders çıkarılırken bir hata oluştu", "Sunucu Hatası");
       });
     }
   }
@@ -354,7 +364,9 @@ export class LessonsComponent implements OnInit {
         lessonId: this.lesson.lessonId
       };
       this.instructorLessonService.add(addModel).subscribe((res) => {
-
+        this.toastr.success('Ders Başarıyla Eğitimciye Atandı.', 'Başarılı');
+      },(err)=>{
+        this.toastr.error("Ders atanırken bir hata oluştu", "Sunucu Hatası");
       });
     }
   }
@@ -362,6 +374,9 @@ export class LessonsComponent implements OnInit {
   deleteUserForLesson(e) {
     for (let i = 0; i < e.items.length; i++) {
       this.instructorLessonService.delete(e.items[i].userId, this.lesson.lessonId).subscribe((res) => {
+        this.toastr.success('Ders Başarıyla Eğitmciden silindi.', 'Başarılı');
+      },(err)=>{
+        this.toastr.error("Ders çıkarılırken bir hata oluştu", "Sunucu Hatası");
       });
     }
   }

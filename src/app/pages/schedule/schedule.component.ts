@@ -69,6 +69,7 @@ export class ScheduleComponent implements OnInit {
     loc: "",
     grp: "",
     semester: "",
+    edType: "",
   }
 
   displayDialog: boolean = false;
@@ -93,6 +94,8 @@ export class ScheduleComponent implements OnInit {
   loading = true;
 
   downPdf = false;
+
+  aktifVarmi = true;
   constructor(
     private scheduleService: SyllabusService,
     private route: Router,
@@ -111,53 +114,22 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
     if (this.dataRoute.snapshot.params['departmentId']) {
 
-      let birinciler = [];
-      let ikinciler = [];
+      let syl = [];
       const dpId = this.dataRoute.snapshot.params['departmentId'];
       this.fillFilters(dpId);
 
       //TODO aşağıyı daha güzel hale getir
       this.scheduleService.getActiveFirstForDepartment(dpId).subscribe((syl1) => {
-        birinciler = syl1.unitLessons;
-        birinciler.map((br) => {
-          br.educationType = syl1.educationType;
-        })
-        this.scheduleService.getActiveSecondForDepartment(dpId).subscribe((syl2) => {
-          ikinciler = syl2.unitLessons;
-          ikinciler.map((ik) => {
-            ik.educationType = syl2.educationType;
-          })
-          this.lessons = [...birinciler, ...ikinciler];
-          let schedule = new Schedule();
-          this.schedule = schedule.make(this.lessons);
-          this.loading = false;
-          this.goster = 6;
-          this.fillDropdownOptions();
-        }, (err) => {
-          this.lessons = [...birinciler, ...ikinciler];
-          let schedule = new Schedule();
-          this.schedule = schedule.make(this.lessons);
-          this.loading = false;
-          this.goster = 6;
-          this.fillDropdownOptions();
-        });
+        syl = syl1.unitLessons;
+        this.lessons = [...syl];
+        let schedule = new Schedule();
+        this.schedule = schedule.make(this.lessons);
+        this.loading = false;
+        this.goster = 6;
+        this.fillDropdownOptions();
       }, (err) => {
-        this.scheduleService.getActiveSecondForDepartment(dpId).subscribe((syl2) => {
-          ikinciler = syl2.unitLessons;
-          this.lessons = [...birinciler, ...ikinciler];
-          let schedule = new Schedule();
-          this.schedule = schedule.make(this.lessons);
-          this.loading = false;
-          this.goster = 6;
-          this.fillDropdownOptions();
-        }, (err) => {
-          this.lessons = [...birinciler, ...ikinciler];
-          let schedule = new Schedule();
-          this.schedule = schedule.make(this.lessons);
-          this.loading = false;
-          this.goster = 6;
-          this.fillDropdownOptions();
-        });
+        this.aktifVarmi=false;
+        this.loading=false;
       });
     } else {
       let dpId: number;
@@ -168,22 +140,10 @@ export class ScheduleComponent implements OnInit {
       this.syllFirst = this.scheduleService.selectedFirst;
       this.syllSecond = this.scheduleService.selectedSecond;
       if (this.syllFirst != null && this.syllSecond != null) {
-        this.syllFirst.unitLessons.map((un) => {
-          un.educationType = this.syllFirst.educationType;
-        });
-        this.syllSecond.unitLessons.map((un) => {
-          un.educationType = this.syllSecond.educationType;
-        });
         this.lessons = [...this.syllFirst.unitLessons, ...this.syllSecond.unitLessons];
       } else if (this.syllFirst == null) {
-        this.syllSecond.unitLessons.map((un) => {
-          un.educationType = this.syllSecond.educationType;
-        });
         this.lessons = [...this.syllSecond.unitLessons];
       } else if (this.syllSecond == null) {
-        this.syllFirst.unitLessons.map((un) => {
-          un.educationType = this.syllFirst.educationType;
-        });
         this.lessons = [...this.syllFirst.unitLessons];
       } else {
         //TODO hata ver
@@ -195,8 +155,6 @@ export class ScheduleComponent implements OnInit {
       this.goster = 6;
       this.fillDropdownOptions();
     }
-
-
   }
 
   showDialog() {
